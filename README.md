@@ -255,5 +255,6 @@ public ResponseEntity< PageInfo > listPage ( PageRowBounds pageRowBounds ) {
 ```
 
 ## 流程控制
-接口对内使用Exception处理,AssertUtils
+接口对内使用Exception处理 AssertUtils
+
 接口对外使用if else流程控制
