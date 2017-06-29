@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aidijing.mapper.PermissionResourceMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.aidijing.domain.PermissionResource">
+		<id column="id" property="id" />
+		<result column="parent_id" property="parentId" />
+		<result column="resource_depth" property="resourceDepth" />
+		<result column="permission_sort" property="permissionSort" />
+		<result column="permission_name" property="permissionName" />
+		<result column="resource_class" property="resourceClass" />
+		<result column="resource_style" property="resourceStyle" />
+		<result column="resource_router_url" property="resourceRouterUrl" />
+		<result column="resource_type" property="resourceType" />
+		<result column="resource_api_uri" property="resourceApiUri" />
+		<result column="resource_api_uri_methods" property="resourceApiUriMethods" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="remark" property="remark" />
+		<result column="category_code" property="categoryCode" />
+	</resultMap>
+
+</mapper>

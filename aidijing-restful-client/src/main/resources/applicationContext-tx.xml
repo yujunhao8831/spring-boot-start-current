@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- 声明式事务 -->
+    <tx:advice id="advice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="get*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="count*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="find*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="query*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="select*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="load*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="list*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="add*" propagation="REQUIRED"/>
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="insert*" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="edit*" propagation="REQUIRED"/>
+            <tx:method name="do*" propagation="REQUIRED"/>
+            <tx:method name="begin*" propagation="REQUIRED"/>
+            <tx:method name="batch*" propagation="REQUIRED"/>
+            <tx:method name="pay*" propagation="REQUIRED"/>
+            <tx:method name="register*" propagation="REQUIRED"/>
+            <tx:method name="service*" propagation="REQUIRED"/>
+            <tx:method name="out*" propagation="REQUIRED"/>
+            <tx:method name="recharge*" propagation="REQUIRED"/>
+            <tx:method name="into*" propagation="REQUIRED"/>
+            <tx:method name="subtraction*" propagation="REQUIRED"/>
+            <tx:method name="add*" propagation="REQUIRED"/>
+            <tx:method name="create*" propagation="REQUIRED"/>
+            <tx:method name="service*" propagation="REQUIRED"/>
+            <tx:method name="buy*" propagation="REQUIRED"/>
+            <tx:method name="dispatcher*" propagation="REQUIRED"/>
+            <tx:method name="extract*" propagation="REQUIRED"/>
+            <tx:method name="reversal*" propagation="REQUIRED"/>
+            <!-- 抛出异常，都进行回滚 -->
+            <tx:method name="*" rollback-for="Exception"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config expose-proxy="true">
+        <aop:pointcut expression="execution(* com.*.*service.*.*(..))" id="pointcut"/>
+        <aop:advisor advice-ref="advice" pointcut-ref="pointcut"/>
+    </aop:config>
+
+
+</beans>

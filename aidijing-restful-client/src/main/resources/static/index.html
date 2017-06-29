@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JWT Spring Security Demo</title>
+
+    <link href="//cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <style type="text/css">
+       .text-hidden {
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+       }
+
+       .text-shown {
+          word-wrap: break-word;
+       }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>JWT Spring Security Demo</h1>
+    
+    <button type="button" class="btn btn-default" id="logoutButton">logout</button>
+
+    <div class="alert alert-danger" id="notLoggedIn">Not logged in!</div>
+
+    <div class="alert alert-info text-hidden" id="loggedIn"></div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default" id="login">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Login</h3>
+                </div>
+                <div class="panel-body">
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="username"
+                                   required name="username">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="exampleInputPassword1"
+                                   placeholder="password" required name="password">
+                        </div>
+                        <div class="form-group">
+                            <img src="captcha/login">
+                        </div>
+                        <div class="well">
+                            Try one of the following logins
+                            <ul>
+                                <li>admin & admin</li>
+                                <li>user & password</li>
+                                <li>disabled & password</li>
+                            </ul>
+                        </div>
+                        <button type="submit" class="btn btn-default">login</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="userInfo">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Authenticated user</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div id="userInfoBody"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="btn-group" role="group" aria-label="..." style="margin-bottom: 16px;">
+                <button type="button" class="btn btn-default" id="exampleServiceBtn">call example service</button>
+                <button type="button" class="btn btn-default" id="adminServiceBtn">call admin protected service</button>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Response:</h3>
+                </div>
+                <div class="panel-body">
+                    <pre id="response"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="loginErrorModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Login unsuccessful</h4>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script src="js/client.js"></script>
+</body>
+</html>

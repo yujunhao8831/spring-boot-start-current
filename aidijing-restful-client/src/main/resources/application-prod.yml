@@ -1,0 +1,45 @@
+# 服务器
+server:
+  port: 8080
+  # session:
+  #  timeout: 1800  # 30 分钟
+
+
+# 日志
+logging:
+  config: classpath:log4j2-production.xml
+  
+  
+# 数据库
+# 数据库
+spring:
+  datasource:
+    # driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://127.0.0.1:3306/blog?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true
+    # 文档 : https://github.com/alibaba/druid/tree/1.1.0/druid-spring-boot-starter
+    druid: 
+      filters: stat # 配置监控统计拦截的filters,默认值为stat，配置多个请以英文逗号分隔，如stat,wall,log4j 
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      maxWait: 60000 # 配置获取连接等待超时的时间
+      timeBetweenEvictionRunsMillis: 60000 # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      minEvictableIdleTimeMillis: 300000 # 配置一个连接在池中最小生存的时间，单位是毫秒  
+      validationQuery: SELECT 1
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true # 是否打开PSCache
+      maxPoolPreparedStatementPerConnectionSize: 20 # 指定每个连接上PSCache的大小
+    # Druid Spring Boot Starter 不仅限于对以上连接池配置项的支持，DruidDataSource提供set方法的属性都可在此进行配置，但需自行检查是否生效。
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+
+# 控制静态资源的访问,生产环境不能访问swagger-ui.html
+spring:
+  resources:
+    static-locations: classpath:/static/

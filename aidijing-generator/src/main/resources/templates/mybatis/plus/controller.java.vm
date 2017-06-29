@@ -1,0 +1,119 @@
+package ${package.Controller};
+
+import com.aidijing.common.ResponseEntity;
+import ${package.Entity}.${entity};
+import ${package.Service}.${table.serviceName};
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import com.github.pagehelper.PageRowBounds;
+
+#if(${restControllerStyle})
+#else
+import org.springframework.stereotype.Controller;
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+
+/**
+ * <p>
+ * $!{table.comment} 前端控制器
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+#else
+public class ${table.controllerName} {
+#end
+    @Autowired
+    private ${table.serviceName} ${serviceVariableName};
+
+    /*
+      #foreach($field in ${table.fields})
+      
+        #if("$!field.comment" != "") ${field.comment} #end ${field.propertyName} #if(${field.propertyType.equals("Boolean")}) boolean #else ${field.propertyType} #end
+        
+       #end
+      
+     */
+    
+    /**
+     * 
+     * URI    : { GET } #if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/{id}
+     * 
+     * @param id : 主键
+     * @return
+     */
+    @GetMapping("{id}")
+    public ResponseEntity< ${entity} > get ( @PathVariable ${primaryKeyTypeString} id ){
+        return ResponseEntity.ok().setResponseContent(${serviceVariableName}.selectById( id ));
+    }
+
+    /**
+     * URI    : { GET } #if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end
+     *
+     * @param pageRowBounds : {@link PageRowBounds}
+     * @return
+     */
+    @GetMapping
+    public ResponseEntity< ${entity} > list ( PageRowBounds pageRowBounds ){
+        return ResponseEntity.ok().setResponseContent(${serviceVariableName}.listPage( pageRowBounds ));
+    }
+
+    /**
+     * URI    : { POST } #if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end
+     * 
+     * @param ${entityVariableName} : {@link ${entity}}
+     * @return
+     */
+    @PostMapping
+    public ResponseEntity< ${entity} > insert ( @RequestBody ${entity} ${entityVariableName} ){
+        if ( ! ${serviceVariableName}.insert( ${entityVariableName}) ){
+            return ResponseEntity.ok("保存失败");    
+        }
+        return ResponseEntity.ok("保存成功");
+    }
+
+    /**
+     * URI    : { PUT } #if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/{id}
+     * 
+     * @param id : 主键
+     * @param ${entityVariableName} : {@link ${entity}}
+     * @return
+     */
+    @PutMapping("{id}")
+    public ResponseEntity< ${entity} > update ( @PathVariable ${primaryKeyTypeString} id,
+                                              @RequestBody ${entity} ${entityVariableName} ){
+        if ( ! ${serviceVariableName}.updateById( ${entityVariableName}.setId(id)) ){
+            return ResponseEntity.ok("更新失败");    
+        }
+        return ResponseEntity.ok("更新成功");
+    }
+
+    /**
+     * URI    : { DELETE } #if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/{id}
+     * 
+     * @param id : 主键
+     * @return
+     */
+    @DeleteMapping("{id}")
+    public ResponseEntity< ${entity} > delete ( @PathVariable ${primaryKeyTypeString} id ){
+        if ( ! ${serviceVariableName}.deleteById(id) ){
+            return ResponseEntity.ok("删除失败");    
+        }
+        return ResponseEntity.ok("删除成功");
+    }
+
+    
+    
+}

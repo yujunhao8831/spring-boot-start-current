@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aidijing.mapper.UserActionHistoryMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.aidijing.domain.UserActionHistory">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="user_real_name" property="userRealName"/>
+        <result column="action_level" property="actionLevel"/>
+        <result column="action_type" property="actionType"/>
+        <result column="action_log" property="actionLog"/>
+        <result column="action_ip_address" property="actionIpAddress"/>
+        <result column="action_description" property="actionDescription"/>
+        <result column="is_warn" property="warn"/>
+        <result column="action_start_time" property="actionStartTime"/>
+        <result column="action_end_time" property="actionEndTime"/>
+        <result column="action_total_time" property="actionTotalTime"/>
+        <result column="action_class" property="actionClass"/>
+        <result column="action_method" property="actionMethod"/>
+        <result column="action_args" property="actionArgs"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+</mapper>

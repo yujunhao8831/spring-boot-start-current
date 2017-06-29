@@ -1,0 +1,32 @@
+package ${package.ServiceImpl};
+
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+import ${superServiceImplClassPackage};
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.PageRowBounds;
+
+/**
+ * <p>
+ * $!{table.comment} 服务实现类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Service
+public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+
+
+    @Override
+    public PageInfo listPage( PageRowBounds pageRowBounds ) {
+        PageHelper.startPage( pageRowBounds.getOffset(), pageRowBounds.getLimit() );
+        return new PageInfo( super.selectList( null ) );
+    }
+    
+    
+}
