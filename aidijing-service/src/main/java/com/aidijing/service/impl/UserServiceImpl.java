@@ -48,7 +48,7 @@ public class UserServiceImpl extends ServiceImpl< UserMapper, User > implements 
      */
     @Cacheable( value = CACHE_User_LIST_PAGE_NAME_PREFIX, key = "#pageRowBounds.offset + '.' + #pageRowBounds.getLimit()" )
     @Override
-    public PageInfo listPage ( PageRowBounds pageRowBounds ) {
+    public PageInfo<User> listPage ( PageRowBounds pageRowBounds ) {
         PageHelper.startPage( pageRowBounds.getOffset(), pageRowBounds.getLimit() );
         return new PageInfo( super.selectList( null ) );
     }

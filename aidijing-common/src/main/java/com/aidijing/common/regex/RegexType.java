@@ -54,13 +54,12 @@ public final class RegexType implements Serializable {
      * <p>yyyyMMdd</p>
      * <p>yyyyMMddhh:mm:ss</p>
      */
-    public static final  String DATE_BASIC                 = new StringBuffer()
-            .append( DATE_YYYY_MM_DD_HH_MM_SS ).append( "|" )
-            .append( DATE_YYYY_MM_DD ).append( "|" )
-            .append( DATE_YYYY_MM_DD_HH_MM_SS_2 ).append( "|" )
-            .append( DATE_YYYY_MM_2 ).append( "|" )
-            .append( DATE_YYYY_MM_DD_HH_MM_SS_3 ).append( "|" )
-            .append( DATE_YYYY_MM_3 ).toString();
+    public static final  String DATE_BASIC                 = DATE_YYYY_MM_DD_HH_MM_SS + "|" +
+            DATE_YYYY_MM_DD + "|" +
+            DATE_YYYY_MM_DD_HH_MM_SS_2 + "|" +
+            DATE_YYYY_MM_2 + "|" +
+            DATE_YYYY_MM_DD_HH_MM_SS_3 + "|" +
+            DATE_YYYY_MM_3;
 
 
 }

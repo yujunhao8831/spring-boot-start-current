@@ -5,6 +5,7 @@ import com.github.pagehelper.PageRowBounds;
 import com.aidijing.common.ResponseEntity;
 import com.aidijing.common.util.LogUtils;
 import com.aidijing.domain.User;
+import com.aidijing.permission.Pass;
 import com.aidijing.service.UserService;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
@@ -25,18 +26,17 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequestMapping( "/api/user" )
 public class UserController {
-    
+
     @Autowired
     private UserService    userService;
     @Autowired
     private RedissonClient redissonClient;
 
-    
+
     @GetMapping
-    public ResponseEntity< PageInfo > listPage ( PageRowBounds pageRowBounds ) {
-        return ResponseEntity.ok()
-                             .setResponseContent( userService.listPage( pageRowBounds ) )
-                             .setFilterField( "-password,-realName" );
+    public ResponseEntity< PageInfo< User > > listPage ( PageRowBounds pageRowBounds ) {
+        return ResponseEntity.ok().setResponseContent( userService.listPage( pageRowBounds ) )
+                             .setFilterFields( "-password" );
     }
 
 
@@ -58,6 +58,7 @@ public class UserController {
     }
 
 
+    @Pass
     @GetMapping( "async" )
     public ResponseEntity asyncUpdate () {
         // 异步操作  
@@ -80,8 +81,6 @@ public class UserController {
     @PutMapping( "{id}" )
     public ResponseEntity update ( @PathVariable Long id,
                                    @RequestBody User user ) {
-        new User();
-
         userService.update( user.setId( id ) );
         return ResponseEntity.ok();
     }

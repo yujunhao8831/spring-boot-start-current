@@ -1,10 +1,10 @@
 package com.aidijing.json;
 
-import com.aidijing.common.ResponseEntity;
-import com.aidijing.common.util.JsonUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.google.gson.reflect.TypeToken;
+import com.aidijing.common.ResponseEntity;
+import com.aidijing.common.util.JsonUtils;
 import org.junit.Test;
 
 /**
@@ -30,7 +30,7 @@ public class JacksonAndGsonTest {
 
     @Test
     public void jacksonSerializableTest () throws Exception {
-        final ResponseEntity< User > responseEntity   = new ResponseEntity<>().setResponseContent( new User() );
+        final ResponseEntity< User > responseEntity = ResponseEntity.empty().setResponseContent( new User() );
         final String                 jscksonJsonValue = JsonUtils.toJson( responseEntity );
         System.err.println( "jscksonJsonValue = " + jscksonJsonValue );
 
@@ -47,7 +47,8 @@ public class JacksonAndGsonTest {
 
     @Test
     public void gsonSerializableTest () throws Exception {
-        final ResponseEntity< User > responseEntity = new ResponseEntity<>().setResponseContent( new User() );
+
+        final ResponseEntity< User > responseEntity = ResponseEntity.empty().setResponseContent( new User() );
         final String                 gsonJsonValue  = JsonUtils.getGson().toJson( responseEntity );
         System.err.println( "gsonJsonValue = " + gsonJsonValue );
 
@@ -66,9 +67,7 @@ public class JacksonAndGsonTest {
 
     @Test
     public void fastjsonSerializableTest () throws Exception {
-
-
-        final ResponseEntity< User > responseEntity = new ResponseEntity<>().setResponseContent( new User() );
+        final ResponseEntity< User > responseEntity = ResponseEntity.empty().setResponseContent( new User() );
         final String                 fastjsonValue  = JSON.toJSONString( responseEntity );
         System.err.println( "fastjsonValue = " + fastjsonValue );
         final ResponseEntity< User > result = JSON.parseObject(
@@ -82,4 +81,5 @@ public class JacksonAndGsonTest {
 
     }
 
+    
 }

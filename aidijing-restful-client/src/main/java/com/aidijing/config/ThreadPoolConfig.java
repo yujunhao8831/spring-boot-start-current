@@ -23,7 +23,7 @@ public class ThreadPoolConfig implements AsyncConfigurer {
         executor.setCorePoolSize( Runtime.getRuntime().availableProcessors() );
         executor.setMaxPoolSize( Runtime.getRuntime().availableProcessors() * 5 );
         executor.setQueueCapacity( Runtime.getRuntime().availableProcessors() * 2 );
-        executor.setThreadNamePrefix( "aidijing-executor-" );
+        executor.setThreadNamePrefix( "data-platform-executor-" );
         executor.initialize();
         return executor;
     }

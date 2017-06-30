@@ -62,7 +62,7 @@ public class AdminPermissionInterceptor extends HandlerInterceptorAdapter {
         if ( LogUtils.getLogger().isDebugEnabled() ) {
             LogUtils.getLogger().debug( "handler '@NotNeedPermission' annotation  : {} ", notNeedPermission );
         }
-        
+
 
         if ( ContextUtils.isNotLogin() ) {
             throw new AuthenticationCredentialsNotFoundException( "未登录" );
@@ -153,7 +153,12 @@ public class AdminPermissionInterceptor extends HandlerInterceptorAdapter {
             }
         }
         // /api/user/{id} 这种形式匹配
-        return antPathMatcher.match( resource.getResourceApiUri(), uri );
+        final boolean match = antPathMatcher.match( resource.getResourceApiUri(), uri );
+        // 如果用户有该api的权限
+        if ( match ) {
+            ContextUtils.setCurrentRequestApiShowFields( resource.getResourceApiUriShowFields() );
+        }
+        return match;
     }
 
 

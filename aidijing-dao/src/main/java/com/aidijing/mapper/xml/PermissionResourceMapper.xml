@@ -15,6 +15,7 @@
 		<result column="resource_type" property="resourceType" />
 		<result column="resource_api_uri" property="resourceApiUri" />
 		<result column="resource_api_uri_methods" property="resourceApiUriMethods" />
+		<result column="resource_api_uri_show_fields" property="resourceApiUriShowFields" />
 		<result column="create_time" property="createTime" />
 		<result column="update_time" property="updateTime" />
 		<result column="remark" property="remark" />

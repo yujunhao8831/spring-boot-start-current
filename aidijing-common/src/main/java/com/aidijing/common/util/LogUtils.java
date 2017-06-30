@@ -13,10 +13,9 @@ import org.apache.logging.log4j.Logger;
  */
 public abstract class LogUtils {
 
-
     /**
      * 返回一个调用这的名称的Logger
-     *
+     * 
      * @return The Logger for the calling class.
      * @throws UnsupportedOperationException if the calling class cannot be determined.
      */

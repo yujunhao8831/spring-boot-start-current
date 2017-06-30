@@ -11,7 +11,7 @@
  Target Server Version : 50716
  File Encoding         : utf-8
 
- Date: 06/23/2017 18:39:49 PM
+ Date: 06/30/2017 18:23:51 PM
 */
 
 SET NAMES utf8;
@@ -33,18 +33,19 @@ CREATE TABLE `manager_permission_resource` (
   `resource_type` varchar(8) NOT NULL COMMENT '资源类型(API:接口,MENU:菜单,BUTTON:按钮)',
   `resource_api_uri` varchar(128) DEFAULT NULL COMMENT '资源API URI(非必须,api才有)',
   `resource_api_uri_methods` varchar(128) DEFAULT NULL COMMENT '资源API URI方法methods(GET,POST,DELETE,PUT,以'',''分割)',
+  `resource_api_uri_show_fields` varchar(512) NOT NULL DEFAULT '*' COMMENT '资源API URI 显示字段\r(\r"*":表示显示所有[默认"*"].\r"-" + 字段名,表示排除某个字段.如果要排除多个以","进行分隔,比如: -username,-password.\r字段名,表示只显示某个字段,如果只要显示某几个字段可以用","分隔,比如:username,password.\r示例 : \r* : 显示所有字段\r-username,-password : 除了不显示username,password这2个字段,其他字段都显示\rusername,password : 只显示username,password这2个字段,都不显示\r)',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `remark` varchar(128) DEFAULT NULL COMMENT '备注',
   `category_code` varchar(8) DEFAULT NULL COMMENT '分类(C,R,U,D)冗余字段',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='后台管理权限资源表';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='后台管理权限资源表';
 
 -- ----------------------------
 --  Records of `manager_permission_resource`
 -- ----------------------------
 BEGIN;
-INSERT INTO `manager_permission_resource` VALUES ('1', '0', null, '1', '用户管理', null, null, null, 'MENU', null, 'GET', '2017-06-21 09:29:45', '2017-06-21 09:29:45', null, 'C'), ('2', '1', null, '1', '用户列表', null, null, null, 'MENU', null, 'GET', '2017-06-21 09:29:45', '2017-06-21 09:29:45', null, 'C'), ('3', '2', null, '1', '查看用户', null, null, null, 'API', '/api/user', 'GET', '2017-06-21 09:29:45', '2017-06-22 16:42:53', null, 'C'), ('4', '2', null, '2', '查看用户', null, null, null, 'API', '/api/user/list', 'GET', '2017-06-21 09:29:45', '2017-06-21 11:29:13', null, 'C'), ('5', '2', null, '3', '查看用户', null, null, null, 'API', '/api/user/{id}', 'GET', '2017-06-21 09:29:45', '2017-06-22 17:08:18', null, 'C'), ('6', '2', null, '5', '删除用户', null, null, null, 'API', '/api/user/{id}', 'DELETE', '2017-06-21 09:29:45', '2017-06-21 11:29:13', null, 'C');
+INSERT INTO `manager_permission_resource` VALUES ('1', '0', null, '1', '用户管理', null, null, null, 'MENU', null, 'GET', '*', '2017-06-21 09:29:45', '2017-06-21 09:29:45', null, 'C'), ('2', '1', null, '1', '用户列表', null, null, null, 'MENU', null, 'GET', '*', '2017-06-21 09:29:45', '2017-06-21 09:29:45', null, 'C'), ('3', '2', null, '1', '查看用户', null, null, null, 'API', '/api/user', 'GET', 'username', '2017-06-21 09:29:45', '2017-06-30 12:20:33', null, 'C'), ('4', '2', null, '2', '查看用户', null, null, null, 'API', '/api/user/list', 'GET', '*', '2017-06-21 09:29:45', '2017-06-21 11:29:13', null, 'C'), ('5', '2', null, '3', '查看用户', null, null, null, 'API', '/api/user/{id}', 'GET', '*', '2017-06-21 09:29:45', '2017-06-22 17:08:18', null, 'C'), ('6', '2', null, '5', '删除用户', null, null, null, 'API', '/api/user/{id}', 'DELETE', '*', '2017-06-21 09:29:45', '2017-06-21 11:29:13', null, 'C'), ('7', '2', null, '6', '查看test', null, null, null, 'API', '/api/user/test', 'GET', '*', '2017-06-21 09:29:45', '2017-06-22 16:42:53', null, 'C');
 COMMIT;
 
 -- ----------------------------
@@ -79,13 +80,13 @@ CREATE TABLE `manager_role_permission_resource` (
   `role_id` bigint(20) NOT NULL COMMENT '后台管理角色_id',
   `permission_resource_id` bigint(20) NOT NULL COMMENT '后台管理权限资源_id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='后台管理角色资源中间表';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='后台管理角色资源中间表';
 
 -- ----------------------------
 --  Records of `manager_role_permission_resource`
 -- ----------------------------
 BEGIN;
-INSERT INTO `manager_role_permission_resource` VALUES ('1', '1', '1'), ('2', '1', '2'), ('3', '1', '3'), ('4', '1', '4'), ('5', '1', '5'), ('6', '1', '6');
+INSERT INTO `manager_role_permission_resource` VALUES ('1', '1', '1'), ('2', '1', '2'), ('3', '1', '3'), ('4', '1', '4'), ('5', '1', '5'), ('6', '1', '6'), ('7', '1', '7');
 COMMIT;
 
 -- ----------------------------

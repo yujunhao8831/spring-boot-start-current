@@ -1,9 +1,15 @@
 package com.aidijing.common.filter.handler;
 
+import com.aidijing.common.ResponseEntity;
+import com.aidijing.common.util.JsonUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.MediaType;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.regex.Pattern;
 
 /**
@@ -55,7 +61,6 @@ public class DefaultInjectionAttackHandler implements InjectionAttackHandler {
             SPECIAL_CHARACTERS_REGEX,
             Pattern.CASE_INSENSITIVE
     );
-    private static final String  EMPTY                            = "";
 
     private DefaultInjectionAttackHandler () {
     }
@@ -93,34 +98,35 @@ public class DefaultInjectionAttackHandler implements InjectionAttackHandler {
 
     @Override
     public String filterSqlInjection ( String rawCharacters ) {
-        if ( null == rawCharacters ) {
+        if ( StringUtils.isBlank( rawCharacters ) ) {
             return rawCharacters;
         }
-        return rawCharacters.replaceAll( SQL_INJECTION_REGEX, EMPTY );
+        return StringUtils.replaceAll( rawCharacters, SQL_INJECTION_REGEX, StringUtils.EMPTY );
     }
 
     @Override
     public String filterXSSInjection ( String rawCharacters ) {
-        if ( null == rawCharacters ) {
+        if ( StringUtils.isBlank( rawCharacters ) ) {
             return rawCharacters;
         }
-        return rawCharacters.replaceAll( XSS_REGEX, EMPTY );
+        return StringUtils.replaceAll( rawCharacters, XSS_REGEX, StringUtils.EMPTY );
     }
 
     @Override
     public String filterSpecialCharacters ( String rawCharacters ) {
-        if ( null == rawCharacters ) {
+        if ( StringUtils.isBlank( rawCharacters ) ) {
             return rawCharacters;
         }
-        return rawCharacters.replaceAll( SPECIAL_CHARACTERS_REGEX, EMPTY );
+        return StringUtils.replaceAll( rawCharacters, SPECIAL_CHARACTERS_REGEX, StringUtils.EMPTY );
     }
 
     @Override
     public void attackHandle ( HttpServletRequest request, HttpServletResponse response, String parameters ) throws
                                                                                                              IOException {
+        response.setHeader( "Content-type", MediaType.APPLICATION_JSON_UTF8_VALUE );
+        response.setCharacterEncoding( StandardCharsets.UTF_8.displayName() );
         try ( PrintWriter out = response.getWriter() ) {
-            response.setStatus( HttpServletResponse.SC_BAD_REQUEST );
-            out.print( "请求内容包含非法字符,原请求内容:\n" + parameters );
+            out.print( JsonUtils.toJson( ResponseEntity.unauthorized( "请求内容包含非法字符,原请求内容:\n" + parameters ) ) );
         }
     }
 

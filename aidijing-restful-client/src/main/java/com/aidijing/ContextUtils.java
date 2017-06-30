@@ -20,8 +20,29 @@ import java.util.List;
  */
 public final class ContextUtils {
 
-    private static final SimpleGrantedAuthority ROLE_ANONYMOUS           = new SimpleGrantedAuthority( "ROLE_ANONYMOUS" );
-    private static final String                 ANONYMOUS_USER_PRINCIPAL = "anonymousUser";
+    private static final SimpleGrantedAuthority ROLE_ANONYMOUS                  = new SimpleGrantedAuthority(
+            "ROLE_ANONYMOUS" );
+    private static final String                 ANONYMOUS_USER_PRINCIPAL        = "anonymousUser";
+    /** 当前请求API能查看到的字段 **/
+    private static final ThreadLocal< String >  CURRENT_REQUEST_API_SHOW_FIELDS = new ThreadLocal<>();
+
+    /**
+     * 得到用户当前请求api可见字段
+     *
+     * @return 
+     */
+    public static String getCurrentRequestApiShowFields () {
+        return CURRENT_REQUEST_API_SHOW_FIELDS.get();
+    }
+
+    /**
+     * 设置用户当前请求api可见字段
+     *
+     * @param currentRequestApiShowFields {@link com.aidijing.domain.PermissionResource#resourceApiUriShowFields}
+     */
+    public static void setCurrentRequestApiShowFields ( final String currentRequestApiShowFields ) {
+        CURRENT_REQUEST_API_SHOW_FIELDS.set( currentRequestApiShowFields );
+    }
 
     /**
      * 是否登录
@@ -42,7 +63,7 @@ public final class ContextUtils {
     /**
      * ! {@link #isLogin()}
      *
-     * @return 
+     * @return
      */
     public static boolean isNotLogin () {
         return ! isLogin();
@@ -108,5 +129,6 @@ public final class ContextUtils {
         }
         return authentication;
     }
+
 
 }

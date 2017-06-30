@@ -60,7 +60,7 @@ docker运行命令 : docker run -p 8080:8080 -t com.aidijing/aidijing-restful-cl
  + 基本工具类
  + jwt认证
  + Spring Security基础权限管理
- + 细粒度权限控制
+ + 细粒度权限控制(粒度控制到字段)
  + 验证码
  
  
@@ -252,6 +252,13 @@ public ResponseEntity< PageInfo > listPage ( PageRowBounds pageRowBounds ) {
     return ResponseEntity.ok().setResponseContent( userService.listPage( pageRowBounds ) ).setFilterField( "password,realName" );
 }
 
+```
+
+## api权限返回指定/排除字段
+
+```
+# 见 resource_api_uri_show_fields 字段
+SELECT * FROM manager_permission_resource;
 ```
 
 ## 流程控制

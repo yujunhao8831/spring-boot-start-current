@@ -53,7 +53,7 @@ public interface UserService extends IService<User> {
      *   </pre>                    
      * @return PageInfo
      */
-    PageInfo listPage ( PageRowBounds pageRowBounds );
+    PageInfo<User> listPage ( PageRowBounds pageRowBounds );
 
 
     List< User > list ();

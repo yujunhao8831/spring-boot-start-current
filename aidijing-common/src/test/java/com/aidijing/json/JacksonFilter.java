@@ -1,10 +1,10 @@
 package com.aidijing.json;
 
-import com.aidijing.common.ResponseEntity;
-import com.aidijing.common.util.JsonUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.bohnman.squiggly.Squiggly;
 import com.github.bohnman.squiggly.util.SquigglyUtils;
+import com.aidijing.common.ResponseEntity;
+import com.aidijing.common.util.JsonUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,14 +22,29 @@ public class JacksonFilter {
     }
 
     @Test
+    public void name () throws Exception {
+        final ResponseEntity empty = ResponseEntity.empty();
+        final ResponseEntity ok    = ResponseEntity.ok();
+        System.err.println( empty );
+    }
+
+    @Test
+    public void responseEntityFields () throws Exception {
+        final ResponseEntity< User > entity = ResponseEntity.ok()
+                                                            .setResponseContent( user )
+                                                            .setFilterFields( "*" );
+        System.err.println( "entity = " + entity );
+        System.err.println( "entity = " + entity.toJson() );
+        System.err.println( "entity = " + entity.filterFieldsFlush() );
+    }
+
+    @Test
     public void squiggly () throws Exception {
         final String filter       = "name,address[zip]";
         ObjectMapper objectMapper = Squiggly.init( new ObjectMapper(), filter );
         System.err.println( SquigglyUtils.stringify( objectMapper, user ) );
         System.err.println( objectMapper.writeValueAsString( user ) );
         System.err.println( JsonUtils.toFilterJson( user, filter ) );
-
-
     }
 
     @Test
@@ -37,14 +52,14 @@ public class JacksonFilter {
         String filter = "name,address[zip]";
         System.err.println( ResponseEntity.ok( "success" )
                                           .setResponseContent( user )
-                                          .setFilterField( filter )
+                                          .setFilterFields( filter )
                                           .toJson() );
         filter = "username,ip";
         System.err.println( ResponseEntity.ok( "success" )
                                           .add( "username", "披荆斩棘" )
                                           .add( "password", "123456" )
                                           .add( "ip", "localhost" )
-                                          .setFilterField( filter )
+                                          .setFilterFields( filter )
                                           .toJson() );
 
         System.err.println( ResponseEntity.ok( "success" )

@@ -1,7 +1,6 @@
 package com.aidijing.config;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -9,17 +8,17 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * <a href="http://springfox.github.io/springfox/docs/current/">document</a>
  * <a href="https://github.com/swagger-api/swagger-core/wiki/Annotations">document</a>
+ * <p>
+ * 废弃
  *
  * @author : 披荆斩棘
  * @date : 2017/5/21
  */
-@Configuration
-@EnableSwagger2
+@Deprecated
 public class Swagger2Config {
 
     @Bean
