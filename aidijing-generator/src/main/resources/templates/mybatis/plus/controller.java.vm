@@ -3,9 +3,10 @@ package ${package.Controller};
 import com.aidijing.common.ResponseEntity;
 import ${package.Entity}.${entity};
 import ${package.Service}.${table.serviceName};
-
+        
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.PageRowBounds;
 
 #if(${restControllerStyle})
@@ -29,7 +30,7 @@ import ${superControllerClassPackage};
 #else
 @Controller
 #end
-@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
 #if(${superControllerClass})
 public class ${table.controllerName} extends ${superControllerClass} {
 #else
@@ -66,7 +67,7 @@ public class ${table.controllerName} {
      * @return
      */
     @GetMapping
-    public ResponseEntity< ${entity} > list ( PageRowBounds pageRowBounds ){
+    public ResponseEntity< PageInfo<${entity}> > list ( PageRowBounds pageRowBounds ){
         return ResponseEntity.ok().setResponseContent(${serviceVariableName}.listPage( pageRowBounds ));
     }
 
@@ -77,7 +78,7 @@ public class ${table.controllerName} {
      * @return
      */
     @PostMapping
-    public ResponseEntity< ${entity} > insert ( @RequestBody ${entity} ${entityVariableName} ){
+    public ResponseEntity insert ( @RequestBody ${entity} ${entityVariableName} ){
         if ( ! ${serviceVariableName}.insert( ${entityVariableName}) ){
             return ResponseEntity.ok("保存失败");    
         }
@@ -92,7 +93,7 @@ public class ${table.controllerName} {
      * @return
      */
     @PutMapping("{id}")
-    public ResponseEntity< ${entity} > update ( @PathVariable ${primaryKeyTypeString} id,
+    public ResponseEntity update ( @PathVariable ${primaryKeyTypeString} id,
                                               @RequestBody ${entity} ${entityVariableName} ){
         if ( ! ${serviceVariableName}.updateById( ${entityVariableName}.setId(id)) ){
             return ResponseEntity.ok("更新失败");    
@@ -107,7 +108,7 @@ public class ${table.controllerName} {
      * @return
      */
     @DeleteMapping("{id}")
-    public ResponseEntity< ${entity} > delete ( @PathVariable ${primaryKeyTypeString} id ){
+    public ResponseEntity delete ( @PathVariable ${primaryKeyTypeString} id ){
         if ( ! ${serviceVariableName}.deleteById(id) ){
             return ResponseEntity.ok("删除失败");    
         }

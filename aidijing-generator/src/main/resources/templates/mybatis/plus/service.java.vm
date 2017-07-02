@@ -43,8 +43,8 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      *              <li> 1. PageInfo page = listPage(new PageRowBounds(1,10)); </li>
      *              <li> 
      *                  2. 控制器中直接使用 PageRowBounds 作为参数接收即可,就算客户端不传值也会有默认值. <br/>
-     *                     默认分页起始值 : {@link com.aidijing.common.GlobalConstant#DEFAULT_PAGE_NUM} <br/>
-     *                     默认分页大小值 : {@link com.aidijing.common.GlobalConstant#DEFAULT_PAGE_SIZE} 
+     *                     默认分页起始值 : {@link com.data-platform.common.GlobalConstant#DEFAULT_PAGE_NUM} <br/>
+     *                     默认分页大小值 : {@link com.data-platform.common.GlobalConstant#DEFAULT_PAGE_SIZE} 
      *              </li>
      *          </ul>
      *
@@ -52,7 +52,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      *   </pre>                    
      * @return PageInfo
      */
-    PageInfo listPage( PageRowBounds pageRowBounds );
+    PageInfo<${entity}> listPage( PageRowBounds pageRowBounds );
     
     
     

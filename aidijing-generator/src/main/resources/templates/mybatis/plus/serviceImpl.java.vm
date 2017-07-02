@@ -23,9 +23,9 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 
 
     @Override
-    public PageInfo listPage( PageRowBounds pageRowBounds ) {
+    public PageInfo<${entity}> listPage( PageRowBounds pageRowBounds ) {
         PageHelper.startPage( pageRowBounds.getOffset(), pageRowBounds.getLimit() );
-        return new PageInfo( super.selectList( null ) );
+        return new PageInfo<>( super.selectList( null ) );
     }
     
     
