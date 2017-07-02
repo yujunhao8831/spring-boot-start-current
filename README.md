@@ -31,10 +31,12 @@ docker运行命令 : docker run -p 8080:8080 -t com.aidijing/aidijing-restful-cl
 
 项目所用技术
  + Spring 
+ + Spring Boot
  + Spring MVC 
  + Spring Session(已不使用,项目无状态)
  + Spring Security
  + Spring Cache
+ + Spring Boot Admin
  + Mybatis Plus 
  + Redis 
  + Swagger
@@ -62,6 +64,7 @@ docker运行命令 : docker run -p 8080:8080 -t com.aidijing/aidijing-restful-cl
  + Spring Security基础权限管理
  + 细粒度权限控制(粒度控制到字段)
  + 验证码
+ + Spring Boot Admin 管理和监视
  
  
 要求 : 
