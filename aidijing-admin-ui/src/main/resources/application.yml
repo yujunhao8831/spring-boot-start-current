@@ -1,0 +1,30 @@
+# 发件箱
+send.mail: pjzj8831@163.com
+# 服务器
+server:
+  port: 8888
+spring:
+  mail: 
+    port: 25
+    host: smtp.163.com
+    protocol: smtp
+    username: ${send.mail}
+    password: a1234567890
+    default-encoding: UTF-8
+    properties:
+      mail.smtp.auth: true 
+      mail.smtp.starttls: false 
+      mail.smtp.quitwait: false
+      
+  boot:
+    admin:
+      notify:
+        mail:
+          to: yujunhao_8831@yahoo.com
+          subject: aidijing-server
+          from: ${send.mail}
+
+security:
+  user:
+    name: root
+    password: root

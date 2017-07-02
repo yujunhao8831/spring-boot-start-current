@@ -17,6 +17,15 @@ spring:
   aop:
     proxy-target-class: true
     auto: true
+    
+# spring boot admin 监控 start
+  boot:
+    admin:
+      url: http://localhost:8888  
+      username: root
+      password: root
+# spring boot admin 监控 end
+
   
 # 分页 page helper
 pagehelper:
@@ -67,10 +76,13 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
+
   
   
     
-    
+
+
+
     
     
     

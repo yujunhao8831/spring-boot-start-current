@@ -139,6 +139,17 @@
         </dependency>
 
 
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.jolokia</groupId>
+            <artifactId>jolokia-core</artifactId>
+        </dependency>
+        
 
     </dependencies>
 
@@ -154,7 +165,6 @@
             </resource>
         </resources>
 
-
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -162,6 +172,13 @@
                 <configuration>
                     <mainClass>com.aidijing.AidijingRestfulClientApplication</mainClass>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build-info</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- 
