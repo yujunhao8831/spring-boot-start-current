@@ -32,6 +32,7 @@
         <module>aidijing-basic-config</module>
         <module>aidijing-generator</module>
         <module>aidijing-admin-ui</module>
+        <module>aidijing-scheduling</module>
     </modules>
 
 

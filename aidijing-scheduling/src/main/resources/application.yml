@@ -1,0 +1,16 @@
+spring:
+  # 多环境配置文件
+  profiles:
+    active: dev
+
+# AOP
+  aop:
+    proxy-target-class: true
+    auto: true
+  
+
+    
+    
+    
+    
+    

@@ -44,6 +44,7 @@
         <squiggly-filter-jackson.version>1.3.4</squiggly-filter-jackson.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <spring-boot-admin.version>1.5.2</spring-boot-admin.version>
+        <net.javacrumbs.shedlock.version>0.12.0</net.javacrumbs.shedlock.version>
     </properties>
 
     <dependencyManagement>
@@ -278,6 +279,18 @@
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-server-ui-login</artifactId>
                 <version>${spring-boot-admin.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.javacrumbs.shedlock</groupId>
+                <artifactId>shedlock-spring</artifactId>
+                <version>${net.javacrumbs.shedlock.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.javacrumbs.shedlock</groupId>
+                <artifactId>shedlock-provider-jedis</artifactId>
+                <version>${net.javacrumbs.shedlock.version}</version>
             </dependency>
 
 
