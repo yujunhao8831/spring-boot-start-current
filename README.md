@@ -65,6 +65,7 @@ docker运行命令 : docker run -p 8080:8080 -t com.aidijing/aidijing-restful-cl
  + 细粒度权限控制(粒度控制到字段)
  + 验证码
  + Spring Boot Admin 管理和监视
+ + 极简分布式任务调度
  
  
 要求 : 
