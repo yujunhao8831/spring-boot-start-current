@@ -51,6 +51,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity
                 // jwt不需要csrf
                 .csrf().disable()
+                // cors 支持
+                .cors().and()
                 // jwt不需要session , 所以不创建会话
                 .sessionManagement().sessionCreationPolicy( SessionCreationPolicy.STATELESS ).and()
                 // 异常处理
