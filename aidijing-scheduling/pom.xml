@@ -6,6 +6,7 @@
         <groupId>com.aidijing</groupId>
         <artifactId>aidijing-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <description>简单分布式调度</description>
@@ -14,7 +15,7 @@
 
     <dependencies>
 
-        <!-- 
+        <!--
             https://github.com/lukas-krecan/ShedLock
         -->
         <dependency>
@@ -62,7 +63,18 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        
+
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-starter-client</artifactId>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.jolokia</groupId>
+			<artifactId>jolokia-core</artifactId>
+		</dependency>
+
     </dependencies>
 
 
@@ -74,7 +86,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.aidijing.AidijingSchedulingApplication</mainClass>
+                    <mainClass>com.aidijing.SchedulingApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>

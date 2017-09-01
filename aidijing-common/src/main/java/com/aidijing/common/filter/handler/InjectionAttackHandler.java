@@ -19,6 +19,8 @@ public interface InjectionAttackHandler {
      */
     boolean isInjectionAttack ( String rawCharacters );
 
+    boolean isInjectionAttack ( String parameters , String[] ignoreStrings );
+
     /**
      * 是SQL注入
      *
@@ -26,6 +28,8 @@ public interface InjectionAttackHandler {
      * @return
      */
     boolean isSqlInjectionAttack ( String rawCharacters );
+
+    boolean isSqlInjectionAttack ( String rawCharacters , String[] ignoreStrings );
 
     /**
      * 是XSS攻击
@@ -35,6 +39,8 @@ public interface InjectionAttackHandler {
      */
     boolean isXSSInjectionAttack ( String rawCharacters );
 
+    boolean isXSSInjectionAttack ( String rawCharacters , String[] ignoreStrings );
+
     /**
      * 是特殊字符注入
      *
@@ -42,6 +48,8 @@ public interface InjectionAttackHandler {
      * @return
      */
     boolean isSpecialCharactersInjectionAttack ( String rawCharacters );
+
+    boolean isSpecialCharactersInjectionAttack ( String rawCharacters , String[] ignoreStrings );
 
     /**
      * 过滤(SQL,XSS,特殊字符注入)
@@ -83,7 +91,8 @@ public interface InjectionAttackHandler {
      * @param response
      * @param parameters
      */
-    void attackHandle ( HttpServletRequest request, HttpServletResponse response, String parameters ) throws
-                                                                                                      IOException;
+    void attackHandle ( HttpServletRequest request , HttpServletResponse response , String parameters ) throws
+                                                                                                        IOException;
+
 
 }

@@ -1,7 +1,7 @@
 package com.aidijing.generator.mybatis.handler;
 
+import com.aidijing.bean.domain.enums.BaseEnumInterface;
 import com.baomidou.mybatisplus.generator.config.ConstVal;
-import com.aidijing.domain.enums.BaseEnumInterface;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -43,23 +43,23 @@ public class MybatisEnumHandlerGenerator {
                 if ( file.getName().indexOf( "BaseEnumInterface" ) != - 1 ) {
                     continue;
                 }
-                String genericEnumName = file.getName().replace( ".class", "" );
+                String genericEnumName = file.getName().replace( ".class" , "" );
                 String enumHandlerName = genericEnumName + "Handler";
 
                 VelocityContext context = new VelocityContext();
-                context.put( "enumHandlerName", enumHandlerName );
-                context.put( "genericEnumName", genericEnumName );
-                context.put( "handlerPackageFilePath", HANDLER_PACKAGE_FILE_PATH );
-                context.put( "enumPackagePath", ENUM_PACKAGE_PATH );
+                context.put( "enumHandlerName" , enumHandlerName );
+                context.put( "genericEnumName" , genericEnumName );
+                context.put( "handlerPackageFilePath" , HANDLER_PACKAGE_FILE_PATH );
+                context.put( "enumPackagePath" , ENUM_PACKAGE_PATH );
 
                 // 模板文件位置
                 String templatePath = "templates/mybatis/handler/handler.java.vm";
                 // 然后根据这些枚举类,进行处理,构建MybatisEnumHandler
                 this.mybatisEnumHandlerGenerator(
-                        context,
-                        templatePath,
+                        context ,
+                        templatePath ,
                         handlerPackage.replace(
-                                "target/classes",
+                                "target/classes" ,
                                 "src/main/java"
                         ) + enumHandlerName + ".java"
                 );
@@ -69,10 +69,12 @@ public class MybatisEnumHandlerGenerator {
     }
 
 
-    private void mybatisEnumHandlerGenerator ( VelocityContext context, String templatePath, String outputFile ) throws
-                                                                                                                 Exception {
+    private void mybatisEnumHandlerGenerator ( VelocityContext context ,
+                                               String templatePath ,
+                                               String outputFile ) throws
+                                                                   Exception {
         VelocityEngine velocity = getVelocityEngine();
-        Template       template = velocity.getTemplate( templatePath, ConstVal.UTF8 );
+        Template       template = velocity.getTemplate( templatePath , ConstVal.UTF8 );
         File           file     = new File( outputFile );
         if ( ! file.getParentFile().exists() ) {
             // 如果文件所在的目录不存在，则创建目录
@@ -82,8 +84,8 @@ public class MybatisEnumHandlerGenerator {
             }
         }
         FileOutputStream fos    = new FileOutputStream( outputFile );
-        BufferedWriter   writer = new BufferedWriter( new OutputStreamWriter( fos, ConstVal.UTF8 ) );
-        template.merge( context, writer );
+        BufferedWriter   writer = new BufferedWriter( new OutputStreamWriter( fos , ConstVal.UTF8 ) );
+        template.merge( context , writer );
         writer.close();
         System.err.println( "模板:" + templatePath + ";  文件:" + outputFile );
 
@@ -94,12 +96,12 @@ public class MybatisEnumHandlerGenerator {
      */
     private VelocityEngine getVelocityEngine () {
         Properties p = new Properties();
-        p.setProperty( ConstVal.VM_LOADPATH_KEY, ConstVal.VM_LOADPATH_VALUE );
-        p.setProperty( Velocity.FILE_RESOURCE_LOADER_PATH, "" );
-        p.setProperty( Velocity.ENCODING_DEFAULT, ConstVal.UTF8 );
-        p.setProperty( Velocity.INPUT_ENCODING, ConstVal.UTF8 );
-        p.setProperty( Velocity.OUTPUT_ENCODING, ConstVal.UTF8 );
-        p.setProperty( "file.resource.loader.unicode", "true" );
+        p.setProperty( ConstVal.VM_LOADPATH_KEY , ConstVal.VM_LOADPATH_VALUE );
+        p.setProperty( Velocity.FILE_RESOURCE_LOADER_PATH , "" );
+        p.setProperty( Velocity.ENCODING_DEFAULT , ConstVal.UTF8 );
+        p.setProperty( Velocity.INPUT_ENCODING , ConstVal.UTF8 );
+        p.setProperty( Velocity.OUTPUT_ENCODING , ConstVal.UTF8 );
+        p.setProperty( "file.resource.loader.unicode" , "true" );
         return new VelocityEngine( p );
     }
 }

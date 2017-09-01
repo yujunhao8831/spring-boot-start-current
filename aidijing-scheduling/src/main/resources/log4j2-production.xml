@@ -54,7 +54,7 @@
         <!-- 
             同步和异步混合记录
          -->
-        <AsyncLogger name="com.hhly"  level="info" includeLocation="true" additivity="false">
+        <AsyncLogger name="com.aidijing"  level="info" includeLocation="true" additivity="false">
             <AppenderRef ref="RandomAccessFile"/>
             <AppenderRef ref="Console"/>
         </AsyncLogger>

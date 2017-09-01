@@ -5,6 +5,7 @@ import ${pkg};
 #end
 #if(${entityLombokModel})
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 #end
 
@@ -18,6 +19,7 @@ import lombok.experimental.Accessors;
  */
 #if(${entityLombokModel})
 @Data
+@EqualsAndHashCode( callSuper = true )
 @Accessors(chain = true)
 #end
 #if(${table.convert})

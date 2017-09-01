@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="1.8" />
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="aidijing-admin-system-bean" />
+        <module name="aidijing-admin-system-dao" />
+        <module name="aidijing-admin-system-feign-service" />
+        <module name="aidijing-admin-system-server" />
+        <module name="aidijing-admin-system-service" />
+        <module name="aidijing-admin-ui" />
+        <module name="aidijing-basic-config" />
+        <module name="aidijing-cache" />
+        <module name="aidijing-common" />
+        <module name="aidijing-generator" />
+        <module name="aidijing-manage-system-bean" />
+        <module name="aidijing-manage-system-dao" />
+        <module name="aidijing-manage-system-server" />
+        <module name="aidijing-manage-system-service" />
+        <module name="aidijing-manage-system-webapp" />
+        <module name="aidijing-scheduling" />
+        <module name="aidijing-security" />
+        <module name="aidijing-spring-config-server" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="1.8">
+      <module name="aidijing-admin-system" target="1.8" />
+      <module name="aidijing-admin-system-bean" target="1.8" />
+      <module name="aidijing-admin-system-dao" target="1.8" />
+      <module name="aidijing-admin-system-feign-service" target="1.8" />
+      <module name="aidijing-admin-system-server" target="1.8" />
+      <module name="aidijing-admin-system-service" target="1.8" />
+      <module name="aidijing-admin-ui" target="1.8" />
+      <module name="aidijing-basic-config" target="1.8" />
+      <module name="aidijing-cache" target="1.8" />
+      <module name="aidijing-cloud-eureka-server" target="1.8" />
+      <module name="aidijing-common" target="1.8" />
+      <module name="aidijing-config-client" target="1.8" />
+      <module name="aidijing-config-server" target="1.8" />
+      <module name="aidijing-dao" target="1.8" />
+      <module name="aidijing-generator" target="1.8" />
+      <module name="aidijing-manage-system" target="1.8" />
+      <module name="aidijing-manage-system-bean" target="1.8" />
+      <module name="aidijing-manage-system-dao" target="1.8" />
+      <module name="aidijing-manage-system-feign-service" target="1.8" />
+      <module name="aidijing-manage-system-server" target="1.8" />
+      <module name="aidijing-manage-system-service" target="1.8" />
+      <module name="aidijing-manage-system-webapp" target="1.8" />
+      <module name="aidijing-manage-webapp" target="1.8" />
+      <module name="aidijing-parent" target="1.8" />
+      <module name="aidijing-restful-client" target="1.8" />
+      <module name="aidijing-scheduling" target="1.8" />
+      <module name="aidijing-security" target="1.8" />
+      <module name="aidijing-service" target="1.8" />
+      <module name="aidijing-spring-config-server" target="1.8" />
+      <module name="spring-boot-start-current" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

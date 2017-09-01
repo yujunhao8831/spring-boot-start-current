@@ -6,6 +6,10 @@ import org.apache.commons.lang3.StringUtils;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -17,8 +21,7 @@ import java.util.regex.Pattern;
 public abstract class DateUtils {
 
     public static final  String  DATE_BASIC_STYLE          = "yyyy-MM-dd HH:mm:ss";
-    public static final  String  DATE_TIMESTAMP_STYLE      = "yyyyMMddHHmmss";
-    public static final  String  DATE_TIMESTAMPS_STYLE     = "yyyyMMddHHmmssSSS";
+    public static final  String  DATE_NORMAL_STYLE         = "yyyy-MM-dd";
     private static final Pattern DATE_BASIC_PATTERN        = Pattern.compile( RegexType.DATE_BASIC );
     private static final Pattern DATE_BASIC_FORMAT_PATTERN = Pattern.compile( "(\\d{4})-(\\d+)-(\\d+).*" );
 
@@ -31,7 +34,7 @@ public abstract class DateUtils {
      */
     public static Date nowAddByMonth ( int number ) {
         Calendar instance = Calendar.getInstance();
-        instance.add( Calendar.MONTH, number );
+        instance.add( Calendar.MONTH , number );
         return instance.getTime();
     }
 
@@ -42,7 +45,7 @@ public abstract class DateUtils {
      */
     public static Date nowMonthLast () {
         Calendar now = Calendar.getInstance();
-        now.set( Calendar.DATE, now.getActualMaximum( Calendar.DAY_OF_MONTH ) );
+        now.set( Calendar.DATE , now.getActualMaximum( Calendar.DAY_OF_MONTH ) );
         return now.getTime();
     }
 
@@ -60,9 +63,17 @@ public abstract class DateUtils {
      *
      * @return
      */
-    public static String formatDateByStyle ( final Date date, final String dateStyle ) {
+    public static String formatDateByStyle ( final Date date , final String dateStyle ) {
         DateFormat format = new SimpleDateFormat( dateStyle );
         return format.format( date );
+    }
+
+    /**
+     * {@link #formatDateByStyle(Date , String)}
+     * 默认格式格式 : {@link DateFormatStyle#CN_DATE_BASIC_STYLE}
+     */
+    public static String formatDateByStyle ( final Date date ) {
+        return formatDateByStyle( date , DateFormatStyle.CN_DATE_BASIC_STYLE.getDateStyle() );
     }
 
     /**
@@ -77,7 +88,7 @@ public abstract class DateUtils {
      *                  | ss   : 秒
      * @return
      */
-    public static Date formatStringByStyleToDate ( final String date, final String dateStyle ) {
+    public static Date formatStringByStyleToDate ( final String date , final String dateStyle ) {
         DateFormat format = new SimpleDateFormat( dateStyle );
         try {
             return format.parse( date );
@@ -93,10 +104,10 @@ public abstract class DateUtils {
      * @param number
      * @return
      */
-    public static Date addMonth ( Date date, int number ) {
+    public static Date addMonth ( Date date , int number ) {
         Calendar instance = Calendar.getInstance();
         instance.setTime( date );
-        instance.add( Calendar.MONTH, number );
+        instance.add( Calendar.MONTH , number );
         return instance.getTime();
     }
 
@@ -107,10 +118,24 @@ public abstract class DateUtils {
      * @param number
      * @return
      */
-    public static Date addSecond ( Date date, int number ) {
+    public static Date addSecond ( Date date , int number ) {
         Calendar instance = Calendar.getInstance();
         instance.setTime( date );
-        instance.add( Calendar.SECOND, number );
+        instance.add( Calendar.SECOND , number );
+        return instance.getTime();
+    }
+
+    /**
+     * 在指定时间内 + n 分钟
+     *
+     * @param date
+     * @param number
+     * @return
+     */
+    public static Date addMinute ( Date date , int number ) {
+        Calendar instance = Calendar.getInstance();
+        instance.setTime( date );
+        instance.add( Calendar.MINUTE , number );
         return instance.getTime();
     }
 
@@ -127,7 +152,7 @@ public abstract class DateUtils {
      * @param b : Date 类型,不分前后顺序
      * @return 日期之间的分钟间隔
      */
-    public static long getMinuteInterval ( Date a, Date b ) {
+    public static long getMinuteInterval ( Date a , Date b ) {
         return Math.abs( ( a.getTime() - b.getTime() ) / ( 1000 * 60 ) );
     }
 
@@ -141,7 +166,7 @@ public abstract class DateUtils {
      * @param b : Date 类型,不分前后顺序
      * @return 日期之间的天数间隔
      */
-    public static long getDayInterval ( Date a, Date b ) {
+    public static long getDayInterval ( Date a , Date b ) {
         return Math.abs( ( a.getTime() - b.getTime() ) / ( 1000 * 60 * 60 * 24 ) );
     }
 
@@ -170,7 +195,7 @@ public abstract class DateUtils {
             int date  = Integer.parseInt( matcher.group( 3 ) );
             if ( date > 28 ) {
                 Calendar instance = Calendar.getInstance();
-                instance.set( year, month - 1, 1 );
+                instance.set( year , month - 1 , 1 );
                 int lastDay = instance.getActualMaximum( Calendar.DAY_OF_MONTH );
                 return ( lastDay >= date );
             }
@@ -191,12 +216,24 @@ public abstract class DateUtils {
 
     /**
      * 字符串转成Date类型
+     * <p>
+     * dateStyle:
+     * <table border="1" summary="Pattern Tokens">
+     * <tr><th>character</th><th>duration element</th></tr>
+     * <tr><td>y</td><td>years</td></tr>
+     * <tr><td>M</td><td>months</td></tr>
+     * <tr><td>d</td><td>days</td></tr>
+     * <tr><td>H</td><td>hours</td></tr>
+     * <tr><td>m</td><td>minutes</td></tr>
+     * <tr><td>s</td><td>seconds</td></tr>
+     * <tr><td>S</td><td>milliseconds</td></tr>
+     * </table>
      *
      * @param inputTime
      * @param dateStyle
      * @return
      */
-    public static Date formatStringByStyle ( final String inputTime, final String dateStyle ) {
+    public static Date formatStringByStyle ( final String inputTime , final String dateStyle ) {
         try {
             if ( StringUtils.isBlank( inputTime ) ) {
                 return null;
@@ -211,7 +248,49 @@ public abstract class DateUtils {
         }
     }
 
+    /**
+     * {@link #formatStringByStyle(String , String)}
+     */
+    public static LocalDateTime formatStringByStyleToLocalDateTime ( final String inputTime , final String dateStyle ) {
+        if ( StringUtils.isBlank( inputTime ) ) {
+            return null;
+        }
+        if ( StringUtils.isBlank( dateStyle ) ) {
+            return null;
+        }
+        return LocalDateTime.parse( inputTime , DateTimeFormatter.ofPattern( dateStyle ) );
+    }
 
+    /**
+     * 得到当前时间,字符串形式,默认格式:{@link DateFormatStyle#DATE_TIMESTAMP_STYLE}
+     */
+    public static String currentTimeString () {
+        return currentTimeString( DateFormatStyle.DATE_TIMESTAMP_STYLE.getDateStyle() );
+    }
+
+    /**
+     * 得到当前时间,字符串形式
+     *
+     * @param dateStyle {@link DateFormatStyle}
+     * @return
+     */
+    public static String currentTimeString ( String dateStyle ) {
+        return formatDateByStyle( Calendar.getInstance().getTime() , dateStyle );
+    }
+
+    /**
+     * 获取前 i 天日期
+     *
+     * @return
+     */
+    public static LocalDate getPreviousDay ( int i ) {
+        LocalDate today = LocalDate.now();
+        return today.minus( i , ChronoUnit.DAYS );
+    }
+
+    
+
+   
 }
 
 

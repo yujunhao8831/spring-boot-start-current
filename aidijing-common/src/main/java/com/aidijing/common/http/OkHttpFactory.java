@@ -19,14 +19,14 @@ import java.util.concurrent.TimeUnit;
  * @date : 2016/10/30
  */
 public class OkHttpFactory {
-
+    public static final String    HTTP_PREFIX                 = "http:";
+    public static final String    HTTPS_PREFIX                = "https:";
     public static final MediaType APPLICATION_JSON_UTF8_VALUE = MediaType.parse( "application/json; charset=utf-8" );
     public static final MediaType APPLICATION_XML_VALUE       = MediaType.parse( org.springframework.http.MediaType.APPLICATION_XML_VALUE );
-
     private OkHttpClient client;
 
     /**
-     * 创建一个工厂和一个默认的 {@link OkHttpClient}  实例。
+     * 创建一个工厂和一个默认的 {@link OkHttpClient} 实例。
      */
     public OkHttpFactory () {
         this.client = new OkHttpClient();
@@ -50,9 +50,8 @@ public class OkHttpFactory {
      * @throws IOException
      */
     public String get ( URI uri ) throws IOException {
-        if ( LogUtils.getLogger().isDebugEnabled() ) {
-            LogUtils.getLogger().debug( "请求地址 : {}", uri.toURL() );
-        }
+        LogUtils.getLogger().debug( "请求地址 : {}" , uri.toURL() );
+
         Request request = new Request.Builder().url( uri.toURL() ).get().build();
         try ( Response response = client.newCall( request ).execute() ) {
             return response.body().string();
@@ -67,15 +66,15 @@ public class OkHttpFactory {
      * @return
      * @throws IOException
      */
-    public String createRequest ( URI uri, HttpMethod httpMethod, MediaType contentType, String content ) throws
-                                                                                                          IOException {
-        if ( LogUtils.getLogger().isDebugEnabled() ) {
-            LogUtils.getLogger().debug( "请求地址 : {}", uri.toURL() );
-            LogUtils.getLogger().debug( "请求参数 : {}", content );
-        }
+    public String createRequest ( URI uri , HttpMethod httpMethod , MediaType contentType ,
+                                  String content ) throws IOException {
+        LogUtils.getLogger().debug( "请求地址 : {}" , uri.toURL() );
+        LogUtils.getLogger().debug( "请求参数 : {}" , content );
 
-        RequestBody body    = RequestBody.create( contentType, content );
-        Request     request = new Request.Builder().url( uri.toURL() ).method( httpMethod.name(), body ).build();
+
+        RequestBody body = RequestBody.create( contentType , content );
+        Request request =
+            new Request.Builder().url( uri.toURL() ).method( httpMethod.name() , body ).build();
         try ( Response response = client.newCall( request ).execute() ) {
             return response.body().string();
         }
@@ -90,13 +89,13 @@ public class OkHttpFactory {
      * @return
      * @throws IOException
      */
-    public String createRequest ( URI uri, HttpMethod httpMethod, String content ) throws IOException {
-        if ( LogUtils.getLogger().isDebugEnabled() ) {
-            LogUtils.getLogger().debug( "请求地址 : {}", uri.toURL() );
-            LogUtils.getLogger().debug( "请求参数 : {}", content );
-        }
-        RequestBody body    = RequestBody.create( APPLICATION_JSON_UTF8_VALUE, content );
-        Request     request = new Request.Builder().url( uri.toURL() ).method( httpMethod.name(), body ).build();
+    public String createRequest ( URI uri , HttpMethod httpMethod , String content ) throws IOException {
+        LogUtils.getLogger().debug( "请求地址 : {}" , uri.toURL() );
+        LogUtils.getLogger().debug( "请求参数 : {}" , content );
+
+        RequestBody body = RequestBody.create( APPLICATION_JSON_UTF8_VALUE , content );
+        Request request =
+            new Request.Builder().url( uri.toURL() ).method( httpMethod.name() , body ).build();
         try ( Response response = client.newCall( request ).execute() ) {
             return response.body().string();
         }
@@ -112,18 +111,16 @@ public class OkHttpFactory {
      * @return
      * @throws IOException
      */
-    public String createRequestHeader ( URI uri,
-                                        HttpMethod httpMethod,
-                                        String content,
+    public String createRequestHeader ( URI uri , HttpMethod httpMethod , String content ,
                                         Map< String, String > headers ) throws IOException {
-        if ( LogUtils.getLogger().isDebugEnabled() ) {
-            LogUtils.getLogger().debug( "请求地址 : {}", uri.toURL() );
-            LogUtils.getLogger().debug( "请求参数 : {}", content );
-            LogUtils.getLogger().debug( "请求headers : {}", headers );
-        }
-        RequestBody     body    = RequestBody.create( APPLICATION_JSON_UTF8_VALUE, content );
-        Request.Builder builder = new Request.Builder().url( uri.toURL() ).method( httpMethod.name(), body );
-        headers.forEach( ( key, value ) -> builder.addHeader( key, value ) );
+        LogUtils.getLogger().debug( "请求地址 : {}" , uri.toURL() );
+        LogUtils.getLogger().debug( "请求参数 : {}" , content );
+        LogUtils.getLogger().debug( "请求headers : {}" , headers );
+
+        RequestBody body = RequestBody.create( APPLICATION_JSON_UTF8_VALUE , content );
+        Request.Builder builder =
+            new Request.Builder().url( uri.toURL() ).method( httpMethod.name() , body );
+        headers.forEach( ( key , value ) -> builder.addHeader( key , value ) );
         Request request = builder.build();
         try ( Response response = client.newCall( request ).execute() ) {
             return response.body().string();
@@ -140,15 +137,15 @@ public class OkHttpFactory {
      * @return
      * @throws IOException
      */
-    public String createRequestHeader ( URI uri, HttpMethod httpMethod, Map< String, String > headers ) throws
-                                                                                                        IOException {
-        if ( LogUtils.getLogger().isDebugEnabled() ) {
-            LogUtils.getLogger().debug( "请求地址 : {}", uri.toURL() );
-            LogUtils.getLogger().debug( "请求headers : {}", headers );
-        }
-        RequestBody     body    = RequestBody.create( APPLICATION_JSON_UTF8_VALUE, "" );
-        Request.Builder builder = new Request.Builder().url( uri.toURL() ).method( httpMethod.name(), body );
-        headers.forEach( ( key, value ) -> builder.addHeader( key, value ) );
+    public String createRequestHeader ( URI uri , HttpMethod httpMethod , Map< String, String > headers )
+        throws IOException {
+        LogUtils.getLogger().debug( "请求地址 : {}" , uri.toURL() );
+        LogUtils.getLogger().debug( "请求headers : {}" , headers );
+
+        RequestBody body = RequestBody.create( APPLICATION_JSON_UTF8_VALUE , "" );
+        Request.Builder builder =
+            new Request.Builder().url( uri.toURL() ).method( httpMethod.name() , body );
+        headers.forEach( ( key , value ) -> builder.addHeader( key , value ) );
         Request request = builder.build();
         try ( Response response = client.newCall( request ).execute() ) {
             return response.body().string();
@@ -165,14 +162,14 @@ public class OkHttpFactory {
      * @return
      * @throws IOException
      */
-    public String createRequest ( URI uri, HttpMethod httpMethod, String paramName, String paramValue ) throws
-                                                                                                        IOException {
-        if ( LogUtils.getLogger().isDebugEnabled() ) {
-            LogUtils.getLogger().debug( "请求地址 : {}", uri.toURL() );
-            LogUtils.getLogger().debug( "请求参数 : {}:{}", paramName, paramValue );
-        }
-        FormBody body    = new FormBody.Builder().addEncoded( paramName, paramValue ).build();
-        Request  request = new Request.Builder().url( uri.toURL() ).method( httpMethod.name(), body ).build();
+    public String createRequest ( URI uri , HttpMethod httpMethod , String paramName , String paramValue )
+        throws IOException {
+        LogUtils.getLogger().debug( "请求地址 : {}" , uri.toURL() );
+        LogUtils.getLogger().debug( "请求参数 : {}:{}" , paramName , paramValue );
+
+        FormBody body = new FormBody.Builder().addEncoded( paramName , paramValue ).build();
+        Request request =
+            new Request.Builder().url( uri.toURL() ).method( httpMethod.name() , body ).build();
         try ( Response response = client.newCall( request ).execute() ) {
             return response.body().string();
         }
@@ -187,15 +184,33 @@ public class OkHttpFactory {
      * @return
      * @throws IOException
      */
-    public String createFromRequest ( URI uri, HttpMethod httpMethod, Map< String, String > params ) throws
-                                                                                                     IOException {
+    public String createFromRequest ( URI uri , HttpMethod httpMethod , Map< String, String > params )
+        throws IOException {
         LogUtils.getLogger().info( "\n----请求地址----\t:" + uri.toURL() );
         LogUtils.getLogger().info( "\n----请求参数----\t:" + params );
         FormBody.Builder body = new FormBody.Builder();
         for ( Map.Entry< String, String > param : params.entrySet() ) {
-            body.addEncoded( param.getKey(), param.getValue() );
+            body.addEncoded( param.getKey() , param.getValue() );
         }
-        Request request = new Request.Builder().url( uri.toURL() ).method( httpMethod.name(), body.build() ).build();
+        Request request = new Request.Builder().url( uri.toURL() )
+                                               .method( httpMethod.name() , body.build() ).build();
+        try ( Response response = client.newCall( request ).execute() ) {
+            return response.body().string();
+        }
+    }
+
+    public String createFromRequest ( URI uri ,
+                                      HttpMethod httpMethod ,
+                                      Map< String, String > params ,
+                                      Map< String, String > headers ) throws IOException {
+        LogUtils.getLogger().info( "\n----请求地址----\t: {}" , uri.toURL() );
+        LogUtils.getLogger().info( "\n----请求参数----\t: {}" , params );
+        LogUtils.getLogger().info( "\n----请求头----\t: {}" , headers );
+        FormBody.Builder body = new FormBody.Builder();
+        params.forEach( body::addEncoded );
+        final Request.Builder builder = new Request.Builder().url( uri.toURL() );
+        headers.forEach( builder::header );
+        Request request = builder.method( httpMethod.name() , body.build() ).build();
         try ( Response response = client.newCall( request ).execute() ) {
             return response.body().string();
         }
@@ -208,9 +223,8 @@ public class OkHttpFactory {
      * @see okhttp3.OkHttpClient.Builder#readTimeout(long , TimeUnit)
      */
     public void setReadTimeout ( int readTimeout ) {
-        this.client = this.client.newBuilder()
-                                 .readTimeout( readTimeout, TimeUnit.MILLISECONDS )
-                                 .build();
+        this.client =
+            this.client.newBuilder().readTimeout( readTimeout , TimeUnit.MILLISECONDS ).build();
     }
 
     /**
@@ -219,9 +233,8 @@ public class OkHttpFactory {
      * @see okhttp3.OkHttpClient.Builder#writeTimeout(long , TimeUnit)
      */
     public void setWriteTimeout ( int writeTimeout ) {
-        this.client = this.client.newBuilder()
-                                 .writeTimeout( writeTimeout, TimeUnit.MILLISECONDS )
-                                 .build();
+        this.client =
+            this.client.newBuilder().writeTimeout( writeTimeout , TimeUnit.MILLISECONDS ).build();
     }
 
     /**
@@ -230,8 +243,7 @@ public class OkHttpFactory {
      * @see okhttp3.OkHttpClient.Builder#connectTimeout(long , TimeUnit)
      */
     public void setConnectTimeout ( int connectTimeout ) {
-        this.client = this.client.newBuilder()
-                                 .connectTimeout( connectTimeout, TimeUnit.MILLISECONDS )
+        this.client = this.client.newBuilder().connectTimeout( connectTimeout , TimeUnit.MILLISECONDS )
                                  .build();
     }
 
@@ -242,21 +254,21 @@ public class OkHttpFactory {
      * @see okhttp3.OkHttpClient.Builder#sslSocketFactory(SSLSocketFactory , X509TrustManager)
      */
     public OkHttpFactory ignoreSslSocketFactory () throws Exception {
-        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance( TrustManagerFactory.getDefaultAlgorithm() );
+        TrustManagerFactory trustManagerFactory =
+            TrustManagerFactory.getInstance( TrustManagerFactory.getDefaultAlgorithm() );
         trustManagerFactory.init( ( KeyStore ) null );
         TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
         if ( trustManagers.length != 1 || ! ( trustManagers[0] instanceof X509TrustManager ) ) {
-            throw new IllegalStateException( "Unexpected default trust managers:" + Arrays.toString( trustManagers ) );
+            throw new IllegalStateException(
+                "Unexpected default trust managers:" + Arrays.toString( trustManagers ) );
         }
         X509TrustManager trustManager = ( X509TrustManager ) trustManagers[0];
         SSLContext       sslContext   = SSLContext.getInstance( "TLS" );
-        sslContext.init( null, new TrustManager[]{ trustManager }, null );
+        sslContext.init( null , new TrustManager[]{ trustManager } , null );
         SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
-        this.client = this.client.newBuilder()
-                                 .sslSocketFactory( sslSocketFactory, trustManager )
-                                 .hostnameVerifier( this.getHostnameVerifier() )
-                                 .build();
+        this.client = this.client.newBuilder().sslSocketFactory( sslSocketFactory , trustManager )
+                                 .hostnameVerifier( this.getHostnameVerifier() ).build();
         return this;
     }
 
@@ -270,7 +282,7 @@ public class OkHttpFactory {
         instance;
 
         @Override
-        public boolean verify ( String s, SSLSession sslSession ) {
+        public boolean verify ( String s , SSLSession sslSession ) {
             return true;
         }
     }

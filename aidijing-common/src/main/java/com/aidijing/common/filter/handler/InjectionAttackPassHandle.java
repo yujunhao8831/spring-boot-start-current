@@ -27,7 +27,17 @@ public class InjectionAttackPassHandle implements InjectionAttackHandler {
     }
 
     @Override
+    public boolean isInjectionAttack ( String parameters , String[] ignoreStrings ) {
+        return false;
+    }
+
+    @Override
     public boolean isSqlInjectionAttack ( String rawCharacters ) {
+        return false;
+    }
+
+    @Override
+    public boolean isSqlInjectionAttack ( String rawCharacters , String[] ignoreStrings ) {
         return false;
     }
 
@@ -37,7 +47,17 @@ public class InjectionAttackPassHandle implements InjectionAttackHandler {
     }
 
     @Override
+    public boolean isXSSInjectionAttack ( String rawCharacters , String[] ignoreStrings ) {
+        return false;
+    }
+
+    @Override
     public boolean isSpecialCharactersInjectionAttack ( String rawCharacters ) {
+        return false;
+    }
+
+    @Override
+    public boolean isSpecialCharactersInjectionAttack ( String rawCharacters , String[] ignoreStrings ) {
         return false;
     }
 

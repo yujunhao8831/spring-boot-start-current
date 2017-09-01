@@ -12,7 +12,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.4.RELEASE</version>
+        <version>1.5.6.RELEASE</version>
         <relativePath/>
     </parent>
 
@@ -23,17 +23,18 @@
         <java.version>1.8</java.version>
     </properties>
 
+
     <modules>
         <module>aidijing-parent</module>
         <module>aidijing-common</module>
-        <module>aidijing-restful-client</module>
-        <module>aidijing-service</module>
-        <module>aidijing-dao</module>
         <module>aidijing-basic-config</module>
         <module>aidijing-generator</module>
         <module>aidijing-admin-ui</module>
         <module>aidijing-scheduling</module>
-    </modules>
+		<module>aidijing-manage-system</module>
+		<module>aidijing-security</module>
+        <module>aidijing-cache</module>
+	</modules>
 
 
 </project>

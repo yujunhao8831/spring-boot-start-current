@@ -21,8 +21,11 @@ import java.util.concurrent.atomic.LongAdder;
 
 /**
  * 分布式code构建工具
+ * 
  */
 public final class GenerationCode {
+    
+    
     
     /** 机器码 加 进程号 会导致生成的序列号很长, 基于这两个值做一些截取 */
     private static final String MP;
@@ -32,7 +35,7 @@ public final class GenerationCode {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern( "yyyyMMddHHmmssSSS" );
     /** 原子类 */
     private static final LongAdder         LONG_ADDER          = new LongAdder();
-
+    
 
     static {
         try {

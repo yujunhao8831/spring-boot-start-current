@@ -117,7 +117,7 @@ com.aidijing.common.ResponseEntity
 使用ResponseEntity对数据进行封装
 ## 代码生成器
 ```
-data-platform-generator
+aidijing-generator
 |---src
 |   |---test
          |---com
@@ -209,7 +209,7 @@ public class PermissionResource {
 
 #### 构建枚举Handler
 ```
-data-platform-generator
+aidijing-generator
 |---src
 |   |---test
          |---com

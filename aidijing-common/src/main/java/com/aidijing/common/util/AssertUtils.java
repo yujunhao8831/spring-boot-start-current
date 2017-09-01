@@ -1,9 +1,6 @@
 package com.aidijing.common.util;
 
-import com.aidijing.common.exception.CaptchaException;
-import com.aidijing.common.exception.DaoException;
-import com.aidijing.common.exception.ForbiddenException;
-import com.aidijing.common.exception.ServiceException;
+import com.aidijing.common.exception.*;
 
 /**
  * <p>
@@ -18,6 +15,21 @@ import com.aidijing.common.exception.ServiceException;
  * @date : 2017/6/3
  */
 public abstract class AssertUtils {
+
+
+    /**
+     * 如果条件为<code>true</code> throw {@link ResourceNotFoundException}
+     *
+     * @param condition : 断言条件
+     * @param message   : 错误信息
+     * @throws ResourceNotFoundException
+     */
+    public static void assertResourceNotFoundIsTrue ( boolean condition, String message ) {
+        if ( condition ) {
+            throw new ResourceNotFoundException( message );
+        }
+
+    }
 
 
     /**

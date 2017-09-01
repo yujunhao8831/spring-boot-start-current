@@ -11,8 +11,17 @@ redis:
   port: 6379
   timeout: 60
   
-# DebugInterceptor
-appDebug:
-  debug: true
-
+spring:
+# spring boot admin 监控 start
+  boot:
+    admin:
+      url: http://localhost:8888  
+      username: root
+      password: root
+      client:
+          enabled: true
+management:
+  security:
+    enabled: false
+  # spring boot admin 监控 end
 

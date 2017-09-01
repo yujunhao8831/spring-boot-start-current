@@ -15,6 +15,7 @@
  */
 package com.aidijing.generator.mybatis.plus;
 
+import com.aidijing.generator.mybatis.plus.config.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
@@ -23,11 +24,11 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import com.aidijing.generator.mybatis.plus.config.AutoGenerator;
 
 import java.util.*;
 
 public class MysqlGenerator {
+
 
     /**
      * <p>
@@ -64,7 +65,6 @@ public class MysqlGenerator {
                             // 自定义数据库表字段类型转换【可选】
                             @Override
                             public DbColumnType processTypeConvert ( String fieldType ) {
-                                System.out.println( "转换类型：" + fieldType );
                                 if ( fieldType.toLowerCase().contains( "tinyint" ) ) {
                                     return DbColumnType.BOOLEAN;
                                 }
@@ -74,15 +74,15 @@ public class MysqlGenerator {
                         .setDriverName( "com.mysql.jdbc.Driver" )
                         .setUsername( "root" )
                         .setPassword( "root" )
-                        .setUrl( "jdbc:mysql://127.0.0.1:3306/blog?characterEncoding=utf8" )
+                        .setUrl( "jdbc:mysql://127.0.0.1:3306/aidijing?characterEncoding=utf8" )
         ).setStrategy(
                 // 策略配置
                 new StrategyConfig()
                         // .setCapitalMode(true)// 全局大写命名
                         // .setDbColumnUnderline(true)//全局下划线命名
-                        .setTablePrefix( new String[]{ "manager_" } )// 此处可以修改为您的表前缀
+                        .setTablePrefix( new String[]{ "manage" } )// 此处可以修改为您的表前缀
                         .setNaming( NamingStrategy.underline_to_camel )// 表名生成策略
-                        // .setInclude(new String[] { "user" }) // 需要生成的表
+                        // .setInclude( new String[]{  } ) // 需要生成的表
                         // .setExclude(new String[]{"test"}) // 排除生成的表
                         // 自定义实体父类
                         // .setSuperEntityClass("com.baomidou.demo.TestEntity")
@@ -113,16 +113,16 @@ public class MysqlGenerator {
                 // 包配置
                 new PackageConfig()
                         // .setModuleName( "test" )
-                        .setParent( "com.aidijing" )// 自定义包路径
+                        .setParent( "com.aidijing.manage" )// 自定义包路径
                         .setController( "controller" )// 这里是控制器包名，默认 web
-                        .setEntity( "domain" )
+                        .setEntity( "bean.domain" )
         ).setCfg(
                 // 注入自定义配置，可以在 VM 中使用 cfg.abc 设置的值
                 new InjectionConfig() {
                     @Override
                     public void initMap () {
                         Map< String, Object > map = new HashMap<>();
-                        map.put( "abc", this.getConfig().getGlobalConfig().getAuthor() + "-mp" );
+                        map.put( "abc" , this.getConfig().getGlobalConfig().getAuthor() + "-mp" );
                         this.setMap( map );
                     }
                 }.setFileOutConfigList( Arrays.asList( new FileOutConfig( "/templates/mapper.xml.vm" ) {
@@ -134,15 +134,16 @@ public class MysqlGenerator {
                 } ) )
         ).setTemplate(
                 // 关闭默认 xml 生成，调整生成 至 根目录
-                new TemplateConfig().setXml( null )
-                                    // 自定义模板配置，模板可以参考源码 /mybatis-plus/src/main/resources/template 使用 copy
-                                    // 至您项目 src/main/resources/template 目录下，模板名称也可自定义如下配置：
-                                    .setController( "templates/mybatis/plus/controller.java.vm" )
-                                    .setEntity( "templates/mybatis/plus/entity.java.vm" )
-                                    // .setMapper("...");
-                                    // .setXml("...");
-                                    .setService( "templates/mybatis/plus/service.java.vm" )
-                                    .setServiceImpl( "templates/mybatis/plus/serviceImpl.java.vm" )
+                new TemplateConfig()
+                        // .setXml( null )
+                        // 自定义模板配置，模板可以参考源码 /mybatis-plus/src/main/resources/template 使用 copy
+                        // 至您项目 src/main/resources/template 目录下，模板名称也可自定义如下配置：
+                        .setController( "templates/mybatis/plus/controller.java.vm" )
+                        .setEntity( "templates/mybatis/plus/entity.java.vm" )
+                        // .setMapper("...");
+                        // .setXml("...")
+                        .setService( "templates/mybatis/plus/service.java.vm" )
+                        .setServiceImpl( "templates/mybatis/plus/serviceImpl.java.vm" )
         );
 
         // 执行生成

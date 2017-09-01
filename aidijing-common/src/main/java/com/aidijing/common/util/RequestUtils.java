@@ -1,6 +1,7 @@
 package com.aidijing.common.util;
 
 import com.aidijing.common.regex.RegexType;
+import eu.bitwalker.useragentutils.UserAgent;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +25,30 @@ import java.util.regex.Pattern;
  * @date : 16/6/16
  */
 public abstract class RequestUtils {
+    /**
+     * 请求头(host)内容 : localhost:8080
+     * 请求头(connection)内容 : keep-alive
+     * 请求头(cache-control)内容 : max-age=0
+     * 请求头(upgrade-insecure-requests)内容 : 1
+     * 请求头(user-agent)内容 : Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36
+     * 请求头(accept)内容 : text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*\/*;q=0.8
+     * 请求头(referer)内容 : http://localhost:8082/access-logs/recharge
+     * 请求头(accept-encoding)内容 : gzip, deflate, br
+     * 请求头(accept-language)内容 : zh-CN,zh;q=0.8,en;q=0.6
+     * 请求头(cookie)内容 : Hm_lvt_14b72f1e13e0586c5f38e5d1d16c549e=1480300179; Hm_lvt_3838faa5c4b1fd15b49f3dd6c90109b7=1480041314,1480057365,1480300285; Hm_lvt_263206af6573c0a362453bee56cd61b6=1480300319; Hm_lvt_e7019b8edb5edab3e54c5e229af23014=1480299450,1480557169,1480667339; Hm_lvt_69c2798f0b79a692b9d74581cf4bdef1=1480299476,1480650441,1481698113; b3log-latke="{\"userPassword\":\"f1c122ca4cf986be49d8e0922d9039b8\",\"userEmail\":\"yujunhao_8831@yahoo.com\"}"; Hm_lvt_9879c0fbf0414b572df462ca41b25798=1491013401; Webstorm-e3ef6d55=e16b3634-28fb-4ed9-9683-aa8c6f9d5bb9; tcd=a14fe7b56fe741d38dc3872a0ca159a9; 42a=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZSI6IiIsIndhc0xvZ2luIjpmYWxzZSwibG9nbyI6Imh0dHA6Ly9yZXNvdXJjZS4xMzMyMi5jb20vdXNlci91c2VyLnBuZyIsImlkIjoyMzI5LCJ1c2VyTmFtZSI6ImExNGZlN2I1NmZlNzQxZDM4ZGMzODcyYTBjYTE1OWE5IiwidHlwZSI6IlVzZXIifQ.m6m28ayhoXX8pjenjxLZblZzxtS6HMqfjTGe_cDCTNQ; UM_distinctid=15bddd43267107a-0ca374e9b56a97-153d655c-1aeaa0-15bddd43268eac; CNZZDATA1260716016=355481192-1494074298-null%7C1494117924; Hm_lvt_fe2c7555911b8560db5e56121c5d5960=1496670538; Hm_lvt_57e94d016e201fba3603a8a2b0263af0=1496719466; CNZZDATA5879641=cnzz_eid%3D400217219-1498785661-http%253A%252F%252Flocalhost%253A8080%252F%26ntime%3D1499299828; io=0vRDLPfIHaDlyA2rAAAA; _ga=GA1.1.205058624.1492656997; _gid=GA1.1.1246690044.1500369259
+     */
+    public static final String REQUEST_HEADER_HOST                      = "host";
+    public static final String REQUEST_HEADER_CONNECTION                = "connection";
+    public static final String REQUEST_HEADER_CACHE_CONTROL             = "cache-control";
+    public static final String REQUEST_HEADER_UPGRADE_INSECURE_REQUESTS = "upgrade-insecure-requests";
+    public static final String REQUEST_HEADER_USER_AGENT                = "user-agent";
+    public static final String REQUEST_HEADER_ACCEPT                    = "accept";
+    public static final String REQUEST_HEADER_REFERER                   = "referer";
+    public static final String REQUEST_HEADER_ACCEPT_ENCODING           = "accept-encoding";
+    public static final String REQUEST_HEADER_ACCEPT_LANGUAGE           = "accept-language";
+    public static final String REQUEST_HEADER_ACCEPT_COOKIE             = "cookie";
+
+
     /** 手机正则模式 **/
     private static final Pattern PHONE_REGEX_PATTERN = Pattern.compile(
             RegexType.PHONE_TERMINAL_REGEX,
@@ -169,6 +194,42 @@ public abstract class RequestUtils {
         return contentType != null && StringUtils.replaceAll( contentType.trim(), StringUtils.SPACE, StringUtils.EMPTY )
                                                  .contains( MediaType.APPLICATION_JSON_VALUE );
     }
+
+    /**
+     * {@link HttpServletRequest#getHeader(String)}
+     *
+     * @param headerName
+     * @return
+     */
+    public static String getRequestHeader ( String headerName ) {
+        return getRequest().getHeader( headerName );
+    }
+
+    /**
+     * 得到 {@link #REQUEST_HEADER_USER_AGENT} 信息
+     * @return 描述信息
+     */
+    public static String getUserAgentHeader () {
+        return getRequestHeader( REQUEST_HEADER_USER_AGENT );
+    }
+
+    /**
+     * @return {@link eu.bitwalker.useragentutils.UserAgent}
+     */
+    public static UserAgent getUserAgent () {
+        return UserAgent.parseUserAgentString( getUserAgentHeader() );
+    }
+
+    /**
+     * 得到请求地址
+     * 
+     * @return 如果是在http://www.google.com域名下请求当前服务器某个api,比如:http://www.aidijing.com/api,<p>
+     *         那么获取到的就是http://www.google.com这个地址,而不是http://www.aidijing.com/api
+     */
+    public static String getRequestReferrerUrl () {
+        return getRequestHeader( REQUEST_HEADER_REFERER );
+    }
+
 
     /**
      * 得到请求信息

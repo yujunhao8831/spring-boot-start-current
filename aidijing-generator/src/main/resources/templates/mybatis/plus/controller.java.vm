@@ -7,7 +7,7 @@ import ${package.Service}.${table.serviceName};
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.github.pagehelper.PageInfo;
-import com.github.pagehelper.PageRowBounds;
+import com.aidijing.common.PagingRequest;
 
 #if(${restControllerStyle})
 #else
@@ -30,7 +30,7 @@ import ${superControllerClassPackage};
 #else
 @Controller
 #end
-@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}s#end#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}s#else${table.entityPath}s#end")
 #if(${superControllerClass})
 public class ${table.controllerName} extends ${superControllerClass} {
 #else
@@ -48,69 +48,38 @@ public class ${table.controllerName} {
       
      */
     
-    /**
-     * 
-     * URI    : { GET } #if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/{id}
-     * 
-     * @param id : 主键
-     * @return
-     */
+    
     @GetMapping("{id}")
     public ResponseEntity< ${entity} > get ( @PathVariable ${primaryKeyTypeString} id ){
         return ResponseEntity.ok().setResponseContent(${serviceVariableName}.selectById( id ));
     }
 
-    /**
-     * URI    : { GET } #if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end
-     *
-     * @param pageRowBounds : {@link PageRowBounds}
-     * @return
-     */
     @GetMapping
-    public ResponseEntity< PageInfo<${entity}> > list ( PageRowBounds pageRowBounds ){
-        return ResponseEntity.ok().setResponseContent(${serviceVariableName}.listPage( pageRowBounds ));
+    public ResponseEntity< PageInfo<${entity}> > list ( PagingRequest pagingRequest ){
+        return ResponseEntity.ok().setResponseContent(${serviceVariableName}.listPage( pagingRequest ));
     }
 
-    /**
-     * URI    : { POST } #if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end
-     * 
-     * @param ${entityVariableName} : {@link ${entity}}
-     * @return
-     */
     @PostMapping
     public ResponseEntity insert ( @RequestBody ${entity} ${entityVariableName} ){
         if ( ! ${serviceVariableName}.insert( ${entityVariableName}) ){
-            return ResponseEntity.ok("保存失败");    
+            return ResponseEntity.badRequest("保存失败");    
         }
         return ResponseEntity.ok("保存成功");
     }
 
-    /**
-     * URI    : { PUT } #if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/{id}
-     * 
-     * @param id : 主键
-     * @param ${entityVariableName} : {@link ${entity}}
-     * @return
-     */
     @PutMapping("{id}")
     public ResponseEntity update ( @PathVariable ${primaryKeyTypeString} id,
                                               @RequestBody ${entity} ${entityVariableName} ){
         if ( ! ${serviceVariableName}.updateById( ${entityVariableName}.setId(id)) ){
-            return ResponseEntity.ok("更新失败");    
+            return ResponseEntity.badRequest("更新失败");    
         }
         return ResponseEntity.ok("更新成功");
     }
 
-    /**
-     * URI    : { DELETE } #if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end/{id}
-     * 
-     * @param id : 主键
-     * @return
-     */
     @DeleteMapping("{id}")
     public ResponseEntity delete ( @PathVariable ${primaryKeyTypeString} id ){
         if ( ! ${serviceVariableName}.deleteById(id) ){
-            return ResponseEntity.ok("删除失败");    
+            return ResponseEntity.badRequest("删除失败");    
         }
         return ResponseEntity.ok("删除成功");
     }

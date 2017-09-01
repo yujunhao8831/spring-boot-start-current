@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aidijing-admin-ui" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aidijing-basic-config" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aidijing-cache" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aidijing-cloud-eureka-server" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aidijing-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aidijing-config-client" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aidijing-config-server" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aidijing-generator" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aidijing-manage-system" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aidijing-manage-system/aidijing-manage-system-bean" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aidijing-manage-system/aidijing-manage-system-dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aidijing-manage-system/aidijing-manage-system-feign-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aidijing-manage-system/aidijing-manage-system-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aidijing-manage-system/aidijing-manage-system-webapp" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aidijing-manage-webapp" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aidijing-parent" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aidijing-scheduling" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/aidijing-security" charset="UTF-8" />
+  </component>
+</project>

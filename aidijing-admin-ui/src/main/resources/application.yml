@@ -1,9 +1,19 @@
 # 发件箱
 send.mail: pjzj8831@163.com
+security:
+  user:
+    name: root
+    password: root
+  basic:
+    enabled: true
+
 # 服务器
 server:
   port: 8888
+
 spring:
+  application:
+      name: aidijing-admin-ui 
   mail: 
     port: 25
     host: smtp.163.com
@@ -15,16 +25,24 @@ spring:
       mail.smtp.auth: true 
       mail.smtp.starttls: false 
       mail.smtp.quitwait: false
-      
   boot:
     admin:
+      username: "${security.user.name}"       
+      password: "${security.user.password}"    
+      client:
+        metadata:
+          user.name: "${security.user.name}"
+          user.password: "${security.user.password}"
       notify:
         mail:
           to: yujunhao_8831@yahoo.com
-          subject: aidijing-server
+          subject: aidijing
           from: ${send.mail}
+      routes:
+        endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream
+      turbine:
+        clusters: default
+        location: turbine
 
-security:
-  user:
-    name: root
-    password: root
+management.security.enabled: false
+

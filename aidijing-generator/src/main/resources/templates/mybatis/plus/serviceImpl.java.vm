@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.github.pagehelper.PageRowBounds;
+import com.aidijing.common.PagingRequest;
+
 
 /**
  * <p>
@@ -23,8 +24,8 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 
 
     @Override
-    public PageInfo<${entity}> listPage( PageRowBounds pageRowBounds ) {
-        PageHelper.startPage( pageRowBounds.getOffset(), pageRowBounds.getLimit() );
+    public PageInfo<${entity}> listPage( PagingRequest pagingRequest ) {
+        PageHelper.startPage( pagingRequest.getPageNumber(), pagingRequest.getPageSize() );
         return new PageInfo<>( super.selectList( null ) );
     }
     

@@ -1,6 +1,5 @@
 package com.aidijing.common.util;
 
-import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -31,20 +30,19 @@ public abstract class JsonUtils {
      * <p>gson</p>
      * <a href="https://github.com/google/gson/blob/master/UserGuide.md">document</a>
      */
-    private static final Gson         GSON          = new GsonBuilder().setDateFormat( DateUtils.DATE_BASIC_STYLE )
-                                                                       .create();
+    private static final Gson         GSON          = new GsonBuilder()
+            .setDateFormat( DateFormatStyle.CN_DATE_BASIC_STYLE.getDateStyle() ).create();
     /**
      * <p>fastjson</p>
      * <a href="https://github.com/alibaba/fastjson/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98">document</a>
      */
-    private static JSON JSON;
+    private static com.alibaba.fastjson.JSON JSON;
 
     static {
-        BASIC.setDateFormat( new SimpleDateFormat( DateUtils.DATE_BASIC_STYLE ) );
+        BASIC.setDateFormat( new SimpleDateFormat( DateFormatStyle.CN_DATE_BASIC_STYLE.getDateStyle() ) );
     }
 
     /**
-     * 
      * <p>
      * 转换为Json,可过滤属性
      * <p>默认使用Jackson进行转换,{@link #CUSTOMIZATION}</p>
@@ -107,16 +105,17 @@ public abstract class JsonUtils {
      *      user       -names,-username              '-' 排除字段                {"id":1001,"info":["北京","朝阳","密云"],"time":"2017-06-23 18:27:58","address":{"name":"地址","province":"北京","zip":"518000"},"order":{"id":8888,"name":"支付宝"}}
      *      user       -names,username               '-' 排除字段(注意)           {"username":"admin"}
      *      user       -names,-username,*            '-' 排除字段                {"id":1001,"info":["北京","朝阳","密云"],"time":"2017-06-23 18:27:58","address":{"name":"地址","province":"北京","zip":"518000"},"order":{"id":8888,"name":"支付宝"}}
+     *      user       -user.names,-order.id         '-' 排除字段                {"user":{"id":1001,"username":"admin","info":["北京","朝阳","密云"],"time":"2017-07-05 13:58:20","address":{"name":"地址","province":"北京","zip":"518000"},"order":{"id":8888,"name":"支付宝"}}}
      *
      * </pre>
-     * 
-     * @see <a href="https://github.com/bohnman/squiggly-filter-jackson">更多内容请看:Squiggly-document</a> <br/>
-     * @param input  : 
+     *
+     * @param input  :
      * @param filter : 过滤字段
      * @return 如果转换失败返回 <code>null</code> ,否则返回转换后的json
+     * @see <a href="https://github.com/bohnman/squiggly-filter-jackson">更多内容请看:Squiggly-document</a> <br/>
      */
-    public static String toFilterJson ( Object input, String filter ) {
-        return toJson( Squiggly.init( new CustomizationObjectMapper(), filter ), input );
+    public static String toFilterJson ( Object input , String filter ) {
+        return toJson( Squiggly.init( new CustomizationObjectMapper() , filter ) , input );
     }
 
     /**
@@ -127,7 +126,18 @@ public abstract class JsonUtils {
      * @return 如果转换失败返回 <code>null</code> ,否则返回转换后的json
      */
     public static String toJson ( Object input ) {
-        return toJson( BASIC, input );
+        return toJson( BASIC , input );
+    }
+
+    /**
+     * 转换为Json
+     * <p>默认使用Jackson进行转换,{@link #BASIC}</p>
+     *
+     * @param input
+     * @return 如果转换失败返回 <code>null</code> ,否则返回转换后的json
+     */
+    public static String toCustomizationJson ( Object input ) {
+        return toJson( CUSTOMIZATION , input );
     }
 
     /**
@@ -140,8 +150,8 @@ public abstract class JsonUtils {
      * @param <T>
      * @return 如果解析失败返回 <code>null</code> ,否则返回解析后的json
      */
-    public static < T > T jsonToType ( String inputJson, Class< T > targetType ) {
-        return jsonToType( BASIC, inputJson, targetType );
+    public static < T > T jsonToType ( String inputJson , Class< T > targetType ) {
+        return jsonToType( BASIC , inputJson , targetType );
     }
 
     /**
@@ -154,8 +164,8 @@ public abstract class JsonUtils {
      * @param <T>
      * @return 如果解析失败返回 <code>null</code> ,否则返回解析后的json
      */
-    public static < T > List< T > jsonToListType ( String inputJson, Class< T > targetType ) {
-        return jsonToListType( BASIC, inputJson, targetType );
+    public static < T > List< T > jsonToListType ( String inputJson , Class< T > targetType ) {
+        return jsonToListType( BASIC , inputJson , targetType );
     }
 
     /**
@@ -170,8 +180,8 @@ public abstract class JsonUtils {
      * @param <T>
      * @return
      */
-    public static < T > T jsonToType ( String inputJson, TypeReference targetType ) {
-        return jsonToType( BASIC, inputJson, targetType );
+    public static < T > T jsonToType ( String inputJson , TypeReference targetType ) {
+        return jsonToType( BASIC , inputJson , targetType );
     }
 
     public static ObjectMapper getCustomizationMapper () {
@@ -186,47 +196,47 @@ public abstract class JsonUtils {
         return GSON;
     }
 
-    public static JSON getFastjson () {
+    public static com.alibaba.fastjson.JSON getFastjson () {
         return JSON;
     }
 
-    private static < T > T jsonToType ( ObjectMapper objectMapper, String inputJson, TypeReference targetType ) {
+    private static < T > T jsonToType ( ObjectMapper objectMapper , String inputJson , TypeReference targetType ) {
         try {
-            return objectMapper.readValue( inputJson, targetType );
+            return objectMapper.readValue( inputJson , targetType );
         } catch ( Exception e ) {
-            LogUtils.getLogger().catching( e );
+            LogUtils.getLogger().error( "jsonToType" , e );
         }
         return null;
     }
 
-    private static < T > T jsonToType ( ObjectMapper objectMapper, String inputJson, Class< T > targetType ) {
+    private static < T > T jsonToType ( ObjectMapper objectMapper , String inputJson , Class< T > targetType ) {
         try {
-            return objectMapper.readValue( inputJson, targetType );
+            return objectMapper.readValue( inputJson , targetType );
         } catch ( Exception e ) {
-            LogUtils.getLogger().catching( e );
+            LogUtils.getLogger().error( "jsonToType" , e );
         }
         return null;
     }
 
-    private static < T > List< T > jsonToListType ( ObjectMapper objectMapper,
-                                                    String inputJson,
+    private static < T > List< T > jsonToListType ( ObjectMapper objectMapper ,
+                                                    String inputJson ,
                                                     Class< T > targetType ) {
         try {
             return objectMapper.readValue(
-                    inputJson,
-                    objectMapper.getTypeFactory().constructCollectionType( List.class, targetType )
+                    inputJson ,
+                    objectMapper.getTypeFactory().constructCollectionType( List.class , targetType )
             );
         } catch ( Exception e ) {
-            LogUtils.getLogger().catching( e );
+            LogUtils.getLogger().error( "jsonToListType" , e );
         }
         return null;
     }
 
-    private static String toJson ( ObjectMapper objectMapper, Object input ) {
+    private static String toJson ( ObjectMapper objectMapper , Object input ) {
         try {
             return objectMapper.writeValueAsString( input );
         } catch ( JsonProcessingException e ) {
-            LogUtils.getLogger().catching( e );
+            LogUtils.getLogger().error( "toJson" , e );
         }
         return null;
     }
@@ -234,7 +244,7 @@ public abstract class JsonUtils {
     private static class CustomizationObjectMapper extends ObjectMapper {
         CustomizationObjectMapper () {
             super();
-            setDateFormat( new SimpleDateFormat( DateUtils.DATE_BASIC_STYLE ) );
+            setDateFormat( new SimpleDateFormat( DateFormatStyle.CN_DATE_BASIC_STYLE.getDateStyle() ) );
             setSerializationInclusion( JsonInclude.Include.NON_NULL ); // <code>null<code> 不序列化
         }
     }
