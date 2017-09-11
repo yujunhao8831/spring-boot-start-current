@@ -262,7 +262,7 @@ public ResponseEntity< PageInfo > listPage ( PageRowBounds pageRowBounds ) {
 
 ```
 # 见 resource_api_uri_show_fields 字段
-SELECT * FROM manager_permission_resource;
+SELECT * FROM manage_role_permission_resource;
 ```
 
 ## 流程控制
