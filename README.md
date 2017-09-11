@@ -44,6 +44,7 @@ docker运行命令 : docker run -p 8080:8080 -t com.aidijing/aidijing-restful-cl
  + Druid
  + Log4j2
  + JWT(JSON Web Tokens)
+ + WebSocket
 
 项目包含了
  + 分布式锁
@@ -66,6 +67,7 @@ docker运行命令 : docker run -p 8080:8080 -t com.aidijing/aidijing-restful-cl
  + 验证码
  + Spring Boot Admin 管理和监视
  + 极简分布式任务调度
+ + WebSocket 简单示例
  
  
 要求 : 
