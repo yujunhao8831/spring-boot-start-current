@@ -1,6 +1,6 @@
 package ${package.Controller};
 
-import com.aidijing.common.ResponseEntity;
+import org.springframework.http.ResponseEntity;
 import ${package.Entity}.${entity};
 import ${package.Service}.${table.serviceName};
         

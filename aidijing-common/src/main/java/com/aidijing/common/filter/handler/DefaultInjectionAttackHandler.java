@@ -1,6 +1,6 @@
 package com.aidijing.common.filter.handler;
 
-import com.aidijing.common.ResponseEntity;
+import com.aidijing.common.ResponseEntityPro;
 import com.aidijing.common.util.JsonUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -70,7 +70,7 @@ public class DefaultInjectionAttackHandler implements InjectionAttackHandler {
     }
 
     public static DefaultInjectionAttackHandler getInstance () {
-        return SingletonDefaultInjectionAttackHandler.instance;
+        return SingletonDefaultInjectionAttackHandler.INSTANCE;
     }
 
     @Override
@@ -187,12 +187,12 @@ public class DefaultInjectionAttackHandler implements InjectionAttackHandler {
         response.setHeader( "Content-type" , MediaType.APPLICATION_JSON_UTF8_VALUE );
         response.setCharacterEncoding( StandardCharsets.UTF_8.displayName() );
         try ( PrintWriter out = response.getWriter() ) {
-            out.print( JsonUtils.toCustomizationJson( ResponseEntity.badRequest( "请求内容包含非法字符,原请求内容:\n" + parameters ) ) );
+            out.print( JsonUtils.toCustomizationJson( ResponseEntityPro.badRequest( "请求内容包含非法字符,原请求内容:\n" + parameters ) ) );
         }
     }
 
     private static class SingletonDefaultInjectionAttackHandler {
-        private static final DefaultInjectionAttackHandler instance = new DefaultInjectionAttackHandler();
+        private static final DefaultInjectionAttackHandler INSTANCE = new DefaultInjectionAttackHandler();
     }
 
 

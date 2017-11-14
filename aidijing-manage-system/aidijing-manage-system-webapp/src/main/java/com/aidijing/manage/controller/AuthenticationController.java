@@ -1,12 +1,13 @@
 package com.aidijing.manage.controller;
 
-import com.aidijing.common.ResponseEntity;
+import com.aidijing.common.ResponseEntityPro;
 import com.aidijing.manage.bean.domain.User;
 import com.aidijing.manage.jwt.JwtUser;
 import com.aidijing.manage.permission.Pass;
 import com.aidijing.security.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -61,13 +62,11 @@ public class AuthenticationController {
 		final String      token       = jwtTokenUtil.generateToken( userDetails , device );
 		final JwtUser     jwtUser     = ( JwtUser ) userDetails;
 		// 返回
-		return ResponseEntity.ok()
-							 .add( "token" , token )
-							 .add( "user" , jwtUser )
-							 .setFilterFields(
-								 // "-user.password,-user.lastPasswordResetDate,-user.createTime,-user.updateTime,-user.remark,-user.enabled,-user.groups.createTime,-user.groups.updateTime"
-								 "*,-user.password,-user.lastPasswordResetDate,-user.createTime,-user.updateTime,-user.remark,-user.enabled"
-							 );
+		return new ResponseEntityPro().add( "token" , token )
+									  .add( "user" , jwtUser )
+									  .flushBodyByFilterFields(
+										  "*,-user.password,-user.lastPasswordResetDate,-user.createTime,-user.updateTime,-user.remark,-user.enabled"
+									  ).buildOk();
 	}
 
 
@@ -86,9 +85,9 @@ public class AuthenticationController {
 
 		if ( jwtTokenUtil.canTokenBeRefreshed( token , user.getLastPasswordResetDate() ) ) {
 			String refreshedToken = jwtTokenUtil.refreshToken( token );
-			return ResponseEntity.ok().add( "token" , refreshedToken );
+			return new ResponseEntityPro().add( "token" , refreshedToken ).buildOk();
 		} else {
-			return ResponseEntity.badRequest( "原 token 无效" );
+			return ResponseEntityPro.badRequest( "原 token 无效" );
 		}
 	}
 

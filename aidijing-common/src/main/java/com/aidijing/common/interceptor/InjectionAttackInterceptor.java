@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * 注入攻击拦截器
  * @author : 披荆斩棘
  * @date : 2017/8/29
  * @see PassInjectionAttackIntercept

@@ -32,17 +32,18 @@ docker运行命令 : docker run -p 8080:8080 -t com.aidijing/aidijing-restful-cl
 项目所用技术
  + Spring 
  + Spring Boot
- + Spring MVC 
+ + Spring MVC
  + Spring Session(已不使用,项目无状态)
  + Spring Security
  + Spring Cache
  + Spring Boot Admin
  + Mybatis Plus 
  + Redis 
- + Swagger
+ + Swagger(已废弃)
  + Pagehelper
  + Druid
  + Log4j2
+ + WebSocket
  + JWT(JSON Web Tokens)
  + WebSocket
 
@@ -58,7 +59,7 @@ docker运行命令 : docker run -p 8080:8080 -t com.aidijing/aidijing-restful-cl
  + Swagger restful api
  + 异常统一处理
  + Cors解决跨域
- + 注入攻击过滤器
+ + 注入攻击拦截器
  + 多环境配置
  + 基本工具类
  + jwt认证
@@ -89,6 +90,8 @@ docker运行命令 : docker run -p 8080:8080 -t com.aidijing/aidijing-restful-cl
 ```
 
 
+
+
 + 服务接口
 
 
@@ -114,7 +117,7 @@ com.aidijing.ContextUtils
 用户相关数据从 ContextUtils 中获取
 ## 数据交互
 ``` java
-com.aidijing.common.ResponseEntity
+org.springframework.http.ResponseEntity
 ```
 使用ResponseEntity对数据进行封装
 ## 代码生成器

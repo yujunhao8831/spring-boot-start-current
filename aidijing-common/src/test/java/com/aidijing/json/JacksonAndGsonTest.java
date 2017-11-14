@@ -1,9 +1,9 @@
 package com.aidijing.json;
 
+import com.aidijing.common.ResponseEntity;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.google.gson.reflect.TypeToken;
-import com.aidijing.common.ResponseEntity;
 import com.aidijing.common.util.JsonUtils;
 import org.junit.Test;
 
@@ -81,5 +81,5 @@ public class JacksonAndGsonTest {
 
     }
 
-    
+
 }

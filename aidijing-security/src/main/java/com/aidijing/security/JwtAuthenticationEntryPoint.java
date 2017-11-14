@@ -1,6 +1,6 @@
 package com.aidijing.security;
 
-import com.aidijing.common.ResponseEntity;
+import com.aidijing.common.ResponseEntityPro;
 import com.aidijing.common.util.JsonUtils;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
@@ -27,7 +27,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
         response.setHeader( "Content-type", MediaType.APPLICATION_JSON_UTF8_VALUE );
         response.setCharacterEncoding( StandardCharsets.UTF_8.displayName() );
         try ( PrintWriter out = response.getWriter() ) {
-            out.print( JsonUtils.toCustomizationJson( ResponseEntity.unauthorized( "未经授权:身份验证令牌丢失或无效。" ) ) );
+            out.print( JsonUtils.toCustomizationJson( ResponseEntityPro.unauthorized( "未经授权:身份验证令牌丢失或无效。" ) ) );
         }
     }
 }

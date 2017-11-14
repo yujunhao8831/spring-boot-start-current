@@ -1,9 +1,11 @@
 package com.aidijing;
 
-import com.aidijing.common.ResponseEntity;
+import com.aidijing.common.ResponseEntityPro;
 import com.aidijing.common.exception.*;
 import com.aidijing.common.util.LogUtils;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,129 +24,128 @@ import java.sql.SQLException;
 public class GlobalErrorController {
 
 
-    @ExceptionHandler(MultipartException.class)
-    public ResponseEntity multipartExceptionHandler(MultipartException e) {
-        LogUtils.getLogger().error("error", e);
-        return ResponseEntity.unauthorized(e.getMessage());
-    }
-    
-    @ExceptionHandler(AuthenticationCredentialsNotFoundException.class)
-    public ResponseEntity serviceErrorHandler(AuthenticationCredentialsNotFoundException e) {
-        LogUtils.getLogger().error("error", e);
-        return ResponseEntity.unauthorized(e.getMessage());
-    }
+	@ExceptionHandler( MultipartException.class )
+	public ResponseEntity multipartExceptionHandler ( MultipartException e ) {
+		LogUtils.getLogger().error( "error" , e );
+		return ResponseEntityPro.unauthorized( e.getMessage() );
+	}
 
-    @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseEntity serviceErrorHandler(UsernameNotFoundException e) {
-        LogUtils.getLogger().error("error", e);
-        return ResponseEntity.unauthorized();
-    }
+	@ExceptionHandler( AuthenticationCredentialsNotFoundException.class )
+	public ResponseEntity serviceErrorHandler ( AuthenticationCredentialsNotFoundException e ) {
+		LogUtils.getLogger().error( "error" , e );
+		return ResponseEntityPro.unauthorized( e.getMessage() );
+	}
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity serviceErrorHandler(ResourceNotFoundException e) {
-        LogUtils.getLogger().error("error", e);
-        return ResponseEntity.badRequest(e.getMessage());
-    }
+	@ExceptionHandler( UsernameNotFoundException.class )
+	public ResponseEntity serviceErrorHandler ( UsernameNotFoundException e ) {
+		LogUtils.getLogger().error( "error" , e );
+		return ResponseEntityPro.unauthorized();
+	}
 
-    @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity serviceErrorHandler(AuthenticationException e) {
-        LogUtils.getLogger().error("error", e);
-        return ResponseEntity.unauthorized();
-    }
+	@ExceptionHandler( ResourceNotFoundException.class )
+	public ResponseEntity serviceErrorHandler ( ResourceNotFoundException e ) {
+		LogUtils.getLogger().error( "error" , e );
+		return ResponseEntityPro.badRequest( e.getMessage() );
+	}
 
-    @ExceptionHandler(ForbiddenException.class)
-    public ResponseEntity forbiddenErrorHandler(ForbiddenException e) {
-        LogUtils.getLogger().error("error", e);
-        return ResponseEntity.forbidden(e.getMessage());
-    }
+	@ExceptionHandler( AuthenticationException.class )
+	public ResponseEntity serviceErrorHandler ( AuthenticationException e ) {
+		LogUtils.getLogger().error( "error" , e );
+		return ResponseEntityPro.unauthorized();
+	}
 
-    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity forbiddenErrorHandler(HttpRequestMethodNotSupportedException e) {
-        LogUtils.getLogger().error("error", e);
-        return ResponseEntity.badRequest(ResponseEntity.StatusCode.METHOD_NOT_ALLOWED,
-                e.getMessage());
-    }
+	@ExceptionHandler( ForbiddenException.class )
+	public ResponseEntity forbiddenErrorHandler ( ForbiddenException e ) {
+		LogUtils.getLogger().error( "error" , e );
+		return ResponseEntityPro.forbidden( e.getMessage() );
+	}
 
-    @ExceptionHandler(CaptchaException.class)
-    public ResponseEntity captchaErrorHandler(CaptchaException e) {
-        LogUtils.getLogger().error("error", e);
-        return ResponseEntity.badRequest(e.getMessage());
-    }
+	@ExceptionHandler( HttpRequestMethodNotSupportedException.class )
+	public ResponseEntity forbiddenErrorHandler ( HttpRequestMethodNotSupportedException e ) {
+		LogUtils.getLogger().error( "error" , e );
+		return ResponseEntityPro.status( HttpStatus.METHOD_NOT_ALLOWED , e.getMessage() );
+	}
 
-    @ExceptionHandler(ServiceException.class)
-    public ResponseEntity serviceErrorHandler(ServiceException e) {
-        LogUtils.getLogger().error("error", e);
-        return ResponseEntity.badRequest(e.getMessage());
-    }
+	@ExceptionHandler( CaptchaException.class )
+	public ResponseEntity captchaErrorHandler ( CaptchaException e ) {
+		LogUtils.getLogger().error( "error" , e );
+		return ResponseEntityPro.badRequest( e.getMessage() );
+	}
 
-    @ExceptionHandler(DaoException.class)
-    public ResponseEntity daoErrorHandler(DaoException e) {
-        LogUtils.getLogger().error("error", e);
-        return ResponseEntity.badRequest(e.getMessage());
-    }
+	@ExceptionHandler( ServiceException.class )
+	public ResponseEntity serviceErrorHandler ( ServiceException e ) {
+		LogUtils.getLogger().error( "error" , e );
+		return ResponseEntityPro.badRequest( e.getMessage() );
+	}
 
-    @ExceptionHandler({SQLException.class, DataAccessException.class})
-    public ResponseEntity sqlErrorHandler(Throwable e) {
-        LogUtils.getLogger().error("error", e);
-        return ResponseEntity.internalServerError(
-                "服务器内部错误,EXCEPTION_CODE:" + ExceptionCode.SQL_EXCEPTION.getCode());
-    }
+	@ExceptionHandler( DaoException.class )
+	public ResponseEntity daoErrorHandler ( DaoException e ) {
+		LogUtils.getLogger().error( "error" , e );
+		return ResponseEntityPro.badRequest( e.getMessage() );
+	}
 
-
-    @ExceptionHandler(Throwable.class)
-    public ResponseEntity globalErrorHandler(Throwable e) {
-        LogUtils.getLogger().error("internalServerError", e);
-        return ResponseEntity.internalServerError("internalServerError : " + e.getMessage());
-    }
+	@ExceptionHandler( { SQLException.class , DataAccessException.class } )
+	public ResponseEntity sqlErrorHandler ( Throwable e ) {
+		LogUtils.getLogger().error( "error" , e );
+		return ResponseEntityPro.internalServerError(
+			"服务器内部错误,EXCEPTION_CODE:" + ExceptionCode.SQL_EXCEPTION.getCode() );
+	}
 
 
-    private enum ExceptionCode {
-        SQL_EXCEPTION("9001", "SQL异常");
+	@ExceptionHandler( Throwable.class )
+	public ResponseEntity globalErrorHandler ( Throwable e ) {
+		LogUtils.getLogger().error( "internalServerError" , e );
+		return ResponseEntityPro.internalServerError( "internalServerError : " + e.getMessage() );
+	}
 
 
-        private String code;
-        private String comment;
+	private enum ExceptionCode {
+		SQL_EXCEPTION( "9001" , "SQL异常" );
 
-        ExceptionCode(String code, String comment) {
-            this.code = code;
-            this.comment = comment;
-        }
 
-        /**
-         * 判断传入的code是否是枚举中所定义的code
-         *
-         * @param code
-         * @return
-         */
-        public static boolean isCode(final String code) {
-            for (ExceptionCode value : ExceptionCode.values()) {
-                if (value.getCode().equalsIgnoreCase(code)) {
-                    return true;
-                }
-            }
-            return false;
-        }
+		private String code;
+		private String comment;
 
-        public static String codeValue(final String code) {
-            for (ExceptionCode value : ExceptionCode.values()) {
-                if (value.getCode().equalsIgnoreCase(code)) {
-                    return value.getComment();
-                }
-            }
-            return null;
-        }
+		ExceptionCode ( String code , String comment ) {
+			this.code = code;
+			this.comment = comment;
+		}
 
-        public static boolean isNotCode(final String code) {
-            return !isCode(code);
-        }
+		/**
+		 * 判断传入的code是否是枚举中所定义的code
+		 *
+		 * @param code
+		 * @return
+		 */
+		public static boolean isCode ( final String code ) {
+			for ( ExceptionCode value : ExceptionCode.values() ) {
+				if ( value.getCode().equalsIgnoreCase( code ) ) {
+					return true;
+				}
+			}
+			return false;
+		}
 
-        public String getComment() {
-            return comment;
-        }
+		public static String codeValue ( final String code ) {
+			for ( ExceptionCode value : ExceptionCode.values() ) {
+				if ( value.getCode().equalsIgnoreCase( code ) ) {
+					return value.getComment();
+				}
+			}
+			return null;
+		}
 
-        public String getCode() {
-            return code;
-        }
-    }
+		public static boolean isNotCode ( final String code ) {
+			return ! isCode( code );
+		}
+
+		public String getComment () {
+			return comment;
+		}
+
+		public String getCode () {
+			return code;
+		}
+	}
 
 }
