@@ -2,9 +2,11 @@ package com.aidijing.manage;
 
 import com.aidijing.common.ResponseEntityPro;
 import com.aidijing.manage.bean.domain.RolePermissionResource;
-import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
@@ -16,14 +18,16 @@ import static com.aidijing.common.util.JsonUtils.toFilterJson;
  * @date : 2017/11/14
  */
 @Aspect
-// @Component // TODO: 2017/11/14 还未测试
+@Component
 public class ResponseEntityAspect {
 
+	@Around( "execution(* com.aidijing.*.controller.*Controller.*(..))" )
+	public Object dataPlatform ( ProceedingJoinPoint joinPoint ) throws Throwable {
 
-	@AfterReturning( pointcut = "execution(* com.aidijing.*.controller.*Controller.*(..))", returning = "returnValue" )
-	public void dataPlatform ( Object returnValue ) {
+		Object returnValue = joinPoint.proceed();
+
 		if ( ! ( returnValue instanceof ResponseEntity ) ) {
-			return;
+			return returnValue;
 		}
 
 		ResponseEntity responseEntity = ( ResponseEntity ) returnValue;
@@ -31,21 +35,23 @@ public class ResponseEntityAspect {
 		// 用户权限或者用户自定义处理
 		final RolePermissionResource currentRequestRolePermissionResource = ContextUtils.getCurrentRequestRolePermissionResource();
 		if ( Objects.isNull( currentRequestRolePermissionResource ) ) {
-			return;
+			return returnValue;
 		}
 		if ( ResponseEntityPro.WILDCARD_ALL.equals( currentRequestRolePermissionResource.getResourceApiUriShowFields() ) ) {
-			return;
+			return returnValue;
 		}
 
 		final String resourceApiUriShowFields = currentRequestRolePermissionResource.getResourceApiUriShowFields();
 		final String filterAfterJsonBody      = toFilterJson( responseEntity.getBody() , resourceApiUriShowFields );
 		final Object filterAfterBody          = jsonToType( filterAfterJsonBody , responseEntity.getBody().getClass() );
 
-		returnValue = new ResponseEntity<>( filterAfterBody ,
-											responseEntity.getHeaders() ,
-											responseEntity.getStatusCode() );
+		return new ResponseEntity<>( filterAfterBody ,
+									 responseEntity.getHeaders() ,
+									 responseEntity.getStatusCode() );
+
 
 	}
+
 
 
 }

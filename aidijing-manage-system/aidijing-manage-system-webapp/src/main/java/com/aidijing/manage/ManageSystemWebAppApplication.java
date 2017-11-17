@@ -28,6 +28,7 @@ public class ManageSystemWebAppApplication extends SpringBootServletInitializer 
 	 * @param application
 	 * @see <a href="http://www.infoq.com/cn/articles/microframeworks1-spring-boot">info</a>
 	 */
+	@Override
 	protected SpringApplicationBuilder configure ( SpringApplicationBuilder application ) {
 		return application.sources( ManageSystemWebAppApplication.class );
 	}
