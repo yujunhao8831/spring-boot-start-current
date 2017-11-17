@@ -235,7 +235,7 @@ https://pagehelper.github.io
 // controller
 @GetMapping
 public ResponseEntity< PageInfo > listPage ( PageRowBounds pageRowBounds ) {
-    return ResponseEntity.ok().setResponseContent( userService.listPage( pageRowBounds ) );
+    return ResponseEntityPro.ok(userService.listPage( pageRowBounds ) );
 }
 
 // service
@@ -252,13 +252,13 @@ public PageInfo listPage ( PageRowBounds pageRowBounds ) {
 // 排除指定字段
 @GetMapping
 public ResponseEntity< PageInfo > listPage ( PageRowBounds pageRowBounds ) {
-    return ResponseEntity.ok().setResponseContent( userService.listPage( pageRowBounds ) ).setFilterField( "-password,-realName" );
+    return ResponseEntityPro.ok(userService.listPage( pageRowBounds ) ,"-password,-realName" );
 }
 
 // 只返回指定字段
 @GetMapping
 public ResponseEntity< PageInfo > listPage ( PageRowBounds pageRowBounds ) {
-    return ResponseEntity.ok().setResponseContent( userService.listPage( pageRowBounds ) ).setFilterField( "password,realName" );
+    return ResponseEntityPro.ok(userService.listPage( pageRowBounds ) ,"password,realName" );
 }
 
 ```
