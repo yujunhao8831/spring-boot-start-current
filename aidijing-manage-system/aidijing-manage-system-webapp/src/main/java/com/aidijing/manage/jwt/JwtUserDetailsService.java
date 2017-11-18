@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Objects;
 
 
+/**
+ * @author pijingzhanji
+ */
 @Service
 @CacheConfig( cacheNames = GlobalCacheConstant.USER_DETAILS_SERVICE_NAMESPACE )
 public class JwtUserDetailsService implements UserDetailsService {

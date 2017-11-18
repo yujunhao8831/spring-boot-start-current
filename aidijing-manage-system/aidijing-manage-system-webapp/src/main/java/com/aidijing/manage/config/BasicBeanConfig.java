@@ -18,6 +18,9 @@ import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
+/**
+ * @author pijingzhanji
+ */
 @Configuration
 public class BasicBeanConfig implements ApplicationContextAware, ApplicationListener< ContextRefreshedEvent > {
 

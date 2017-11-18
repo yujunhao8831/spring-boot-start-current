@@ -37,13 +37,14 @@ public class ResponseEntityAspect {
 			return returnValue;
 		}
 		if ( ResponseEntityPro.WILDCARD_ALL.equals( currentRequestRolePermissionResource.getResourceApiUriShowFields() ) ) {
+			ContextUtils.removeCurrentRequestRolePermissionResource();
 			return returnValue;
 		}
 
 		final String resourceApiUriShowFields = currentRequestRolePermissionResource.getResourceApiUriShowFields();
 		final String filterAfterJsonBody      = toFilterJson( responseEntity.getBody() , resourceApiUriShowFields );
 		final Object filterAfterBody          = jsonToType( filterAfterJsonBody , responseEntity.getBody().getClass() );
-
+		ContextUtils.removeCurrentRequestRolePermissionResource();
 		return new ResponseEntity<>( filterAfterBody ,
 									 responseEntity.getHeaders() ,
 									 responseEntity.getStatusCode() );

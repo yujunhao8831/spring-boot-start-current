@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 /**
  * jwt对象
+ * @author pijingzhanji
  */
 @Data
 @Accessors( chain = true )

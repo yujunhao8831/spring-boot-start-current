@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 授权
+ * @author pijingzhanji
  */
 @RestController
 public class AuthenticationController {

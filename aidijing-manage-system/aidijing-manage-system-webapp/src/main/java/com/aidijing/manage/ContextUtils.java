@@ -6,8 +6,8 @@ import com.aidijing.manage.bean.domain.Role;
 import com.aidijing.manage.bean.domain.RolePermissionResource;
 import com.aidijing.manage.bean.domain.User;
 import com.aidijing.manage.bean.domain.enums.RoleType;
-import com.aidijing.manage.jwt.JwtUser;
 import com.aidijing.manage.bean.vo.PermissionResourceVO;
+import com.aidijing.manage.jwt.JwtUser;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
@@ -52,6 +52,14 @@ public final class ContextUtils {
 		final RolePermissionResource currentRequestRolePermissionResource ) {
 		CURRENT_REQUEST_ROLE_PERMISSION_RESOURCE.set( currentRequestRolePermissionResource );
 	}
+
+	/**
+	 * 删除用户当前请求api可见字段
+	 */
+	public static void removeCurrentRequestRolePermissionResource () {
+		CURRENT_REQUEST_ROLE_PERMISSION_RESOURCE.remove();
+	}
+
 
 	/**
 	 * 是否登录

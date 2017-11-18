@@ -12,6 +12,7 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
  * 注册应用，这会通过Servlet 3.0 API以编码的方式注册servlet并且会用到ServletContext。
  * 通过提供SpringBootServletInitializer的子类，Boot应用能够使用嵌入的Spring上下文来
  * 注册配置，这个Spring上下文是在容器初始化的时候创建的。
+ * @author pijingzhanji
  */
 @SpringBootApplication( scanBasePackages = "com.aidijing" )
 public class ManageSystemWebAppApplication extends SpringBootServletInitializer {
