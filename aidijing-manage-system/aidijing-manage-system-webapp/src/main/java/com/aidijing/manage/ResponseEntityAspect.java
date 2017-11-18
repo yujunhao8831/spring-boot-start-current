@@ -21,14 +21,11 @@ import static com.aidijing.common.util.JsonUtils.toFilterJson;
 @Component
 public class ResponseEntityAspect {
 
-	@Around( "execution(* com.aidijing.*.controller.*Controller.*(..))" )
+
+	@Around( "execution(org.springframework.http.ResponseEntity com.aidijing.*.controller.*Controller.*(..)) )" )
 	public Object dataPlatform ( ProceedingJoinPoint joinPoint ) throws Throwable {
 
 		Object returnValue = joinPoint.proceed();
-
-		if ( ! ( returnValue instanceof ResponseEntity ) ) {
-			return returnValue;
-		}
 
 		ResponseEntity responseEntity = ( ResponseEntity ) returnValue;
 
@@ -51,7 +48,6 @@ public class ResponseEntityAspect {
 
 
 	}
-
 
 
 }
