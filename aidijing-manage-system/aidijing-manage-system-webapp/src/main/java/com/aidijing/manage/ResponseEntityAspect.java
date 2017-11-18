@@ -14,6 +14,8 @@ import static com.aidijing.common.util.JsonUtils.jsonToType;
 import static com.aidijing.common.util.JsonUtils.toFilterJson;
 
 /**
+ * api {@link ResponseEntity} 返回类型处理,针对 {@link RolePermissionResource#resourceApiUriShowFields} 字段
+ *
  * @author : 披荆斩棘
  * @date : 2017/11/14
  */
