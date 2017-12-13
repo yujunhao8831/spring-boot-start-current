@@ -100,7 +100,7 @@ public final class Export {
                    titleMap ,
                    new LinkedHashMap<>( Collections.singletonMap( sheetName , dataList ) ) );
     }
-    
+
     public static void exportXls ( OutputStream outputStream ,
                                    LinkedHashMap< String, String > titleMap ,
                                    List< ? > dataList ) throws IOException {
@@ -190,7 +190,7 @@ public final class Export {
             i = 0;
             for ( String title : titleMap.keySet() ) {
                 sbd.append( handleCsvContent(
-                    ReflectionPlusUtils.invokeFieldGettersMethodToCustomizeString( data , title ) )
+					ReflectionProUtils.invokeFieldGettersMethodToCustomizeString( data , title ) )
                 );
                 i++;
                 if ( i != titleMap.size() ) sbd.append( "," );
@@ -204,11 +204,11 @@ public final class Export {
     }
 
     public static String addXlsSuffix ( String fileName ) {
-        return StringPrivateUtils.getString( fileName ) + ".xls";
+        return StringProUtils.getString( fileName ) + ".xls";
     }
 
     public static String addXlsxSuffix ( String fileName ) {
-        return StringPrivateUtils.getString( fileName ) + ".xlsx";
+        return StringProUtils.getString( fileName ) + ".xlsx";
     }
 
     public enum Type {
@@ -337,8 +337,8 @@ public final class Export {
                                         cellValue = Objects.isNull( obj ) ? StringUtils.EMPTY : obj.toString();
                                     } else {
                                         cellValue =
-                                            ReflectionPlusUtils.invokeFieldGettersMethodToCustomizeString( data ,
-                                                                                                           value );
+                                            ReflectionProUtils.invokeFieldGettersMethodToCustomizeString( data ,
+																										  value );
                                     }
                                     // 每列
                                     cell = row.createCell( cellIndex );

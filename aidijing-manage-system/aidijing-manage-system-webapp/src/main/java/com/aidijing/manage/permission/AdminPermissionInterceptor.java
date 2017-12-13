@@ -164,7 +164,7 @@ public class AdminPermissionInterceptor extends HandlerInterceptorAdapter {
 		if ( Objects.nonNull( annotation ) ) {
 			return annotation;
 		}
-		return handlerMethod.getBean().getClass().getAnnotation( clazz );
+		return handlerMethod.getBeanType().getAnnotation( clazz );
 	}
 
 	/**

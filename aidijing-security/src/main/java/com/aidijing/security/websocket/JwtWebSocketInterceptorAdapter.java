@@ -30,7 +30,7 @@ public class JwtWebSocketInterceptorAdapter extends ChannelInterceptorAdapter {
     private UserDetailsService userDetailsService;
     @Autowired
     private JwtTokenUtil       jwtTokenUtil;
-    @Value( "${jwt.header}" )
+	@Value( "${jwt.header:Authorization}" )
     private String             tokenHeader;
 
 
@@ -74,7 +74,7 @@ public class JwtWebSocketInterceptorAdapter extends ChannelInterceptorAdapter {
         if ( Objects.isNull( accessor.getUser() ) ) {
             throw new AuthenticationCredentialsNotFoundException( "未授权" );
         }
-        
+
         return message;
     }
 }

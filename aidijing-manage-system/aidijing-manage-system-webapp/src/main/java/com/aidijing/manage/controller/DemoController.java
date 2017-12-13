@@ -16,17 +16,16 @@ import java.util.Date;
  * @date : 2017/8/26
  */
 @RestController
+@Pass
 public class DemoController {
 
 
-	@Pass
 	@GetMapping( "demo3" )
 	public String demo3 () {
 		return "demo3";
 	}
 
 
-	@Pass
 	@GetMapping( "demo" )
 	public ResponseEntity demo () {
 		return new ResponseEntityPro().add( "id" , GenerationCode.globalUniqueId() )
@@ -34,7 +33,6 @@ public class DemoController {
 									  .buildOk();
 	}
 
-	@Pass
 	@GetMapping( "demo2" )
 	public ResponseEntity demo2 () {
 		return ResponseEntityPro.badRequest(
@@ -49,7 +47,6 @@ public class DemoController {
 		);
 	}
 
-	@Pass
 	@GetMapping( "injection" )
 	@PassInjectionAttackIntercept( { "update" , "delete" } )
 	public ResponseEntity< String > injection () {

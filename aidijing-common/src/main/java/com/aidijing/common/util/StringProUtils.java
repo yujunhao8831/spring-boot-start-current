@@ -15,7 +15,7 @@ import static java.lang.Character.*;
  * @author : 披荆斩棘
  * @date : 2017/7/26
  */
-public final class StringPrivateUtils {
+public final class StringProUtils {
     public final static String  SPRIT                = "/";
     /* V_2V */
     static              boolean separatorBeforeDigit = false;
@@ -193,7 +193,7 @@ public final class StringPrivateUtils {
             boolean previousIsWhitespace   = isWhitespace( previousChar );
             boolean lastOneIsNotUnderscore = buf.length() > 0 && buf.charAt( buf.length() - 1 ) != '_';
             boolean isNotUnderscore        = c != '_';
-            //  ORIGINAL      if (lastOneIsNotUnderscore && (isUpperCase(c) || isLowerCaseAndPreviousIsWhitespace)) {  
+            //  ORIGINAL      if (lastOneIsNotUnderscore && (isUpperCase(c) || isLowerCaseAndPreviousIsWhitespace)) {
 
 
             //camelCase handling - add extra _

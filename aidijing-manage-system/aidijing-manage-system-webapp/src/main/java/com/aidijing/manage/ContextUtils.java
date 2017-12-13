@@ -140,9 +140,8 @@ public final class ContextUtils {
 	 * 得到凭证
 	 */
 	private static Authentication getAuthentication () {
-		final Authentication authentication =
-			SecurityContextHolder.getContext().getAuthentication();
-		if ( Objects.isNull( authentication ) || isNotLogin() ) {
+		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if ( Objects.isNull( authentication ) ) {
 			throw new AuthenticationCredentialsNotFoundException( "未授权" );
 		}
 		return authentication;
