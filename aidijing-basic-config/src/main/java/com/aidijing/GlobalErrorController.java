@@ -6,10 +6,13 @@ import com.aidijing.common.util.LogUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MultipartException;
@@ -23,6 +26,30 @@ import java.sql.SQLException;
 @RestControllerAdvice
 public class GlobalErrorController {
 
+
+	@ExceptionHandler( ServletRequestBindingException.class )
+	public ResponseEntity servletRequestBindingExceptionHandler ( ServletRequestBindingException e ) {
+		LogUtils.getLogger().error( "error" , e );
+		return ResponseEntityPro.unauthorized( e.getMessage() + ",请检查参数名称是否符合格式." );
+	}
+
+	@ExceptionHandler( ValidatedIllegalArgumentException.class )
+	public ResponseEntity validatedIllegalArgumentExceptionHandler ( ValidatedIllegalArgumentException e ) {
+		LogUtils.getLogger().error( "error" , e );
+		return ResponseEntityPro.unauthorized( e.getBindingResult().getFieldError().getDefaultMessage() );
+	}
+
+	@ExceptionHandler( MethodArgumentNotValidException.class )
+	public ResponseEntity methodArgumentNotValidExceptionHandler ( MethodArgumentNotValidException e ) {
+		LogUtils.getLogger().error( "error" , e );
+		return ResponseEntityPro.unauthorized( e.getBindingResult().getFieldError().getDefaultMessage() );
+	}
+
+	@ExceptionHandler( HttpMessageNotReadableException.class )
+	public ResponseEntity httpMessageNotReadableExceptionHandler ( HttpMessageNotReadableException e ) {
+		LogUtils.getLogger().error( "error" , e );
+		return ResponseEntityPro.unauthorized( "Required request body is missing, 请输入参数后再进行相关操作. " );
+	}
 
 	@ExceptionHandler( MultipartException.class )
 	public ResponseEntity multipartExceptionHandler ( MultipartException e ) {
@@ -39,7 +66,7 @@ public class GlobalErrorController {
 	@ExceptionHandler( UsernameNotFoundException.class )
 	public ResponseEntity serviceErrorHandler ( UsernameNotFoundException e ) {
 		LogUtils.getLogger().error( "error" , e );
-		return ResponseEntityPro.unauthorized();
+		return ResponseEntityPro.unauthorized( e.getMessage() );
 	}
 
 	@ExceptionHandler( ResourceNotFoundException.class )
@@ -51,7 +78,7 @@ public class GlobalErrorController {
 	@ExceptionHandler( AuthenticationException.class )
 	public ResponseEntity serviceErrorHandler ( AuthenticationException e ) {
 		LogUtils.getLogger().error( "error" , e );
-		return ResponseEntityPro.unauthorized();
+		return ResponseEntityPro.unauthorized( e.getMessage() );
 	}
 
 	@ExceptionHandler( ForbiddenException.class )

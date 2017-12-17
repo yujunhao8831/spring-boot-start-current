@@ -62,10 +62,7 @@ public class UserServiceImpl extends ServiceImpl< UserMapper, User > implements 
 	)
 	@Override
 	public boolean save ( User user ) {
-		if ( ! super.insert( user ) ) {
-			return false;
-		}
-		return true;
+		return super.insert( user );
 	}
 
 	@Caching( evict = {
@@ -79,14 +76,14 @@ public class UserServiceImpl extends ServiceImpl< UserMapper, User > implements 
 
 
 	@Override
-	public User findByUsername ( String Username ) {
-		return this.selectOne( new Condition().eq( "username" , Username ) );
+	public User findByUsername ( String username ) {
+		return this.selectOne( Condition.create().eq( "username" , username ) );
 	}
 
 
 	@Override
 	public boolean isExist ( Long userId ) {
-		return super.selectCount( new Condition().eq( "id" , userId ) ) > 0;
+		return super.selectCount( Condition.create().eq( "id" , userId ) ) > 0;
 	}
 
 	@Override

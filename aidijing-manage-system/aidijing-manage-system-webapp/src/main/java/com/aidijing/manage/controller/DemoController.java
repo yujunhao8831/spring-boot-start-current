@@ -15,15 +15,9 @@ import java.util.Date;
  * @author : 披荆斩棘
  * @date : 2017/8/26
  */
-@RestController
 @Pass
+@RestController
 public class DemoController {
-
-
-	@GetMapping( "demo3" )
-	public String demo3 () {
-		return "demo3";
-	}
 
 
 	@GetMapping( "demo" )

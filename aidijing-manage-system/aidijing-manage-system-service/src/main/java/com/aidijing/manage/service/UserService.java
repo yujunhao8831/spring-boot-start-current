@@ -22,7 +22,7 @@ public interface UserService extends IService< User > {
 
 	boolean delete ( Long id );
 
-	User findByUsername ( String Username );
+	User findByUsername ( String username );
 
 	boolean isExist ( Long userId );
 

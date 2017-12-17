@@ -10,6 +10,7 @@ import com.aidijing.manage.service.PermissionResourceService;
 import com.aidijing.manage.service.RolePermissionResourceService;
 import com.aidijing.manage.service.RoleService;
 import com.aidijing.manage.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -41,9 +42,12 @@ public class JwtUserDetailsService implements UserDetailsService {
 	private RolePermissionResourceService rolePermissionResourceService;
 
 
-	@Cacheable( key = "#username" )
+	@Cacheable( key = "#username", condition = "#username != null" )
 	@Override
 	public UserDetails loadUserByUsername ( String username ) throws UsernameNotFoundException {
+		if ( StringUtils.isBlank( username ) ) {
+			throw new UsernameNotFoundException( String.format( "该'%s'用户名不存在." , username ) );
+		}
 		User user = userService.findByUsername( username );
 		if ( user == null ) {
 			throw new UsernameNotFoundException( String.format( "该'%s'用户名不存在." , username ) );
@@ -54,7 +58,8 @@ public class JwtUserDetailsService implements UserDetailsService {
 			return buildSuperAdminJwtUser( user );
 		}
 		final List< RolePermissionResource > rolePermissionResources = rolePermissionResourceService.listByUserId( user.getId() );
-		final List< PermissionResourceVO >   permissionResource      = permissionResourceService.listUserPermissionByRolePermissionResource( rolePermissionResources );
+		final List< PermissionResourceVO >   permissionResource      = permissionResourceService.listUserPermissionByRolePermissionResource(
+			rolePermissionResources );
 		return new JwtUser(
 			user.getId() ,
 			user.getUsername() ,

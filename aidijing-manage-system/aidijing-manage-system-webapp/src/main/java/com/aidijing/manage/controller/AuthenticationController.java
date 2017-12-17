@@ -1,7 +1,8 @@
 package com.aidijing.manage.controller;
 
 import com.aidijing.common.ResponseEntityPro;
-import com.aidijing.manage.bean.domain.User;
+import com.aidijing.common.util.ValidatedGroups;
+import com.aidijing.manage.bean.dto.UserForm;
 import com.aidijing.manage.jwt.JwtUser;
 import com.aidijing.manage.permission.Pass;
 import com.aidijing.security.JwtTokenUtil;
@@ -16,17 +17,15 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 /**
- * 授权
+ * 授权认证控制器
+ *
  * @author pijingzhanji
  */
+@Pass
 @RestController
 public class AuthenticationController {
 
@@ -48,8 +47,7 @@ public class AuthenticationController {
 	 * @throws AuthenticationException
 	 */
 	@PostMapping( value = "authentication" )
-	@Pass
-	public ResponseEntity createAuthenticationToken ( @RequestBody User user ,
+	public ResponseEntity createAuthenticationToken ( @Validated( ValidatedGroups.Special.class ) @RequestBody UserForm user ,
 													  Device device ) throws AuthenticationException {
 		// 执行安全认证
 		final Authentication authentication = authenticationManager.authenticate(
@@ -74,16 +72,12 @@ public class AuthenticationController {
 	/**
 	 * 刷新并认证token
 	 *
-	 * @param request
 	 * @return
 	 */
 	@PutMapping( value = "authentication" )
-	@Pass
-	public ResponseEntity refreshAndGetAuthenticationToken ( HttpServletRequest request ) {
-		String  token    = request.getHeader( tokenHeaderKey );
+	public ResponseEntity refreshAndGetAuthenticationToken ( @RequestHeader( "${jwt.header:Authorization}" ) final String token ) {
 		String  username = jwtTokenUtil.getUsernameFromToken( token );
 		JwtUser user     = ( JwtUser ) userDetailsService.loadUserByUsername( username );
-
 		if ( jwtTokenUtil.canTokenBeRefreshed( token , user.getLastPasswordResetDate() ) ) {
 			String refreshedToken = jwtTokenUtil.refreshToken( token );
 			return new ResponseEntityPro().add( "token" , refreshedToken ).buildOk();

@@ -44,6 +44,10 @@ import java.util.Map;
 @ConditionalOnBean( RedisTemplate.class )
 @ConditionalOnExpression
 public class SpringCacheConfig extends CachingConfigurerSupport {
+	/*
+	 *	TODO: 2017/12/17 后续解决 CacheAspectSupport.generateKey 方法中,生成失败时的处理,
+	 *	源码是抛 IllegalArgumentException 异常,不好区别
+	 */
 
     /** 指定命名空间下的过期时间,默认不指定 **/
     private Map< String, Long > expires           = null;

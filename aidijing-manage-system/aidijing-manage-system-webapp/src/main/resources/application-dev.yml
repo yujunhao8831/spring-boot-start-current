@@ -1,12 +1,7 @@
 # 服务器
 server:
   port: 8080
-  tomcat:
-    accesslog:
-      enabled: true
-      directory: /applogs/accesslog/aidijing-manage-system-webapp
-      pattern: "%h %l %u %t \"%r\" %s %D"
-
+  
 # 日志
 logging:
   config: classpath:log4j2.xml

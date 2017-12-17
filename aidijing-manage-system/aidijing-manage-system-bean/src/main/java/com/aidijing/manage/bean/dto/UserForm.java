@@ -27,13 +27,13 @@ public class UserForm implements Serializable {
 	/**
 	 * 用户名(登录名称)
 	 */
-	@NotEmpty( message = "username不能为空",groups = ValidatedGroups.Save.class)
+	@NotEmpty( message = "username不能为空", groups = { ValidatedGroups.Special.class , ValidatedGroups.Save.class } )
 	@Size( min = 3, max = 32, message = "username长度必须在{min}和{max}之间" )
 	private String  username;
 	/**
 	 * 密码
 	 */
-	@NotEmpty( message = "password不能为空" )
+	@NotEmpty( message = "password不能为空", groups = { ValidatedGroups.Special.class , ValidatedGroups.Save.class } )
 	@Length( min = 6, message = "password长度不能小于6位" )
 	private String  password;
 	/**
@@ -47,12 +47,12 @@ public class UserForm implements Serializable {
 	/**
 	 * 电子邮箱
 	 */
-	@Email( message = "email格式不正确" )
+	@Email( message = "email格式不正确", groups = { ValidatedGroups.Save.class } )
 	private String  email;
 	/**
 	 * 手机号码
 	 */
-	@Pattern( regexp = "^(1[0-9])\\d{9}$", message = "手机号格式不正确" )
+	@Pattern( regexp = "^(1[0-9])\\d{9}$", message = "手机号格式不正确", groups = { ValidatedGroups.Save.class } )
 	private String  phone;
 	/**
 	 * 用户头像
