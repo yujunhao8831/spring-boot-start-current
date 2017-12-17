@@ -37,6 +37,7 @@ docker运行命令 : docker run -p 8080:8080 -t com.aidijing/aidijing-restful-cl
  + Spring Security
  + Spring Cache
  + Spring Boot Admin
+ + hibernate validator
  + Mybatis Plus 
  + Redis 
  + Swagger(已废弃)
