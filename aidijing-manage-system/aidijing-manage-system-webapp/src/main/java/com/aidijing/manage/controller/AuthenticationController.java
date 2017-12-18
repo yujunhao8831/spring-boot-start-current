@@ -7,7 +7,6 @@ import com.aidijing.manage.jwt.JwtUser;
 import com.aidijing.manage.permission.Pass;
 import com.aidijing.security.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,10 +26,9 @@ import org.springframework.web.bind.annotation.*;
  */
 @Pass
 @RestController
+@RequestMapping( "authentication" )
 public class AuthenticationController {
 
-	@Value( "${jwt.header}" )
-	private String                tokenHeaderKey;
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	@Autowired
@@ -39,14 +37,14 @@ public class AuthenticationController {
 	private UserDetailsService    userDetailsService;
 
 	/**
-	 * 创建身份验证token
+	 * 认证
 	 *
-	 * @param user
-	 * @param device
-	 * @return
-	 * @throws AuthenticationException
+	 * @param user   : 表单
+	 * @param device : 终端
+	 * @return token
+	 * @throws AuthenticationException 认证失败则会抛异常
 	 */
-	@PostMapping( value = "authentication" )
+	@PostMapping
 	public ResponseEntity createAuthenticationToken ( @Validated( ValidatedGroups.Special.class ) @RequestBody UserForm user ,
 													  Device device ) throws AuthenticationException {
 		// 执行安全认证
@@ -59,22 +57,20 @@ public class AuthenticationController {
 		SecurityContextHolder.getContext().setAuthentication( authentication );
 		final UserDetails userDetails = ( UserDetails ) authentication.getPrincipal();
 		final String      token       = jwtTokenUtil.generateToken( userDetails , device );
-		final JwtUser     jwtUser     = ( JwtUser ) userDetails;
 		// 返回
 		return new ResponseEntityPro().add( "token" , token )
-									  .add( "user" , jwtUser )
+									  .add( "user" , userDetails )
 									  .flushBodyByFilterFields(
 										  "*,-user.password,-user.lastPasswordResetDate,-user.createTime,-user.updateTime,-user.remark,-user.enabled"
 									  ).buildOk();
 	}
 
-
 	/**
 	 * 刷新并认证token
 	 *
-	 * @return
+	 * @return token
 	 */
-	@PutMapping( value = "authentication" )
+	@PutMapping
 	public ResponseEntity refreshAndGetAuthenticationToken ( @RequestHeader( "${jwt.header:Authorization}" ) final String token ) {
 		String  username = jwtTokenUtil.getUsernameFromToken( token );
 		JwtUser user     = ( JwtUser ) userDetailsService.loadUserByUsername( username );

@@ -47,7 +47,7 @@ public class UserValidatorDemoController {
 	 * @param user
 	 * @return
 	 */
-	@PostMapping("save-validated-2")
+	@PostMapping( "save-validated-2" )
 	public ResponseEntity< UserForm > saveValidated2 ( @RequestBody
 													   @Validated( { ValidatedGroups.Save.class , Default.class } ) UserForm user ) {
 		LogUtils.getLogger().debug( "user : {},验证通过" , user );
