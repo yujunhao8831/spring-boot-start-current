@@ -107,8 +107,8 @@ public class JwtUserDetailsService implements UserDetailsService {
 	}
 
 	private boolean isSuperAdmin ( Role role ) {
-		final boolean isSuperAdmin = Objects.equals( role.getRoleType().getCode() , RoleType.SUPER_ADMIN.getCode() );
-		final boolean isRoot       = Objects.equals( role.getRoleType().getCode() , RoleType.ROOT.getCode() );
+		final boolean isSuperAdmin = Objects.equals( role.getRoleType().getValue() , RoleType.SUPER_ADMIN.getValue() );
+		final boolean isRoot       = Objects.equals( role.getRoleType().getValue() , RoleType.ROOT.getValue() );
 		return isSuperAdmin || isRoot;
 	}
 

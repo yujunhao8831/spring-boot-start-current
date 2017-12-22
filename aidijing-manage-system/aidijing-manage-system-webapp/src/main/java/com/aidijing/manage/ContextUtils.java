@@ -180,7 +180,7 @@ public final class ContextUtils {
 	public static boolean isRoot ( Long roleId ) {
 		return getJwtUser().getRoles().parallelStream()
 						   .filter( role -> Objects.equals( role.getId() , roleId ) ).findAny().orElse( new Role() )
-						   .getRoleType().getCode().equals( RoleType.ROOT.getCode() );
+						   .getRoleType().getValue().equals( RoleType.ROOT.getValue() );
 	}
 
 
@@ -297,13 +297,13 @@ public final class ContextUtils {
 	// 超级管理员
 	private static boolean roleIsSuperAdmin ( Role role ) {
 		final boolean isSuperAdmin =
-			Objects.equals( role.getRoleType().getCode() , RoleType.SUPER_ADMIN.getCode() );
+			Objects.equals( role.getRoleType().getValue() , RoleType.SUPER_ADMIN.getValue() );
 		return isSuperAdmin || roleIsRoot( role );
 	}
 
 	// ROOT
 	private static boolean roleIsRoot ( Role role ) {
-		return Objects.equals( role.getRoleType().getCode() , RoleType.ROOT.getCode() );
+		return Objects.equals( role.getRoleType().getValue() , RoleType.ROOT.getValue() );
 	}
 
 	/**

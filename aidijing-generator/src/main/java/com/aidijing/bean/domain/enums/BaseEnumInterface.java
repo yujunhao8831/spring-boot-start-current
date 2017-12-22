@@ -4,6 +4,7 @@ package com.aidijing.bean.domain.enums;
  * @author : 披荆斩棘
  * @date : 2017/6/17
  */
+@Deprecated
 public interface BaseEnumInterface < T > {
 
     /**

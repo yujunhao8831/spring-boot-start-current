@@ -99,7 +99,7 @@ public class PermissionResourceServiceImpl extends ServiceImpl< PermissionResour
 
 	// api 处理
 	private void apiHandle ( PermissionResourceForm form , PermissionResource resource ) {
-		if ( Objects.equals( resource.getResourceType().getCode() , ResourceType.API.getCode() ) ) {
+		if ( Objects.equals( resource.getResourceType().getValue() , ResourceType.API.getValue() ) ) {
 			final Set< String > methods = Stream.of( RequestMethod.values() )
 												.map( RequestMethod::name )
 												.collect( Collectors.toSet() );

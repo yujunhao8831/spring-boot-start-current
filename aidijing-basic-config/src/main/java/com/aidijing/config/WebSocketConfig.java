@@ -44,7 +44,7 @@ import java.util.Objects;
  *          }
  *      }
  * </pre>
- * 
+ *
  */
 @Configuration
 @EnableWebSocketMessageBroker
@@ -54,10 +54,9 @@ import java.util.Objects;
 @ConditionalOnExpression( "${aidijing.web-socket.enabled:false}" )
 public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
-
-    private String[] clientBrokerDestinationPrefixes      = { "/topic" };         // default
-    private String[] serverApplicationDestinationPrefixes = { "/app" };           // default
-    private String[] stompEndpointsPaths                  = { "/aidijing" }; // default
+    private String[] clientBrokerDestinationPrefixes      = { "/topic" };
+    private String[] serverApplicationDestinationPrefixes = { "/app" };
+    private String[] stompEndpointsPaths                  = { "/aidijing" };
     /**
      * WebSocket拦截器
      */

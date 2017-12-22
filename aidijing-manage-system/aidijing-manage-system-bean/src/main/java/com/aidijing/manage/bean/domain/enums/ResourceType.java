@@ -1,8 +1,8 @@
 package com.aidijing.manage.bean.domain.enums;
 
+import com.baomidou.mybatisplus.enums.IEnum;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
-
-import java.util.Objects;
 
 /**
  * 资源类型(API:接口,MENU:菜单,BUTTON:按钮)
@@ -10,55 +10,27 @@ import java.util.Objects;
  * 对应字段 {@link com.aidijing.manage.bean.domain.PermissionResource#resourceType}
  */
 @Getter
-public enum ResourceType implements BaseEnumInterface< ResourceType > {
+public enum ResourceType implements IEnum {
 
-    API( "API", "接口" ),
-    MENU( "MENU", "菜单" ),
-    BUTTON( "BUTTON", "按钮" );
+	API( "API" , "接口" ),
+	MENU( "MENU" , "菜单" ),
+	BUTTON( "BUTTON" , "按钮" );
 
-    /** code **/
-    private String code;
-    /** 注释 **/
-    private String comment;
+	/** 数据库存储值 **/
+	private String value;
+	/** 相应注释 **/
+	private String comment;
 
-    ResourceType ( String code, String comment ) {
-        this.code = code;
-        this.comment = comment;
-    }
+	ResourceType ( String value , String comment ) {
+		this.value = value;
+		this.comment = comment;
+	}
 
-    @Override
-    public boolean isEnumCode ( final String inputCode ) {
-        return Objects.nonNull( getEnum( inputCode ) );
-    }
-
-    @Override
-    public boolean isNotEnumCode ( final String inputCode ) {
-        return ! isEnumCode( inputCode );
-    }
-
-    @Override
-    public String getCodeComment ( final String inputCode ) {
-        if ( Objects.isNull( inputCode ) ) {
-            return null;
-        }
-        for ( ResourceType value : ResourceType.values() ) {
-            if ( value.getCode().equals( inputCode ) ) {
-                return value.getComment();
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public ResourceType getEnum ( final String inputCode ) {
-        if ( Objects.isNull( inputCode ) ) {
-            return null;
-        }
-        for ( ResourceType thisEnum : ResourceType.values() ) {
-            if ( thisEnum.getCode().equals( inputCode ) ) {
-                return thisEnum;
-            }
-        }
-        return null;
-    }
+	/**
+	 * {@link JsonValue} 指定序列化为该字段,也就是显示时以该字段显示
+	 */
+	@JsonValue
+	public String getComment () {
+		return comment;
+	}
 }

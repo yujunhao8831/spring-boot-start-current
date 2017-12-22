@@ -21,6 +21,7 @@ import java.util.Properties;
  * @author : 披荆斩棘
  * @date : 2017/6/19
  */
+@Deprecated
 public class MybatisEnumHandlerGenerator {
 
     // 枚举包位置 : /Users/pijingzhanji/Desktop/aidijing/aidijing-dao/target/classes/com/aidijing/domain/enums/

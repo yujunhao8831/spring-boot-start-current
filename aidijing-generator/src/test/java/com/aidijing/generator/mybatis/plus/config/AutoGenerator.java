@@ -392,7 +392,7 @@ public class AutoGenerator {
             TableInfo             tableInfo = ( TableInfo ) context.get( "table" );
             Map< String, String > pathInfo  = config.getPathInfo();
             String entityFile = String.format(
-                    ( pathInfo.get( ConstVal.ENTITY_PATH ) + ConstVal.ENTITY_NAME ),
+                    ( pathInfo.get( ConstVal.ENTITY_PATH ) + ConstVal.ENTITY ),
                     entityName
             );
             String mapperFile = String.format( ( pathInfo.get( ConstVal.MAPPER_PATH ) + File.separator + tableInfo
@@ -410,7 +410,7 @@ public class AutoGenerator {
 
             // 根据override标识来判断是否需要创建文件
             if ( isCreate( entityFile ) ) {
-                vmToFile( context, template.getEntity(), entityFile );
+                vmToFile( context, template.getEntity(false), entityFile );
             }
             if ( isCreate( mapperFile ) ) {
                 vmToFile( context, template.getMapper(), mapperFile );

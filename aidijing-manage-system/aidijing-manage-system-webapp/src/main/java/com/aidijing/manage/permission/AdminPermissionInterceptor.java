@@ -201,7 +201,7 @@ public class AdminPermissionInterceptor extends HandlerInterceptorAdapter {
 	 * @return 如果有权限返回 <code>true</code>,否则返回 <code>false</code>
 	 */
 	private boolean check ( PermissionResourceVO resource , String method , String uri ) {
-		if ( ! ResourceType.API.getCode().equals( resource.getResourceType().getCode() ) ) {
+		if ( ! ResourceType.API.getValue().equals( resource.getResourceType().getValue() ) ) {
 			return false;
 		}
 		if ( StringUtils.isEmpty( resource.getResourceApiUriMethods() ) ) {
