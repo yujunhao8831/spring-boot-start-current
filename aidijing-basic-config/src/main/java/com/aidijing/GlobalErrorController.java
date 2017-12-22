@@ -48,7 +48,7 @@ public class GlobalErrorController {
 	@ExceptionHandler( HttpMessageNotReadableException.class )
 	public ResponseEntity httpMessageNotReadableExceptionHandler ( HttpMessageNotReadableException e ) {
 		LogUtils.getLogger().error( "error" , e );
-		return ResponseEntityPro.unauthorized( "Required request body is missing, 请输入参数后再进行相关操作. " );
+		return ResponseEntityPro.unauthorized( "Required request body is missing,请求体无法解析,请检查请求体格式的有效性(或请求体内参数格式有误导致无法解析). " );
 	}
 
 	@ExceptionHandler( MultipartException.class )

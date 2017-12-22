@@ -1,5 +1,6 @@
 package com.aidijing.common.util;
 
+import com.aidijing.common.SimpleDateFormatPro;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -244,10 +245,12 @@ public abstract class JsonUtils {
     private static class CustomizationObjectMapper extends ObjectMapper {
         CustomizationObjectMapper () {
             super();
-            setDateFormat( new SimpleDateFormat( DateFormatStyle.CN_DATE_BASIC_STYLE.getDateStyle() ) );
-            setSerializationInclusion( JsonInclude.Include.NON_NULL ); // <code>null<code> 不序列化
+            // 设置格式化
+            setDateFormat( new SimpleDateFormatPro(DateFormatStyle.getDateFormatStyles()) );
+			// <code>null<code> 不序列化
+            setSerializationInclusion( JsonInclude.Include.NON_NULL );
         }
-    }
+	}
 
 
 }
