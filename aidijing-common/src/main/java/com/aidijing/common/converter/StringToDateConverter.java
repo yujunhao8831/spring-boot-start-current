@@ -5,6 +5,7 @@ import com.aidijing.common.util.DateUtils;
 import org.springframework.core.convert.converter.Converter;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author : 披荆斩棘
@@ -14,9 +15,13 @@ public class StringToDateConverter implements Converter< String, Date > {
 
     @Override
     public Date convert ( String source ) {
+		Date date = null;
         for ( DateFormatStyle formatStyle : DateFormatStyle.values() ) {
-            return DateUtils.formatStringByStyle( source.trim(), formatStyle.getDateStyle() );
+			date = DateUtils.formatStringByStyle(source.trim(), formatStyle.getDateStyle());
+			if ( Objects.nonNull(date) ) {
+				break;
+			}
         }
-        return DateUtils.formatStringByStyle( source.trim(), DateFormatStyle.CN_DATE_BASIC_STYLE.getDateStyle() );
+        return date;
     }
 }
