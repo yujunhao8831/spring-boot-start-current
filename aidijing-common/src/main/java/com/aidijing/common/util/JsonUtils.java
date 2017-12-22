@@ -1,6 +1,5 @@
 package com.aidijing.common.util;
 
-import com.aidijing.common.SimpleDateFormatPro;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -9,6 +8,7 @@ import com.github.bohnman.squiggly.Squiggly;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -189,6 +189,10 @@ public abstract class JsonUtils {
         return CUSTOMIZATION;
     }
 
+	public static ObjectMapper buildCustomizationMapper () {
+		return new CustomizationObjectMapper();
+	}
+
     public static ObjectMapper getBasicMapper () {
         return BASIC;
     }
@@ -243,13 +247,22 @@ public abstract class JsonUtils {
     }
 
     private static class CustomizationObjectMapper extends ObjectMapper {
-        CustomizationObjectMapper () {
-            super();
-            // 设置格式化
-            setDateFormat( new SimpleDateFormatPro(DateFormatStyle.getDateFormatStyles()) );
+
+		private CustomizationObjectMapper (DateFormat dateFormat) {
+			super();
+			// 设置格式化
+			setDateFormat( dateFormat );
 			// <code>null<code> 不序列化
-            setSerializationInclusion( JsonInclude.Include.NON_NULL );
+			setSerializationInclusion( JsonInclude.Include.NON_NULL );
+		}
+
+        private CustomizationObjectMapper () {
+			// 默认只支持 yyyy-MM-dd HH:mm:ss
+			this(new SimpleDateFormat(DateFormatStyle.CN_DATE_BASIC_STYLE.getDateStyle()));
         }
+
+
+
 	}
 
 

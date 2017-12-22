@@ -1,9 +1,12 @@
 package com.aidijing.config;
 
+import com.aidijing.common.SimpleDateFormatPro;
 import com.aidijing.common.converter.StringToDateConverter;
 import com.aidijing.common.filter.RequestLoggingFilter;
 import com.aidijing.common.interceptor.InjectionAttackInterceptor;
+import com.aidijing.common.util.DateFormatStyle;
 import com.aidijing.common.util.JsonUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.ErrorPage;
@@ -38,119 +41,122 @@ import java.util.Objects;
 public class SpringConfig extends WebMvcConfigurerAdapter implements ErrorPageRegistrar {
 
 
-    @Autowired( required = false )
-    private InjectionAttackInterceptor injectionAttackInterceptor;
+	@Autowired( required = false )
+	private InjectionAttackInterceptor injectionAttackInterceptor;
 
 
-    @Bean
-    public RequestLoggingFilter requestLoggingFilter () {
-        return new RequestLoggingFilter();
-    }
+	@Bean
+	public RequestLoggingFilter requestLoggingFilter () {
+		return new RequestLoggingFilter();
+	}
 
-    /**
-     * <pre>
-     *      aidijing:
-     *        filter:
-     *          injection-attack-interceptor:
-     *            enabled: true
-     *
-     * </pre>
-     */
-    @Bean
-    @Order( Ordered.HIGHEST_PRECEDENCE )
-    @ConditionalOnProperty( prefix = "aidijing.filter.injection-attack-interceptor", name = "enabled", havingValue = "true" )
-    public InjectionAttackInterceptor injectionAttackInterceptor () {
-        return new InjectionAttackInterceptor();
-    }
-
-
-    /**
-     * 添加过滤器
-     *
-     * @return
-     */
-    @Bean
-    public FilterRegistrationBean filterRegistrationBean () {
-        // 过滤器注册
-        FilterRegistrationBean  registrationBean = new FilterRegistrationBean();
-        CharacterEncodingFilter encodingFilter   = new CharacterEncodingFilter();
-        encodingFilter.setEncoding( StandardCharsets.UTF_8.displayName() );
-        encodingFilter.setForceEncoding( true );
-        // 字符过滤器 
-        registrationBean.setFilter( encodingFilter );
-        // 日志处理过滤器
-        registrationBean.setFilter( requestLoggingFilter() );
-        return registrationBean;
-    }
-
-    /**
-     * 添加转换器
-     *
-     * @param registry
-     */
-    @Override
-    public void addFormatters ( FormatterRegistry registry ) {
-        // 从前台过来的数据转换成对应类型的转换器
-        registry.addConverter( new StringToDateConverter() );
-    }
-
-    @Bean
-    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter () {
-        return new MappingJackson2HttpMessageConverter( JsonUtils.getCustomizationMapper() );
-    }
-
-    /**
-     * 消息转换
-     *
-     * @param converters
-     */
-    @Override
-    public void extendMessageConverters ( List< HttpMessageConverter< ? > > converters ) {
-        // 默认转换器注册后, 插入自定义的请求响应转换器
-        converters.add( new StringHttpMessageConverter( StandardCharsets.UTF_8 ) );
-        converters.add( this.mappingJackson2HttpMessageConverter() );
-
-    }
+	/**
+	 * <pre>
+	 *      aidijing:
+	 *        filter:
+	 *          injection-attack-interceptor:
+	 *            enabled: true
+	 *
+	 * </pre>
+	 */
+	@Bean
+	@Order( Ordered.HIGHEST_PRECEDENCE )
+	@ConditionalOnProperty( prefix = "aidijing.filter.injection-attack-interceptor", name = "enabled", havingValue = "true" )
+	public InjectionAttackInterceptor injectionAttackInterceptor () {
+		return new InjectionAttackInterceptor();
+	}
 
 
-    @Override
-    public void addReturnValueHandlers ( List< HandlerMethodReturnValueHandler > returnValueHandlers ) {
-    }
+	/**
+	 * 添加过滤器
+	 *
+	 * @return
+	 */
+	@Bean
+	public FilterRegistrationBean filterRegistrationBean () {
+		// 过滤器注册
+		FilterRegistrationBean  registrationBean = new FilterRegistrationBean();
+		CharacterEncodingFilter encodingFilter   = new CharacterEncodingFilter();
+		encodingFilter.setEncoding( StandardCharsets.UTF_8.displayName() );
+		encodingFilter.setForceEncoding( true );
+		// 字符过滤器
+		registrationBean.setFilter( encodingFilter );
+		// 日志处理过滤器
+		registrationBean.setFilter( requestLoggingFilter() );
+		return registrationBean;
+	}
 
-    @Override
-    public void addInterceptors ( InterceptorRegistry registry ) {
-        if ( Objects.nonNull( injectionAttackInterceptor ) ) {
-            registry.addInterceptor( injectionAttackInterceptor ).addPathPatterns( "/**" );
-        }
-    }
+	/**
+	 * 添加转换器
+	 *
+	 * @param registry
+	 */
+	@Override
+	public void addFormatters ( FormatterRegistry registry ) {
+		// 从前台过来的数据转换成对应类型的转换器
+		registry.addConverter( new StringToDateConverter() );
+	}
 
-    /**
-     * cors跨域处理
-     *
-     * @param registry
-     */
-    @Override
-    public void addCorsMappings ( CorsRegistry registry ) {
-        registry.addMapping( "/**" )
-                .allowedMethods(
-                    HttpMethod.HEAD.name() ,
-                    HttpMethod.GET.name() ,
-                    HttpMethod.POST.name() ,
-                    HttpMethod.PUT.name() ,
-                    HttpMethod.DELETE.name() ,
-                    HttpMethod.OPTIONS.name() ,
-                    HttpMethod.PATCH.name() ,
-                    HttpMethod.TRACE.name()
-                )
-                // 允许的域名
-                .allowedOrigins( "*" );
-    }
+	@Bean
+	public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter () {
+		ObjectMapper customizationMapper = JsonUtils.buildCustomizationMapper()
+													// 设置格式化解析,支持多种
+													.setDateFormat( new SimpleDateFormatPro( DateFormatStyle.getDateFormatStyles() ) );
+		return new MappingJackson2HttpMessageConverter( customizationMapper );
+	}
+
+	/**
+	 * 消息转换
+	 *
+	 * @param converters
+	 */
+	@Override
+	public void extendMessageConverters ( List< HttpMessageConverter< ? > > converters ) {
+		// 默认转换器注册后, 插入自定义的请求响应转换器
+		converters.add( new StringHttpMessageConverter( StandardCharsets.UTF_8 ) );
+		converters.add( this.mappingJackson2HttpMessageConverter() );
+
+	}
 
 
-    @Override
-    public void registerErrorPages ( ErrorPageRegistry registry ) {
-        registry.addErrorPages( new ErrorPage( HttpStatus.NOT_FOUND , "/404.html" ) );
-        registry.addErrorPages( new ErrorPage( HttpStatus.UNAUTHORIZED , "/401.html" ) );
-        registry.addErrorPages( new ErrorPage( Throwable.class , "/500.html" ) );
-    }
+	@Override
+	public void addReturnValueHandlers ( List< HandlerMethodReturnValueHandler > returnValueHandlers ) {
+	}
+
+	@Override
+	public void addInterceptors ( InterceptorRegistry registry ) {
+		if ( Objects.nonNull( injectionAttackInterceptor ) ) {
+			registry.addInterceptor( injectionAttackInterceptor ).addPathPatterns( "/**" );
+		}
+	}
+
+	/**
+	 * cors跨域处理
+	 *
+	 * @param registry
+	 */
+	@Override
+	public void addCorsMappings ( CorsRegistry registry ) {
+		registry.addMapping( "/**" )
+				.allowedMethods(
+					HttpMethod.HEAD.name() ,
+					HttpMethod.GET.name() ,
+					HttpMethod.POST.name() ,
+					HttpMethod.PUT.name() ,
+					HttpMethod.DELETE.name() ,
+					HttpMethod.OPTIONS.name() ,
+					HttpMethod.PATCH.name() ,
+					HttpMethod.TRACE.name()
+				)
+				// 允许的域名
+				.allowedOrigins( "*" );
+	}
+
+
+	@Override
+	public void registerErrorPages ( ErrorPageRegistry registry ) {
+		registry.addErrorPages( new ErrorPage( HttpStatus.NOT_FOUND , "/404.html" ) );
+		registry.addErrorPages( new ErrorPage( HttpStatus.UNAUTHORIZED , "/401.html" ) );
+		registry.addErrorPages( new ErrorPage( Throwable.class , "/500.html" ) );
+	}
 }
