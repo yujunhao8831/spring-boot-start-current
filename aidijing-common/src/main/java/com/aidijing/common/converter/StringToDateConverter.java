@@ -8,6 +8,10 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
+ * 这里只能对普通参数进行转换
+ *
+ * 对 {@link org.springframework.web.bind.annotation.RequestBody} 接收的参数无效
+ *
  * @author : 披荆斩棘
  * @date : 17/7/17
  */
