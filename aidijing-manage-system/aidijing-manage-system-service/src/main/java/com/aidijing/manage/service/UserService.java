@@ -3,6 +3,8 @@ package com.aidijing.manage.service;
 import com.aidijing.manage.bean.domain.User;
 import com.baomidou.mybatisplus.service.IService;
 
+import java.util.concurrent.Future;
+
 /**
  * <p>
  * 后台管理用户 服务类
@@ -28,5 +30,7 @@ public interface UserService extends IService< User > {
 
 	boolean isNotExist ( Long userId );
 
+
+	Future<Boolean> pay ();
 
 }

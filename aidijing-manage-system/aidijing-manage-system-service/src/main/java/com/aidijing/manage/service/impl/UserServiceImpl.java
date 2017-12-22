@@ -1,12 +1,22 @@
 package com.aidijing.manage.service.impl;
 
+import com.aidijing.common.util.AssertUtils;
+import com.aidijing.common.util.LogUtils;
 import com.aidijing.manage.bean.domain.User;
 import com.aidijing.manage.mapper.UserMapper;
 import com.aidijing.manage.service.UserService;
 import com.baomidou.mybatisplus.mapper.Condition;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.redisson.api.RedissonClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
 
 /**
  * 用户服务实现类
@@ -26,14 +36,14 @@ public class UserServiceImpl extends ServiceImpl< UserMapper, User > implements 
 	 * 用户分页在缓存中存储名称key的前缀
 	 */
 	private static final String CACHE_USER_LIST_PAGE_NAME_PREFIX = "UserService.User.namespace";
-
+	@Autowired
+	private RedissonClient redissonClient;
 
 	@Cacheable( key = "T(java.lang.String).valueOf(#id)" )
 	@Override
 	public User get ( Long id ) {
 		return super.selectById( id );
 	}
-
 
 	@Caching(
 		evict = {
@@ -50,7 +60,6 @@ public class UserServiceImpl extends ServiceImpl< UserMapper, User > implements 
 		}
 		return super.selectById( user.getId() );
 	}
-
 
 	@Caching(
 		evict = {
@@ -74,12 +83,10 @@ public class UserServiceImpl extends ServiceImpl< UserMapper, User > implements 
 		return super.deleteById( id );
 	}
 
-
 	@Override
 	public User findByUsername ( String username ) {
 		return this.selectOne( Condition.create().eq( "username" , username ) );
 	}
-
 
 	@Override
 	public boolean isExist ( Long userId ) {
@@ -89,6 +96,37 @@ public class UserServiceImpl extends ServiceImpl< UserMapper, User > implements 
 	@Override
 	public boolean isNotExist ( Long userId ) {
 		return ! this.isExist( userId );
+	}
+
+	@Async
+	@Override
+	public Future< Boolean > pay () {
+		// 获取分布式锁
+		final Lock lock = redissonClient.getLock( "buyLock" );
+		
+		try {
+			// 30秒没有获取到锁
+			if ( ! lock.tryLock( 30 , TimeUnit.SECONDS ) ) {
+				AssertUtils.isTrue( true , "支付失败,请稍后再试" );
+			}
+		} catch ( InterruptedException e ) {
+			AssertUtils.isTrue( true , "支付失败,请稍后再试" );
+		}
+
+		try {
+			// 支付处理
+			// ... ...
+			for ( int i = 0 ; i < 3 ; i++ ) {
+				TimeUnit.SECONDS.sleep( 1 );
+				LogUtils.getLogger().warn( "线程id : {},支付处理中... " , Thread.currentThread().getId() );
+			}
+		} catch ( InterruptedException e ) {
+			AssertUtils.isTrue( true , "支付失败,请稍后再试" );
+		} finally {
+			// 解锁
+			lock.unlock();
+		}
+		return new AsyncResult<>( true );
 	}
 
 

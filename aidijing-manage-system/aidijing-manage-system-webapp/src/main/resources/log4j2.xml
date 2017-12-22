@@ -91,6 +91,7 @@ ${project.name}
         <logger name="org.springframework" level="info" />
         <logger name="com.alibaba.druid" level="info"/>
 		<logger name="org.netflix" level="info" />
+		<logger name="org.redisson" level="info" />
 
         <!--
             同步和异步混合记录

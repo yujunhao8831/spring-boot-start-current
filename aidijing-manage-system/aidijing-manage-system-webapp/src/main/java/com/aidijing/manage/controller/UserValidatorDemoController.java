@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.groups.Default;
 
 /**
+ * HibernateValidator 校验示例
+ *
  * @author : 披荆斩棘
  * @date : 2017/8/26
  */
