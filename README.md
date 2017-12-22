@@ -1,12 +1,4 @@
 # Spring Boot 基础骨架
-https://yujunhao8831.github.io/
-
-算是个人的记录,几年来做项目是会遇到的问题,这里会得到解决.当然还是有很多不足
-
-没有整合消息队列,不想东西太多了,想要整合可以看 https://github.com/spring-projects/spring-amqp-samples
-
-分布式服务之间调用,这里没有用到,后续会用Spring Cloud解决.
-
 项目可以打成jar部署,也可以打成war部署,默认使用jar
 
 ``` xml
