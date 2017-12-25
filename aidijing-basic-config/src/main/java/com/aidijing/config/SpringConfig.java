@@ -93,14 +93,15 @@ public class SpringConfig extends WebMvcConfigurerAdapter implements ErrorPageRe
 	 */
 	@Override
 	public void addFormatters ( FormatterRegistry registry ) {
-		// 从前台过来的数据转换成对应类型的转换器
+		// 从前台过来的数据转换成对应类型的转换器,但是对 @RequestBody 注解的参数无效
 		registry.addConverter( new StringToDateConverter() );
 	}
 
 	@Bean
 	public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter () {
 		ObjectMapper customizationMapper = JsonUtils.buildCustomizationMapper()
-													// 设置格式化解析,支持多种
+													// 设置格式化解析,支持多种,针对 @RequestBody 参数解析时,前端传入不同种类时间格式(以字符串形式)时能够正常解析.
+													// 解析失败时会抛 HttpMessageNotReadableException 异常
 													.setDateFormat( new SimpleDateFormatPro( DateFormatStyle.getDateFormatStyles() ) );
 		return new MappingJackson2HttpMessageConverter( customizationMapper );
 	}
@@ -121,6 +122,7 @@ public class SpringConfig extends WebMvcConfigurerAdapter implements ErrorPageRe
 
 	@Override
 	public void addReturnValueHandlers ( List< HandlerMethodReturnValueHandler > returnValueHandlers ) {
+		// 返回值的处理,可以用来处理敏感数据的显示
 	}
 
 	@Override
