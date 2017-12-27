@@ -21,6 +21,10 @@ import java.util.concurrent.atomic.LongAdder;
 
 /**
  * 分布式code构建工具
+ * <p>
+ * (机器码 + 进程号(或者用PID)) + 随机数 + 时间 + 计数器
+ *
+ * @author pijingzhanji
  */
 public final class GenerationCode {
 
@@ -51,15 +55,33 @@ public final class GenerationCode {
 		}
 	}
 
-
 	/**
-	 * (机器码 + 进程号) + 随机数 + 时间 + 下一个数
-	 *
+	 * (机器码 + 进程号) + 随机数 + 时间 + 计数器
 	 * @return 全局唯一ID
 	 */
 	public static String globalUniqueId () {
+		return globalUniqueId( 10 );
+	}
+
+	/**
+	 * (机器码 + 进程号) + 随机数 + 时间 + 计数器 + 用户ID
+	 *
+	 * @param userId : 用户ID
+	 * @return 全局唯一ID
+	 */
+	public static String globalUniqueId ( final String userId ) {
+		return globalUniqueId(10) + userId;
+	}
+
+
+	/**
+	 * (机器码 + 进程号) + 随机数 + 时间 + 计数器
+	 * @param count 随机数长度
+	 * @return 全局唯一ID
+	 */
+	private static String globalUniqueId (final int count) {
 		// 随机数,该工具类是线程安全的
-		final String randomNumber = RandomStringUtils.randomNumeric( 10 );
+		final String randomNumber = RandomStringUtils.randomNumeric( count );
 		// 时间
 		final String now = DATE_TIME_FORMATTER.format( LocalDateTime.now() );
 		// 下一个数
@@ -67,6 +89,9 @@ public final class GenerationCode {
 		return MP + Thread.currentThread().getId() + randomNumber + now + nextNumber;
 	}
 
+	/**
+	 * 自增数
+	 */
 	private static long getNextNumber () {
 		final long next = LONG_ADDER.longValue();
 		if ( next >= NEXT_NUMBER_MAX_LIMIT ) {
@@ -77,15 +102,6 @@ public final class GenerationCode {
 		return next;
 	}
 
-	/**
-	 * (机器码 + 进程号) + 随机数 + 时间 + 下一个数 + 用户ID
-	 *
-	 * @param userId : 用户ID
-	 * @return 全局唯一ID
-	 */
-	public static String globalUniqueId ( final String userId ) {
-		return globalUniqueId() + userId;
-	}
 
 	// 创建机器标识符
 	private static int createMachineIdentifier () {
