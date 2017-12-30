@@ -23,8 +23,6 @@ public interface RoleService extends IService< Role > {
 
     List< Role > listByUserRole ( List< UserRole > userRoles );
 
-    List< Role > listSuperAdminRole ();
-
     boolean deleteRelatedById ( Long id );
 
 	Role getByRoleNameCode ( String roleCode );

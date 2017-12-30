@@ -22,6 +22,7 @@ import java.util.Objects;
 
 /**
  * 注入攻击拦截器
+ *
  * @author : 披荆斩棘
  * @date : 2017/8/29
  * @see PassInjectionAttackIntercept
@@ -31,66 +32,66 @@ import java.util.Objects;
 public class InjectionAttackInterceptor extends HandlerInterceptorAdapter {
 
 
-    private InjectionAttackHandler injectionAttackHandler = DefaultInjectionAttackHandler.getInstance();
+	private InjectionAttackHandler injectionAttackHandler = DefaultInjectionAttackHandler.getInstance();
 
-    @Override
-    public boolean preHandle ( HttpServletRequest request , HttpServletResponse response , Object handler ) throws
-                                                                                                            Exception {
-        if ( ! ( handler instanceof HandlerMethod ) ) {
-            return false;
-        }
+	@Override
+	public boolean preHandle ( HttpServletRequest request , HttpServletResponse response , Object handler ) throws
+																											Exception {
+		if ( ! ( handler instanceof HandlerMethod ) ) {
+			return false;
+		}
 
-        HandlerMethod handlerMethod = ( HandlerMethod ) handler;
+		HandlerMethod handlerMethod = ( HandlerMethod ) handler;
 
-        final PassInjectionAttackIntercept passInjectionAttackIntercept =
-                this.getHandlerAnnotation( handlerMethod , PassInjectionAttackIntercept.class );
-
-
-        String[] ignoreStrings = null;
-        if ( Objects.nonNull( passInjectionAttackIntercept ) ) {
-            if ( ArrayUtils.isEmpty( passInjectionAttackIntercept.value() ) ) {
-                LogUtils.getLogger().debug( "pass,不需要注入攻击拦截" );
-                return true;
-            }
-            ignoreStrings = passInjectionAttackIntercept.value();
-        }
+		final PassInjectionAttackIntercept passInjectionAttackIntercept =
+			this.getHandlerAnnotation( handlerMethod , PassInjectionAttackIntercept.class );
 
 
-        final String parameters = RequestUtils.getRequestParameters( request );
-        LogUtils.getLogger().debug( "请求参数 : {} " , parameters );
-        LogUtils.getLogger().debug( "ignoreStrings : {} " , Arrays.toString( ignoreStrings ) );
+		String[] ignoreStrings = null;
+		if ( Objects.nonNull( passInjectionAttackIntercept ) ) {
+			if ( ArrayUtils.isEmpty( passInjectionAttackIntercept.value() ) ) {
+				LogUtils.getLogger().debug( "pass,不需要注入攻击拦截" );
+				return true;
+			}
+			ignoreStrings = passInjectionAttackIntercept.value();
+		}
 
 
-        // 参数注入攻击处理
-        if ( this.injectionAttackHandler.isInjectionAttack( parameters , ignoreStrings ) ) {
-            LogUtils.getLogger().debug( "参数 {} 被判断为注入攻击" , parameters );
-            this.injectionAttackHandler.attackHandle( request , response , parameters );
-            return false;
-        }
+		final String parameters = RequestUtils.getRequestParameters( request );
+		LogUtils.getLogger().debug( "请求参数 : {} " , parameters );
+		LogUtils.getLogger().debug( "ignoreStrings : {} " , Arrays.toString( ignoreStrings ) );
 
-        final Map< String, String > decodedUriVariables = ( Map< String, String > ) request.getAttribute( HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE );
 
-        if ( MapUtils.isEmpty( decodedUriVariables ) ) {
-            return true;
-        }
+		// 参数注入攻击处理
+		if ( this.injectionAttackHandler.isInjectionAttack( parameters , ignoreStrings ) ) {
+			LogUtils.getLogger().debug( "参数 {} 被判断为注入攻击" , parameters );
+			this.injectionAttackHandler.attackHandle( request , response , parameters );
+			return false;
+		}
 
-        // URI PATH 注入攻击处理
-        for ( String decodedUriVariable : decodedUriVariables.values() ) {
-            if ( this.injectionAttackHandler.isInjectionAttack( decodedUriVariable , ignoreStrings ) ) {
-                LogUtils.getLogger().debug( "URI {} 被判断为注入攻击" , parameters );
-                this.injectionAttackHandler.attackHandle( request , response , decodedUriVariable );
-                return false;
-            }
-        }
-        return true;
-    }
+		final Map< String, String > decodedUriVariables = ( Map< String, String > ) request.getAttribute( HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE );
 
-    private < T extends Annotation > T getHandlerAnnotation ( HandlerMethod handlerMethod ,
-                                                              Class< T > clazz ) {
-        T annotation = handlerMethod.getMethodAnnotation( clazz );
-        if ( Objects.nonNull( annotation ) ) {
-            return annotation;
-        }
-        return handlerMethod.getBean().getClass().getAnnotation( clazz );
-    }
+		if ( MapUtils.isEmpty( decodedUriVariables ) ) {
+			return true;
+		}
+
+		// URI PATH 注入攻击处理
+		for ( String decodedUriVariable : decodedUriVariables.values() ) {
+			if ( this.injectionAttackHandler.isInjectionAttack( decodedUriVariable , ignoreStrings ) ) {
+				LogUtils.getLogger().debug( "URI {} 被判断为注入攻击" , parameters );
+				this.injectionAttackHandler.attackHandle( request , response , decodedUriVariable );
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private < T extends Annotation > T getHandlerAnnotation ( HandlerMethod handlerMethod ,
+															  Class< T > clazz ) {
+		T annotation = handlerMethod.getMethodAnnotation( clazz );
+		if ( Objects.nonNull( annotation ) ) {
+			return annotation;
+		}
+		return handlerMethod.getBeanType().getAnnotation( clazz );
+	}
 }

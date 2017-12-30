@@ -14,11 +14,11 @@ import java.util.Date;
 
 /**
  * <p>
- * 短信订阅表
+ * 短信订阅
  * </p>
  *
  * @author 披荆斩棘
- * @since 2017-08-31
+ * @since 2017-12-28
  */
 @Data
 @EqualsAndHashCode( callSuper = true )
@@ -60,12 +60,8 @@ public class SmsSubscribe extends Model< SmsSubscribe > {
 	private Date    smsSendTime;
 	/**
 	 * 发送状态
-	 * (
-	 * NOT_SEND : 未发送,
-	 * SEND : 已发送,
-	 * FAIL_SEND : 发送失败,
-	 * FINAL_FAIL_SEND : 重试次数用完后,还是发送失败
-	 * )
+	 * ( NOT_SEND : 未发送,SEND : 已发送,
+	 * FAIL_SEND : 发送失败,FINAL_FAIL_SEND : 重试次数用完后,还是发送失败 )
 	 */
 	@TableField( "sms_send_state" )
 	private String  smsSendState;

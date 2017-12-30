@@ -39,8 +39,10 @@ public class NotifierConfiguration {
         return notifier;
     }
 
-    // 计划每10秒发送一次到期提醒。
-    @Scheduled( fixedRate = 1_000L )
+	/**
+	 * 计划每10秒发送一次到期提醒。
+	 */
+	@Scheduled( fixedRate = 1_000L )
     public void remind () {
         remindingNotifier().sendReminders();
     }

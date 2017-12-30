@@ -1,4 +1,4 @@
-# 发件箱
+# 发件箱,配自己的发件箱,该发件箱已无效
 send.mail: pjzj8831@163.com
 security:
   user:
@@ -35,7 +35,7 @@ spring:
           user.password: "${security.user.password}"
       notify:
         mail:
-          to: yujunhao_8831@yahoo.com
+          to: yujunhao_8831@yahoo.com # 通知到哪个邮箱
           subject: aidijing
           from: ${send.mail}
       routes:

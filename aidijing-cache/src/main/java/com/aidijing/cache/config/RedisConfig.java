@@ -74,8 +74,7 @@ public class RedisConfig {
 
     @Bean
     public JedisPoolConfig jedisPoolConfig () {
-        JedisPoolConfig config = new JedisPoolConfig();
-        return config;
+		return new JedisPoolConfig();
     }
 
     @Bean

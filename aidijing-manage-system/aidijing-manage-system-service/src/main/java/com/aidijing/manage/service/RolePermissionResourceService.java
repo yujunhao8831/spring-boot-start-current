@@ -17,10 +17,9 @@ import java.util.List;
  */
 public interface RolePermissionResourceService extends IService<RolePermissionResource> {
 
-    PageInfo listPage ( PagingRequest pagingRequest );
+    PageInfo<RolePermissionResource> listPage ( PagingRequest pagingRequest );
 
     List<RolePermissionResource> listByUserId ( Long userId );
 
-    List<RolePermissionResource> listSuperAdminRolePermissionResource ();
 
 }

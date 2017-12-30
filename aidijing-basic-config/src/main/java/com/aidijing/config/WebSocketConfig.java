@@ -3,7 +3,6 @@ package com.aidijing.config;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -45,6 +44,7 @@ import java.util.Objects;
  *      }
  * </pre>
  *
+ * @author pijingzhanji
  */
 @Configuration
 @EnableWebSocketMessageBroker
@@ -54,86 +54,83 @@ import java.util.Objects;
 @ConditionalOnExpression( "${aidijing.web-socket.enabled:false}" )
 public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
-    private String[] clientBrokerDestinationPrefixes      = { "/topic" };
-    private String[] serverApplicationDestinationPrefixes = { "/app" };
-    private String[] stompEndpointsPaths                  = { "/aidijing" };
-    /**
-     * WebSocket拦截器
-     */
-    @Autowired( required = false )
-    private ChannelInterceptor channelInterceptor;
+	private String[] clientBrokerDestinationPrefixes      = { "/topic" };
+	private String[] serverApplicationDestinationPrefixes = { "/app" };
+	private String[] stompEndpointsPaths                  = { "/aidijing" };
+	/**
+	 * WebSocket拦截器
+	 */
+	@Autowired( required = false )
+	private ChannelInterceptor channelInterceptor;
 
 
-    @Value( "${jwt.header}" )
-    private String tokenHeaderKey;
+	/**
+	 * 通道
+	 *
+	 * @param registration
+	 */
+	@Override
+	public void configureClientInboundChannel ( ChannelRegistration registration ) {
+		if ( Objects.nonNull( channelInterceptor ) ) {
+			registration.interceptors( channelInterceptor );
+		}
 
-    /**
-     * 通道
-     *
-     * @param registration
-     */
-    @Override
-    public void configureClientInboundChannel ( ChannelRegistration registration ) {
-        if ( Objects.nonNull( channelInterceptor ) ) {
-            registration.setInterceptors( channelInterceptor );
-        }
+	}
 
-    }
+	/**
+	 * 定义消息代理,设置消息连接请求的各种规范信息.
+	 *
+	 * @param config 消息代理注册
+	 */
+	@Override
+	public void configureMessageBroker ( MessageBrokerRegistry config ) {
+		// Server前缀,指服务端接收地址的前缀,意思就是说客户端给服务端发消息的地址的前缀
+		config.setApplicationDestinationPrefixes( serverApplicationDestinationPrefixes );
+		// Client前缀,表示客户端订阅地址的前缀信息,也就是客户端接收服务端消息的地址的前缀信息
+		config.enableSimpleBroker( clientBrokerDestinationPrefixes );
+	}
 
-    /**
-     * 定义消息代理,设置消息连接请求的各种规范信息.
-     *
-     * @param config 消息代理注册
-     */
-    @Override
-    public void configureMessageBroker ( MessageBrokerRegistry config ) {
-        // 指服务端接收地址的前缀,意思就是说客户端给服务端发消息的地址的前缀
-        config.setApplicationDestinationPrefixes( serverApplicationDestinationPrefixes ); // Server前缀
-        // 表示客户端订阅地址的前缀信息,也就是客户端接收服务端消息的地址的前缀信息
-        config.enableSimpleBroker( clientBrokerDestinationPrefixes ); // Client前缀
-    }
+	/**
+	 *
+	 * <pre>
+	 *    var stompClient = null;
+	 *    var brokerDestinationPrefixes = "服务器端配置的订阅前缀";
+	 *    var serverApplicationDestinationPrefixes = "服务器端配置的接收前缀";
+	 *    var serverEndpoint = "/aidijing"; // 服务端配置的端点
+	 *
+	 *    // 连接
+	 *    function connect() {
+	 *        var socket = new SockJS(serverEndpoint);
+	 *        stompClient = Stomp.over(socket);
+	 *        stompClient.connect({}, function (frame) {
+	 *            setConnected(true);
+	 *            // 订阅的时候,加上前缀 {@link #CLIENT_SUBSCRIBE_PREFIXES}
+	 *            stompClient.subscribe( brokerDestinationPrefixes + '/greetings', function (greeting) {
+	 *                showGreeting(JSON.parse(greeting.body).content);
+	 *            });
+	 *        });
+	 *    }
+	 *    // 发送消息
+	 *    function sendName() {
+	 *        stompClient.send( serverApplicationDestinationPrefixes + "/hello", {}, JSON.stringify({'name': '披荆斩棘'}));
+	 *    }
+	 *
+	 * </pre>
+	 */
 
-    /**
-     *
-     * <pre>
-     *    var stompClient = null;
-     *    var brokerDestinationPrefixes = "服务器端配置的订阅前缀";
-     *    var serverApplicationDestinationPrefixes = "服务器端配置的接收前缀";
-     *    var serverEndpoint = "/aidijing"; // 服务端配置的端点
-     *
-     *    // 连接
-     *    function connect() {
-     *        var socket = new SockJS(serverEndpoint);
-     *        stompClient = Stomp.over(socket);
-     *        stompClient.connect({}, function (frame) {
-     *            setConnected(true);
-     *            // 订阅的时候,加上前缀 {@link #CLIENT_SUBSCRIBE_PREFIXES}
-     *            stompClient.subscribe( brokerDestinationPrefixes + '/greetings', function (greeting) {
-     *                showGreeting(JSON.parse(greeting.body).content);
-     *            });
-     *        });
-     *    }
-     *    // 发送消息
-     *    function sendName() {
-     *        stompClient.send( serverApplicationDestinationPrefixes + "/hello", {}, JSON.stringify({'name': '披荆斩棘'}));
-     *    }
-     *
-     * </pre>
-     */
-
-    /**
-     * 配置端点注册中心,接收客户端的连接
-     *
-     * @param registry 端点注册中心
-     */
-    @Override
-    public void registerStompEndpoints ( StompEndpointRegistry registry ) {
-        /* 在指定的映射路径上为Web套接字端点注册一个STOMP. */
-        // 表示添加了一个 /aidijing 端点,客户端就可以通过这个端点来进行连接.
-        // aidijing
-        registry.addEndpoint( stompEndpointsPaths )
-                .withSockJS(); // 开启SockJS支持
-    }
+	/**
+	 * 配置端点注册中心,接收客户端的连接
+	 *
+	 * @param registry 端点注册中心
+	 */
+	@Override
+	public void registerStompEndpoints ( StompEndpointRegistry registry ) {
+		/* 在指定的映射路径上为Web套接字端点注册一个STOMP. */
+		// 表示添加了一个 /aidijing 端点,客户端就可以通过这个端点来进行连接.
+		// aidijing
+		registry.addEndpoint( stompEndpointsPaths )
+				.withSockJS(); // 开启SockJS支持
+	}
 
 
 }

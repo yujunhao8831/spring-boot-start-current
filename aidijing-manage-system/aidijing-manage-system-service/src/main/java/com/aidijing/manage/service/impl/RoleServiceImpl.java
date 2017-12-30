@@ -35,8 +35,6 @@ public class RoleServiceImpl extends ServiceImpl< RoleMapper, Role > implements 
 	@Autowired
 	private UserRoleService               userRoleService;
 	@Autowired
-	private PermissionResourceService     permissionResourceService;
-	@Autowired
 	private RolePermissionResourceService rolePermissionResourceService;
 
 
@@ -68,17 +66,12 @@ public class RoleServiceImpl extends ServiceImpl< RoleMapper, Role > implements 
 	@Override
 	public List< Role > listByUserRole ( List< UserRole > userRoles ) {
 		if ( CollectionUtils.isEmpty( userRoles ) ) {
-			return Collections.EMPTY_LIST;
+			return Collections.emptyList();
 		}
 		final List< Long > roleIds = userRoles.parallelStream()
 											  .map( UserRole::getRoleId )
 											  .collect( Collectors.toList() );
 		return super.selectBatchIds( roleIds );
-	}
-
-	@Override
-	public List< Role > listSuperAdminRole () {
-		return super.selectList( null );
 	}
 
 	@Override

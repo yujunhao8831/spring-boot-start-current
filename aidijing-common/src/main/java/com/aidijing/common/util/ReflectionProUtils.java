@@ -1,7 +1,5 @@
 package com.aidijing.common.util;
 
-import com.aidijing.common.annotation.ExportFiledComment;
-import com.google.common.collect.Maps;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.reflections.ReflectionUtils;
@@ -11,7 +9,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * 反射工具
@@ -45,53 +46,6 @@ public final class ReflectionProUtils extends ReflectionUtils {
 			return DateUtils.formatDateByStyle( ( Date ) methodResult );
 		}
 		return methodResult.toString();
-	}
-
-
-	/**
-	 * 获取字段属性说明
-	 *
-	 * @param clazz
-	 * @return
-	 */
-	public static LinkedHashMap< String, String > exportFiledComment ( Class< ? > clazz ) {
-		Set< Field > fields = getAllFields(
-			clazz ,
-			withAnnotation( ExportFiledComment.class )
-		);
-		LinkedHashMap< String, String > linkedHashMap = new LinkedHashMap<>( Maps.newHashMapWithExpectedSize( fields.size() ) );
-		fields.forEach( field -> {
-			String filedComment = field.getAnnotation( ExportFiledComment.class ).value();
-			if ( StringUtils.isEmpty( filedComment ) ) {
-				filedComment = field.getName();
-			}
-			linkedHashMap.put( field.getName() , filedComment );
-		} );
-		return linkedHashMap;
-	}
-
-
-	/**
-	 * 获取字段属性说明
-	 *
-	 * @param clazz
-	 * @param keyPrefix   字段前缀
-	 * @param valuePrefix 值的前缀
-	 * @return
-	 */
-	public static LinkedHashMap< String, String > exportFiledComment ( Class< ? > clazz , String keyPrefix ,
-																	   String valuePrefix ) {
-		Set< Field > fields = getAllFields( clazz ,
-											withAnnotation( ExportFiledComment.class ) );
-		LinkedHashMap< String, String > linkedHashMap = new LinkedHashMap<>( Maps.newHashMapWithExpectedSize( fields.size() ) );
-		fields.forEach( field -> {
-			String filedComment = field.getAnnotation( ExportFiledComment.class ).value();
-			if ( StringUtils.isEmpty( filedComment ) ) {
-				filedComment = field.getName();
-			}
-			linkedHashMap.put( keyPrefix + field.getName() , valuePrefix + filedComment );
-		} );
-		return linkedHashMap;
 	}
 
 
@@ -181,8 +135,8 @@ public final class ReflectionProUtils extends ReflectionUtils {
 	/**
 	 * 反射得到公开的没有参数的get方法
 	 *
-	 * @param clazz     : 对象
-	 * @param fieldName : 对象字段
+	 * @param clazz      对象
+	 * @param fieldName  对象字段
 	 * @return 公开没有参数的get方法 , 如果反射不到则返回<code>null</code>
 	 */
 	private static Method getPublicNoParametersGettersMethod ( Class< ? > clazz , String fieldName ) {

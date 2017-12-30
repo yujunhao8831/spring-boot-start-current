@@ -20,8 +20,6 @@ import java.util.regex.Pattern;
  */
 public abstract class DateUtils {
 
-    public static final  String  DATE_BASIC_STYLE          = "yyyy-MM-dd HH:mm:ss";
-    public static final  String  DATE_NORMAL_STYLE         = "yyyy-MM-dd";
     private static final Pattern DATE_BASIC_PATTERN        = Pattern.compile( RegexType.DATE_BASIC );
     private static final Pattern DATE_BASIC_FORMAT_PATTERN = Pattern.compile( "(\\d{4})-(\\d+)-(\\d+).*" );
 
@@ -288,9 +286,9 @@ public abstract class DateUtils {
         return today.minus( i , ChronoUnit.DAYS );
     }
 
-    
 
-   
+
+
 }
 
 

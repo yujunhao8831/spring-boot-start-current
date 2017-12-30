@@ -8,7 +8,6 @@ import com.aidijing.manage.bean.domain.enums.ResourceType;
 import com.aidijing.manage.bean.vo.PermissionResourceVO;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.method.HandlerMethod;
@@ -85,10 +84,6 @@ public class AdminPermissionInterceptor extends HandlerInterceptorAdapter {
 		LogUtils.getLogger().debug( "当前用户权限资源 : {}" , permissionResources );
 
 
-		if ( ContextUtils.currentUserIsRoot() ) {
-			return true;
-		}
-
 		AssertUtils.assertPermissionIsTrue(
 			! checkPermission( permissionResources , method , uri ) ,
 			"对不起权限不足,您没有以 : '" + method + "' 方式,访问 '" + uri + "' 的权限"
@@ -100,20 +95,17 @@ public class AdminPermissionInterceptor extends HandlerInterceptorAdapter {
 		return true;
 	}
 
-	// TODO: 2017/7/10 使用注解还是在添加资源或者授权资源的时候指定持久化到数据库?
+	/**
+	 * 用户越权处理,使用注解还是在添加资源或者授权资源的时候指定持久化到数据库?
+	 * <p>
+	 * 未完善
+	 */
 	private void ultraViresHandle ( HandlerMethod handlerMethod , HttpServletRequest request ) {
 		userUltraViresHandle( handlerMethod , request );
 	}
 
 
-	// 用户越权处理
 	private void userUltraViresHandle ( HandlerMethod handlerMethod , HttpServletRequest request ) {
-		final NeedAuthenticationCurrentUser needAuthenticationCurrentUser =
-			this.getHandlerAnnotation( handlerMethod , NeedAuthenticationCurrentUser.class );
-
-		if ( Objects.isNull( needAuthenticationCurrentUser ) ) {
-			return;
-		}
 
 		/**
 		 * 大概流程
@@ -126,35 +118,12 @@ public class AdminPermissionInterceptor extends HandlerInterceptorAdapter {
 		 * {@link org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping#handleMatch(Object , String , HttpServletRequest)}
 		 *
 		 */
-		final String userIdName = needAuthenticationCurrentUser.pathVariableUserIdName();
 		// /roles/{userId}/{roleId}
 		final String uriVariables =
 			( String ) request.getAttribute( HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE );
 		// {userId=1, roleId=10000}
 		final Map< String, String > decodedUriVariables = ( Map< String, String > ) request.getAttribute( HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE );
 
-		LogUtils.getLogger().debug( "current request uriVariables : {}" , uriVariables );
-		LogUtils.getLogger().debug( "current request decodedUriVariables : {}" , decodedUriVariables );
-
-
-		final Long userId = NumberUtils.createLong( decodedUriVariables.get( userIdName ) );
-
-		if ( Objects.isNull( userId ) ) {
-			// 一般不会为空,到拦截器这一步,Spring就已经处理好了,就是类型有问题,也只会在之前报错
-			LogUtils.getLogger().warn(
-				"验证当前用户信息,根据 needAuthenticationCurrentUser : {} ,获取的userId 为空" ,
-				needAuthenticationCurrentUser
-			);
-
-			return;
-		}
-
-		// 验证是否是当前用户
-		if ( needAuthenticationCurrentUser.authenticationIsCurrentUser() ) {
-			ContextUtils.assertNotCurrentUser( userId );
-			return;
-		}
-		return;
 	}
 
 

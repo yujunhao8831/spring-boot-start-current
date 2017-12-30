@@ -6,9 +6,11 @@ import com.aidijing.manage.bean.dto.UserForm;
 import com.aidijing.manage.jwt.JwtUser;
 import com.aidijing.manage.permission.Pass;
 import com.aidijing.security.JwtTokenUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -72,8 +74,11 @@ public class AuthenticationController {
 	 */
 	@PutMapping
 	public ResponseEntity refreshAndGetAuthenticationToken ( @RequestHeader( "${jwt.header:Authorization}" ) final String token ) {
-		String  username = jwtTokenUtil.getUsernameFromToken( token );
-		JwtUser user     = ( JwtUser ) userDetailsService.loadUserByUsername( username );
+		String username = jwtTokenUtil.getUsernameFromToken( token );
+		if ( StringUtils.isBlank( username ) ) {
+			throw new AuthenticationCredentialsNotFoundException( "无效token" );
+		}
+		JwtUser user = ( JwtUser ) userDetailsService.loadUserByUsername( username );
 		if ( jwtTokenUtil.canTokenBeRefreshed( token , user.getLastPasswordResetDate() ) ) {
 			String refreshedToken = jwtTokenUtil.refreshToken( token );
 			return new ResponseEntityPro().add( "token" , refreshedToken ).buildOk();

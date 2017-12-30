@@ -7,11 +7,12 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.*;
 
 /**
- * @author : 披荆斩棘
- * @date : 2017/5/12
- * 不用在每个类中使用 LogManager.getLogger(xxx.class) 的方式了
+ * 不用在每个类中使用 LogManager.getLogger(xxx.class) 的方式了,
  * 直接使用 LogManager.getLogger(),或者用LogUtils.getLogger
  * 使用以上方法,或自动获取当前调用者的类名
+ *
+ * @author : 披荆斩棘
+ * @date : 2017/5/12
  */
 public abstract class LogUtils {
 
@@ -36,12 +37,17 @@ public abstract class LogUtils {
 	}
 
 
-	public static String confusion (String parameter) {
-		if ( StringUtils.isBlank( parameter ) ) {
-			return parameter;
+	/**
+	 * 混淆,未实现
+	 *
+	 * @param rawString 原字符
+	 * @return 混淆后的字符
+	 */
+	public static String confusion ( String rawString ) {
+		if ( StringUtils.isBlank( rawString ) ) {
+			return rawString;
 		}
-		// TODO: 2017/12/25
-		return parameter;
+		return rawString;
 	}
 
 

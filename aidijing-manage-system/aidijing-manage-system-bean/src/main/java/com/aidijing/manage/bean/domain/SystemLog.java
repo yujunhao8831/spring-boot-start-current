@@ -1,6 +1,6 @@
 package com.aidijing.manage.bean.domain;
 
-import com.aidijing.manage.bean.domain.enums.ActionLevel;
+import com.aidijing.manage.bean.domain.enums.NoticeType;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -15,17 +15,17 @@ import java.util.Date;
 
 /**
  * <p>
- * 后台管理用户历史记录操作表
+ * 系统日志表
  * </p>
  *
  * @author 披荆斩棘
- * @since 2017-06-19
+ * @since 2017-12-29
  */
 @Data
 @EqualsAndHashCode( callSuper = true )
 @Accessors( chain = true )
-@TableName( "manage_user_action_history" )
-public class UserActionHistory extends Model< UserActionHistory > {
+@TableName( "system_log" )
+public class SystemLog extends Model< SystemLog > {
 
 	private static final long serialVersionUID = 1L;
 
@@ -33,87 +33,87 @@ public class UserActionHistory extends Model< UserActionHistory > {
 	 * 主键
 	 */
 	@TableId( value = "id", type = IdType.AUTO )
-	private Long        id;
+	private Long       id;
 	/**
 	 * 后台管理用户ID
 	 */
 	@TableField( "user_id" )
-	private Long        userId;
+	private Long       userId;
 	/**
 	 * 后台管理用户真实姓名
 	 */
 	@TableField( "user_real_name" )
-	private String      userRealName;
-	/**
-	 * 操作级别(FATAL_1 : 致命,能影响到应用 , ERROR_2 : 错误,会影响正常功能, WARN_3 : 日常警告 ,INFO_4 : 日常记录)
-	 */
-	@TableField( "action_level" )
-	private ActionLevel actionLevel;
-	/**
-	 * 操作类型
-	 */
-	@TableField( "action_type" )
-	private String      actionType;
+	private String     userRealName;
 	/**
 	 * 操作日志(也用于可以存储异常栈信息,或者运行的sql)
 	 */
 	@TableField( "action_log" )
-	private String      actionLog;
+	private String     actionLog;
 	/**
 	 * 操作ip地址
 	 */
 	@TableField( "action_ip_address" )
-	private String      actionIpAddress;
+	private String     actionIpAddress;
 	/**
 	 * 操作描述
 	 */
 	@TableField( "action_description" )
-	private String      actionDescription;
-	/**
-	 * 是否警报(注意【强制】POJO 类的 Boolean 属性不能加 is，而数据库字段必须加 is_，要求在 resultMap 中 进行字段与属性之间的映射。)
-	 */
-	@TableField( "is_warn" )
-	private Boolean     warn;
+	private String     actionDescription;
 	/**
 	 * 动作开始时间
 	 */
 	@TableField( "action_start_time" )
-	private Date        actionStartTime;
+	private Date       actionStartTime;
 	/**
 	 * 动作结束时间
 	 */
 	@TableField( "action_end_time" )
-	private Date        actionEndTime;
+	private Date       actionEndTime;
 	/**
-	 * 总执行时间
+	 * 总执行时间(微秒)
 	 */
 	@TableField( "action_total_time" )
-	private Date        actionTotalTime;
+	private Long       actionTotalTime;
 	/**
 	 * 操作类
 	 */
 	@TableField( "action_class" )
-	private String      actionClass;
+	private String     actionClass;
 	/**
 	 * 操作方法
 	 */
 	@TableField( "action_method" )
-	private String      actionMethod;
+	private String     actionMethod;
 	/**
 	 * 方法参数
 	 */
 	@TableField( "action_args" )
-	private String      actionArgs;
+	private String     actionArgs;
+	/**
+	 * 是否异常
+	 */
+	@TableField( "is_exception" )
+	private Boolean    exception;
+	/**
+	 * 异常是否警报
+	 */
+	@TableField( "is_exception_warn" )
+	private Boolean    exceptionWarn;
+	/**
+	 * 通知类型(SMS:短信,MAIL:邮箱)
+	 */
+	@TableField( "notice_type" )
+	private NoticeType noticeType;
 	/**
 	 * 创建时间
 	 */
 	@TableField( "create_time" )
-	private Date        createTime;
+	private Date       createTime;
 	/**
 	 * 修改时间
 	 */
 	@TableField( "update_time" )
-	private Date        updateTime;
+	private Date       updateTime;
 
 
 	@Override

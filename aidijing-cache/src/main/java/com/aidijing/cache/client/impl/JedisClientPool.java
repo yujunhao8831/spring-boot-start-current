@@ -8,11 +8,18 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.exceptions.JedisDataException;
 
+/**
+ * 单机情况使用 try-with-resources 自动关闭
+ * 集群情况下就不能使用这种方式
+ *
+ * @author pijingzhanji
+ */
 @Component
 public class JedisClientPool implements JedisClient {
 
     @Autowired
     private JedisPool jedisPool;
+
 
     @Override
     public String get ( String key ) {

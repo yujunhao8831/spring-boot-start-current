@@ -6,19 +6,21 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
 /**
  * <p>
- * 后台管理角色资源中间表
+ * 角色和权限资源中间表
  * </p>
  *
  * @author 披荆斩棘
- * @since 2017-06-19
+ * @since 2017-12-28
  */
 @Data
+@EqualsAndHashCode( callSuper = true )
 @Accessors( chain = true )
 @TableName( "manage_role_permission_resource" )
 public class RolePermissionResource extends Model< RolePermissionResource > {
@@ -51,6 +53,7 @@ public class RolePermissionResource extends Model< RolePermissionResource > {
 	 * -username,-password : 除了不显示username,password这2个字段,其他字段都显示
 	 * username,password : 只显示username,password这2个字段,都不显示
 	 * )
+	 * 目前只是精确到角色,具体到用户,还需要后续思考
 	 */
 	@TableField( "resource_api_uri_show_fields" )
 	private String resourceApiUriShowFields;

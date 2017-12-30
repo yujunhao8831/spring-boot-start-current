@@ -76,6 +76,12 @@ public abstract class AssertUtils {
 	}
 
 
+	public static void isTrue ( boolean condition , Throwable throwable ) throws Throwable {
+		if ( condition ) {
+			throw throwable;
+		}
+	}
+
 	/**
 	 * dao 层断言
 	 *

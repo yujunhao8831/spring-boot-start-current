@@ -38,9 +38,9 @@ public class RolePermissionResourceServiceImpl extends ServiceImpl< RolePermissi
     private UserService userService;
 
     @Override
-    public PageInfo listPage ( PagingRequest pagingRequest ) {
+    public PageInfo<RolePermissionResource> listPage ( PagingRequest pagingRequest ) {
         PageHelper.startPage( pagingRequest.getPageNumber(), pagingRequest.getPageSize() );
-        return new PageInfo( super.selectList( null ) );
+        return new PageInfo<>( super.selectList( null ) );
     }
 
     @Override
@@ -67,11 +67,5 @@ public class RolePermissionResourceServiceImpl extends ServiceImpl< RolePermissi
         );
         return rolePermissionResources;
     }
-
-    @Override
-    public List< RolePermissionResource > listSuperAdminRolePermissionResource () {
-        return selectList( null );
-    }
-
 
 }

@@ -3,6 +3,7 @@ package com.aidijing;
 import com.aidijing.common.ResponseEntityPro;
 import com.aidijing.common.exception.*;
 import com.aidijing.common.util.LogUtils;
+import lombok.Getter;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,8 @@ import org.springframework.web.multipart.MultipartException;
 import java.sql.SQLException;
 
 /**
+ * 统一异常处理
+ *
  * @author : 披荆斩棘
  * @date : 2017/5/18
  */
@@ -48,7 +51,8 @@ public class GlobalErrorController {
 	@ExceptionHandler( HttpMessageNotReadableException.class )
 	public ResponseEntity httpMessageNotReadableExceptionHandler ( HttpMessageNotReadableException e ) {
 		LogUtils.getLogger().error( "error" , e );
-		return ResponseEntityPro.unauthorized( "Required request body is missing,请求体无法解析,请检查请求体格式的有效性(或请求体内参数格式有误导致无法解析). " );
+		return ResponseEntityPro.unauthorized(
+			"Required request body is missing,请求体无法解析,请检查请求体格式的有效性(或请求体内参数格式有误导致无法解析). " );
 	}
 
 	@ExceptionHandler( MultipartException.class )
@@ -66,7 +70,7 @@ public class GlobalErrorController {
 	@ExceptionHandler( UsernameNotFoundException.class )
 	public ResponseEntity serviceErrorHandler ( UsernameNotFoundException e ) {
 		LogUtils.getLogger().error( "error" , e );
-		return ResponseEntityPro.unauthorized( e.getMessage() );
+		return ResponseEntityPro.unauthorized( e.getMessage() , e.getMessage() );
 	}
 
 	@ExceptionHandler( ResourceNotFoundException.class )
@@ -78,7 +82,7 @@ public class GlobalErrorController {
 	@ExceptionHandler( AuthenticationException.class )
 	public ResponseEntity serviceErrorHandler ( AuthenticationException e ) {
 		LogUtils.getLogger().error( "error" , e );
-		return ResponseEntityPro.unauthorized( e.getMessage() );
+		return ResponseEntityPro.unauthorized( e.getMessage() , e.getMessage() );
 	}
 
 	@ExceptionHandler( ForbiddenException.class )
@@ -126,6 +130,7 @@ public class GlobalErrorController {
 	}
 
 
+	@Getter
 	private enum ExceptionCode {
 		SQL_EXCEPTION( "9001" , "SQL异常" );
 
@@ -138,41 +143,7 @@ public class GlobalErrorController {
 			this.comment = comment;
 		}
 
-		/**
-		 * 判断传入的code是否是枚举中所定义的code
-		 *
-		 * @param code
-		 * @return
-		 */
-		public static boolean isCode ( final String code ) {
-			for ( ExceptionCode value : ExceptionCode.values() ) {
-				if ( value.getCode().equalsIgnoreCase( code ) ) {
-					return true;
-				}
-			}
-			return false;
-		}
 
-		public static String codeValue ( final String code ) {
-			for ( ExceptionCode value : ExceptionCode.values() ) {
-				if ( value.getCode().equalsIgnoreCase( code ) ) {
-					return value.getComment();
-				}
-			}
-			return null;
-		}
-
-		public static boolean isNotCode ( final String code ) {
-			return ! isCode( code );
-		}
-
-		public String getComment () {
-			return comment;
-		}
-
-		public String getCode () {
-			return code;
-		}
 	}
 
 }

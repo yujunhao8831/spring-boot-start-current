@@ -1,5 +1,7 @@
 package com.aidijing.manage.service.impl;
 
+import com.aidijing.common.PagingRequest;
+import com.aidijing.common.annotation.Log;
 import com.aidijing.common.util.AssertUtils;
 import com.aidijing.common.util.LogUtils;
 import com.aidijing.manage.bean.domain.User;
@@ -7,6 +9,8 @@ import com.aidijing.manage.mapper.UserMapper;
 import com.aidijing.manage.service.UserService;
 import com.baomidou.mybatisplus.mapper.Condition;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
@@ -38,6 +42,14 @@ public class UserServiceImpl extends ServiceImpl< UserMapper, User > implements 
 	private static final String CACHE_USER_LIST_PAGE_NAME_PREFIX = "UserService.User.namespace";
 	@Autowired
 	private RedissonClient redissonClient;
+
+	@Log
+	@Override
+	public PageInfo< User > listPage ( PagingRequest pagingRequest ) {
+		AssertUtils.isTrue( true,"测试log异常记录" );
+		PageHelper.startPage( pagingRequest.getPageNumber() , pagingRequest.getPageSize() );
+		return new PageInfo<>( super.selectList( null ) );
+	}
 
 	@Cacheable( key = "T(java.lang.String).valueOf(#id)" )
 	@Override
@@ -103,7 +115,7 @@ public class UserServiceImpl extends ServiceImpl< UserMapper, User > implements 
 	public Future< Boolean > pay () {
 		// 获取分布式锁
 		final Lock lock = redissonClient.getLock( "buyLock" );
-		
+
 		try {
 			// 30秒没有获取到锁
 			if ( ! lock.tryLock( 30 , TimeUnit.SECONDS ) ) {

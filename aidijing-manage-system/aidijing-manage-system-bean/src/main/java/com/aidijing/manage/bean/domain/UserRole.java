@@ -13,14 +13,14 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 后台管理用户角色中间表
+ * 后台管理角色_id
  * </p>
  *
  * @author 披荆斩棘
- * @since 2017-06-19
+ * @since 2017-12-28
  */
-@EqualsAndHashCode( callSuper = true )
 @Data
+@EqualsAndHashCode( callSuper = true )
 @Accessors( chain = true )
 @TableName( "manage_user_role" )
 public class UserRole extends Model< UserRole > {

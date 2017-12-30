@@ -57,6 +57,7 @@ public final class GenerationCode {
 
 	/**
 	 * (机器码 + 进程号) + 随机数 + 时间 + 计数器
+	 *
 	 * @return 全局唯一ID
 	 */
 	public static String globalUniqueId () {
@@ -70,16 +71,17 @@ public final class GenerationCode {
 	 * @return 全局唯一ID
 	 */
 	public static String globalUniqueId ( final String userId ) {
-		return globalUniqueId(10) + userId;
+		return globalUniqueId() + userId;
 	}
 
 
 	/**
 	 * (机器码 + 进程号) + 随机数 + 时间 + 计数器
+	 *
 	 * @param count 随机数长度
 	 * @return 全局唯一ID
 	 */
-	private static String globalUniqueId (final int count) {
+	private static String globalUniqueId ( final int count ) {
 		// 随机数,该工具类是线程安全的
 		final String randomNumber = RandomStringUtils.randomNumeric( count );
 		// 时间

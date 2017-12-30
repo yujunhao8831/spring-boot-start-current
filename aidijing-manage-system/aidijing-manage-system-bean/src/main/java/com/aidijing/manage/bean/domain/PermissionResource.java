@@ -15,11 +15,11 @@ import java.util.Date;
 
 /**
  * <p>
- * 后台管理权限资源表
+ * 权限资源
  * </p>
  *
  * @author 披荆斩棘
- * @since 2017-08-31
+ * @since 2017-12-28
  */
 @Data
 @EqualsAndHashCode( callSuper = true )
@@ -85,23 +85,15 @@ public class PermissionResource extends Model< PermissionResource > {
 	@TableField( "resource_api_uri_methods" )
 	private String       resourceApiUriMethods;
 	/**
-	 * 资源API URI 显示字段列表
-	 * 提供选择以','逗号分隔
+	 * 资源API URI 显示字段列表           提供选择以','逗号分隔
 	 */
 	@TableField( "resource_api_uri_options_fields" )
 	private String       resourceApiUriOptionsFields;
 	/**
-	 * 资源API 保护方式(未确定)
-	 * GROUP_USER  : 组成员可见,及以上管理员可见
-	 * GROUP_ADMIN : 组管理员,及以上管理员可见
-	 * SUPER_ADMIN : 超级管理员,及以上管理员可见
-	 * ROOT : 仅ROOT可见
-	 * CUSTOM : 自定义(该接口保护方式在代码硬编码决定)
-	 * <p>
-	 * 默认 : GROUP_ADMIN
+	 * 资源状态
 	 */
-	@TableField( "resource_api_protected_type" )
-	private String       resourceApiProtectedType;
+	@TableField( "is_enabled" )
+	private Boolean      enabled;
 	/**
 	 * 创建时间
 	 */
@@ -113,20 +105,6 @@ public class PermissionResource extends Model< PermissionResource > {
 	@TableField( "update_time" )
 	private Date         updateTime;
 	/**
-	 * 备注
-	 */
-	private String       remark;
-	/**
-	 * 分类(C,R,U,D)冗余字段
-	 */
-	@TableField( "category_code" )
-	private String       categoryCode;
-	/**
-	 * 资源状态
-	 */
-	@TableField( "is_enabled" )
-	private Boolean      enabled;
-	/**
 	 * 创建人
 	 */
 	@TableField( "create_user_id" )
@@ -136,6 +114,10 @@ public class PermissionResource extends Model< PermissionResource > {
 	 */
 	@TableField( "update_user_id" )
 	private Long         updateUserId;
+	/**
+	 * 备注
+	 */
+	private String       remark;
 
 
 	@Override

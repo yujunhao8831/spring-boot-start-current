@@ -1,7 +1,9 @@
 package com.aidijing.manage.service;
 
+import com.aidijing.common.PagingRequest;
 import com.aidijing.manage.bean.domain.User;
 import com.baomidou.mybatisplus.service.IService;
+import com.github.pagehelper.PageInfo;
 
 import java.util.concurrent.Future;
 
@@ -15,6 +17,7 @@ import java.util.concurrent.Future;
  */
 public interface UserService extends IService< User > {
 
+	PageInfo<User> listPage( PagingRequest pagingRequest );
 
 	User get ( Long id );
 
@@ -32,5 +35,6 @@ public interface UserService extends IService< User > {
 
 
 	Future<Boolean> pay ();
+
 
 }

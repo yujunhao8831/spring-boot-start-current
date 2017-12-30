@@ -1,6 +1,5 @@
 package com.aidijing.manage.bean.domain;
 
-import com.aidijing.manage.bean.domain.enums.RoleType;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -19,7 +18,7 @@ import java.util.Date;
  * </p>
  *
  * @author 披荆斩棘
- * @since 2017-07-04
+ * @since 2017-12-28
  */
 @Data
 @EqualsAndHashCode( callSuper = true )
@@ -33,45 +32,40 @@ public class Role extends Model< Role > {
 	 * 主键
 	 */
 	@TableId( value = "id", type = IdType.AUTO )
-	private Long     id;
+	private Long    id;
 	/**
 	 * 角色名称
 	 */
 	@TableField( "role_name" )
-	private String   roleName;
+	private String  roleName;
 	/**
-	 * 角色名称core(组code+角色code)
+	 * 角色名称code
 	 */
 	@TableField( "role_name_code" )
-	private String   roleNameCode;
-	/**
-	 * 角色类型(ROOT:根,SUPER_ADMIN:超级管理员,ADMIN:管理员,USER:普通用户)
-	 */
-	@TableField( "role_type" )
-	private RoleType roleType;
+	private String  roleNameCode;
 	/**
 	 * 角色状态(1:激活,0:锁定)
 	 */
 	@TableField( "is_enabled" )
-	private Boolean  enabled;
+	private Boolean enabled;
 	/**
 	 * 描述
 	 */
-	private String   description;
+	private String  description;
 	/**
 	 * 创建时间
 	 */
 	@TableField( "create_time" )
-	private Date     createTime;
+	private Date    createTime;
 	/**
 	 * 修改时间
 	 */
 	@TableField( "update_time" )
-	private Date     updateTime;
+	private Date    updateTime;
 	/**
 	 * 备注
 	 */
-	private String   remark;
+	private String  remark;
 
 
 	@Override

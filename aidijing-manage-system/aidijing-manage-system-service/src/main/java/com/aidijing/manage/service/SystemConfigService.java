@@ -7,7 +7,7 @@ import com.aidijing.common.PagingRequest;
 
 /**
  * <p>
- * 系统配置表(MYISAM引擎) 服务类
+ * 系统配置表服务类
  * </p>
  *
  * @author 披荆斩棘

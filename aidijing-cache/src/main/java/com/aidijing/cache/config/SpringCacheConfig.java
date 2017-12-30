@@ -22,6 +22,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import java.util.Map;
 
 /**
+ * Spring 缓存配置
+ * <p>
  * <pre>
  *     aidijing:
  *       spring:
@@ -44,89 +46,85 @@ import java.util.Map;
 @ConditionalOnBean( RedisTemplate.class )
 @ConditionalOnExpression
 public class SpringCacheConfig extends CachingConfigurerSupport {
-	/*
-	 *	TODO: 2017/12/17 后续解决 CacheAspectSupport.generateKey 方法中,生成失败时的处理,
-	 *	源码是抛 IllegalArgumentException 异常,不好区别
+
+	/** 指定命名空间下的过期时间,默认不指定 **/
+	private Map< String, Long > expires           = null;
+	/** 指定全局的过期时间,默认60分钟 **/
+	private long                defaultExpiration = 3600;
+	/** 是否使用前缀,默认使用 **/
+	private boolean             usePrefix         = true;
+
+
+	@Bean
+	public CacheManager cacheManager ( RedisTemplate redisTemplate ) {
+		RedisCacheManager redisCacheManager = new RedisCacheManager( redisTemplate );
+		// 默认30分钟
+		redisCacheManager.setDefaultExpiration( defaultExpiration );
+		redisCacheManager.setExpires( expires );
+		redisCacheManager.setUsePrefix( usePrefix );
+		return redisCacheManager;
+	}
+
+	/**
+	 * 默认使用的是 : {@link org.springframework.cache.interceptor.SimpleCacheResolver}
+	 *
+	 * @return
 	 */
+	@Override
+	public CacheResolver cacheResolver () {
+		return null;
+	}
 
-    /** 指定命名空间下的过期时间,默认不指定 **/
-    private Map< String, Long > expires           = null;
-    /** 指定全局的过期时间,默认60分钟 **/
-    private long                defaultExpiration = 3600;
-    /** 是否使用前缀,默认使用 **/
-    private boolean             usePrefix         = true;
-
-
-    @Bean
-    public CacheManager cacheManager ( RedisTemplate redisTemplate ) {
-        RedisCacheManager redisCacheManager = new RedisCacheManager( redisTemplate );
-        // 默认30分钟
-        redisCacheManager.setDefaultExpiration( defaultExpiration );
-        redisCacheManager.setExpires( expires );
-        redisCacheManager.setUsePrefix( usePrefix );
-        return redisCacheManager;
-    }
-
-    /**
-     * 默认使用的是 : {@link org.springframework.cache.interceptor.SimpleCacheResolver}
-     *
-     * @return
-     */
-    @Override
-    public CacheResolver cacheResolver () {
-        return null;
-    }
-
-    /**
-     * 默认使用的是 : {@link org.springframework.cache.interceptor.SimpleKeyGenerator}
-     *
-     * @return
-     */
-    @Override
-    public KeyGenerator keyGenerator () {
-        return null;
-    }
+	/**
+	 * 默认使用的是 : {@link org.springframework.cache.interceptor.SimpleKeyGenerator}
+	 *
+	 * @return
+	 */
+	@Override
+	public KeyGenerator keyGenerator () {
+		return null;
+	}
 
 
-    /**
-     * 错误处理
-     *
-     * @return
-     */
-    @Bean
-    @Override
-    public CacheErrorHandler errorHandler () {
-        return new SimpleCacheErrorHandler() {
-            @Override
-            public void handleCacheGetError ( RuntimeException exception , Cache cache , Object key ) {
-                LogUtils.getLogger().error( "cache : {} , key : {}" , cache , key );
-                LogUtils.getLogger().error( "handleCacheGetError" , exception );
-                super.handleCacheGetError( exception , cache , key );
-            }
+	/**
+	 * 错误处理
+	 *
+	 * @return
+	 */
+	@Bean
+	@Override
+	public CacheErrorHandler errorHandler () {
+		return new SimpleCacheErrorHandler() {
+			@Override
+			public void handleCacheGetError ( RuntimeException exception , Cache cache , Object key ) {
+				LogUtils.getLogger().error( "cache : {} , key : {}" , cache , key );
+				LogUtils.getLogger().error( "handleCacheGetError" , exception );
+				super.handleCacheGetError( exception , cache , key );
+			}
 
-            @Override
-            public void handleCachePutError ( RuntimeException exception , Cache cache , Object key ,
-                                              Object value ) {
-                LogUtils.getLogger().error( "cache : {} , key : {} , value : {} " , cache , key ,
-                                            value
-                );
-                LogUtils.getLogger().error( "handleCachePutError" , exception );
-                super.handleCachePutError( exception , cache , key , value );
-            }
+			@Override
+			public void handleCachePutError ( RuntimeException exception , Cache cache , Object key ,
+											  Object value ) {
+				LogUtils.getLogger().error( "cache : {} , key : {} , value : {} " , cache , key ,
+											value
+				);
+				LogUtils.getLogger().error( "handleCachePutError" , exception );
+				super.handleCachePutError( exception , cache , key , value );
+			}
 
-            @Override
-            public void handleCacheEvictError ( RuntimeException exception , Cache cache , Object key ) {
-                LogUtils.getLogger().error( "cache : {} , key : {}" , cache , key );
-                LogUtils.getLogger().error( "handleCacheEvictError" , exception );
-                super.handleCacheEvictError( exception , cache , key );
-            }
+			@Override
+			public void handleCacheEvictError ( RuntimeException exception , Cache cache , Object key ) {
+				LogUtils.getLogger().error( "cache : {} , key : {}" , cache , key );
+				LogUtils.getLogger().error( "handleCacheEvictError" , exception );
+				super.handleCacheEvictError( exception , cache , key );
+			}
 
-            @Override
-            public void handleCacheClearError ( RuntimeException exception , Cache cache ) {
-                LogUtils.getLogger().error( "cache : {} " , cache );
-                LogUtils.getLogger().error( "handleCacheClearError" , exception );
-                super.handleCacheClearError( exception , cache );
-            }
-        };
-    }
+			@Override
+			public void handleCacheClearError ( RuntimeException exception , Cache cache ) {
+				LogUtils.getLogger().error( "cache : {} " , cache );
+				LogUtils.getLogger().error( "handleCacheClearError" , exception );
+				super.handleCacheClearError( exception , cache );
+			}
+		};
+	}
 }

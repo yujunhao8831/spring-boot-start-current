@@ -1,6 +1,7 @@
 package com.aidijing.config;
 
 /**
+ *
  * <a href="http://springfox.github.io/springfox/docs/current/">document</a>
  * <a href="https://github.com/swagger-api/swagger-core/wiki/Annotations">document</a>
  * <p>
@@ -12,7 +13,7 @@ package com.aidijing.config;
 @Deprecated
 public class Swagger2Config {
 
-    
+
     /*public Docket docket () {
         return new Docket( DocumentationType.SWAGGER_2 )
                 .apiInfo( apiInfo() )

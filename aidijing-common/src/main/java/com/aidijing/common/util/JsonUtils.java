@@ -15,6 +15,8 @@ import java.util.List;
 /**
  * json工具类
  *
+ *
+ *
  * @author : 披荆斩棘
  * @date : 2016/10/2
  */
@@ -123,7 +125,7 @@ public abstract class JsonUtils {
      * 转换为Json
      * <p>默认使用Jackson进行转换,{@link #BASIC}</p>
      *
-     * @param input
+     * @param input 待转换对象
      * @return 如果转换失败返回 <code>null</code> ,否则返回转换后的json
      */
     public static String toJson ( Object input ) {
@@ -134,7 +136,7 @@ public abstract class JsonUtils {
      * 转换为Json
      * <p>默认使用Jackson进行转换,{@link #BASIC}</p>
      *
-     * @param input
+     * @param input 待转换对象
      * @return 如果转换失败返回 <code>null</code> ,否则返回转换后的json
      */
     public static String toCustomizationJson ( Object input ) {
@@ -148,7 +150,7 @@ public abstract class JsonUtils {
      *
      * @param inputJson  : json
      * @param targetType : 目标类型
-     * @param <T>
+     * @param <T> 目标类型
      * @return 如果解析失败返回 <code>null</code> ,否则返回解析后的json
      */
     public static < T > T jsonToType ( String inputJson , Class< T > targetType ) {
@@ -162,7 +164,7 @@ public abstract class JsonUtils {
      *
      * @param inputJson  : json
      * @param targetType : 目标类型
-     * @param <T>
+     * @param <T> 目标类型
      * @return 如果解析失败返回 <code>null</code> ,否则返回解析后的json
      */
     public static < T > List< T > jsonToListType ( String inputJson , Class< T > targetType ) {
@@ -178,7 +180,7 @@ public abstract class JsonUtils {
      *
      * @param inputJson  : json
      * @param targetType : 目标类型
-     * @param <T>
+     * @param <T> 目标类型
      * @return
      */
     public static < T > T jsonToType ( String inputJson , TypeReference targetType ) {
@@ -255,7 +257,7 @@ public abstract class JsonUtils {
 			// <code>null<code> 不序列化
 			setSerializationInclusion( JsonInclude.Include.NON_NULL );
 		}
-
+		
         private CustomizationObjectMapper () {
 			// 默认只支持 yyyy-MM-dd HH:mm:ss
 			this(new SimpleDateFormat(DateFormatStyle.CN_DATE_BASIC_STYLE.getDateStyle()));

@@ -17,6 +17,8 @@ import static com.aidijing.common.util.JsonUtils.jsonToType;
 import static com.aidijing.common.util.JsonUtils.toFilterJson;
 
 /**
+ * {@link ResponseEntity} 封装
+ *
  * @author : 披荆斩棘
  * @date : 16/6/16
  */

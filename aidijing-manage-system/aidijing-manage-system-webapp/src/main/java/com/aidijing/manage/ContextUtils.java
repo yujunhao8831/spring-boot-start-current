@@ -5,7 +5,6 @@ import com.aidijing.common.exception.ForbiddenException;
 import com.aidijing.manage.bean.domain.Role;
 import com.aidijing.manage.bean.domain.RolePermissionResource;
 import com.aidijing.manage.bean.domain.User;
-import com.aidijing.manage.bean.domain.enums.RoleType;
 import com.aidijing.manage.bean.vo.PermissionResourceVO;
 import com.aidijing.manage.jwt.JwtUser;
 import org.springframework.beans.BeanUtils;
@@ -148,50 +147,6 @@ public final class ContextUtils {
 	}
 
 
-	/**
-	 * 如果当前用户角色是超级管理员 {@link RoleType#SUPER_ADMIN} ,{@link RoleType#ROOT}
-	 */
-	public static boolean currentUserIsSuperAdmin () {
-		return getJwtUser().getRoles().parallelStream().anyMatch( ContextUtils::roleIsSuperAdmin );
-	}
-
-	/**
-	 * ! {@link #currentUserIsSuperAdmin()}
-	 */
-	public static boolean currentUserIsNotSuperAdmin () {
-		return ! currentUserIsSuperAdmin();
-	}
-
-	/**
-	 * 如果当前用户角色是ROOT角色
-	 *
-	 * @throws ForbiddenException
-	 */
-	public static boolean currentUserIsRoot () {
-		return getJwtUser().getRoles().parallelStream().anyMatch( ContextUtils::roleIsRoot );
-	}
-
-
-	/**
-	 * 如果当前用户角色是ROOT角色
-	 *
-	 * @throws ForbiddenException
-	 */
-	public static boolean isRoot ( Long roleId ) {
-		return getJwtUser().getRoles().parallelStream()
-						   .filter( role -> Objects.equals( role.getId() , roleId ) ).findAny().orElse( new Role() )
-						   .getRoleType().getValue().equals( RoleType.ROOT.getValue() );
-	}
-
-
-	/**
-	 * ! {@link #currentUserIsRoot()}
-	 */
-	public static boolean currentUserNotIsRoot () {
-		return ! currentUserIsRoot();
-	}
-
-
 	public static boolean isNotCurrentUser ( Long userId ) {
 		return ! isCurrentUser( userId );
 	}
@@ -224,29 +179,6 @@ public final class ContextUtils {
 		return Objects.equals( getUserId() , userId );
 	}
 
-
-	/**
-	 * 如果当前用户角色不是超级管理员,那么属于越权
-	 *
-	 * @throws ForbiddenException
-	 */
-	public static void assertCurrentUserNotSuperAdmin () throws ForbiddenException {
-		if ( currentUserIsNotSuperAdmin() ) {
-			throw new ForbiddenException( "非超级管理员,不能进行此操作" );
-		}
-	}
-
-
-	/**
-	 * 如果不是ROOT角色
-	 *
-	 * @throws ForbiddenException
-	 */
-	public static void assertCurrentUserNotRoot () throws ForbiddenException {
-		if ( currentUserNotIsRoot() ) {
-			throw new ForbiddenException( "非ROOT,不能进行此操作" );
-		}
-	}
 
 	/**
 	 * 不是当前用户 角色资源中间表信的 ID
@@ -293,18 +225,6 @@ public final class ContextUtils {
 		}
 	}
 
-
-	// 超级管理员
-	private static boolean roleIsSuperAdmin ( Role role ) {
-		final boolean isSuperAdmin =
-			Objects.equals( role.getRoleType().getValue() , RoleType.SUPER_ADMIN.getValue() );
-		return isSuperAdmin || roleIsRoot( role );
-	}
-
-	// ROOT
-	private static boolean roleIsRoot ( Role role ) {
-		return Objects.equals( role.getRoleType().getValue() , RoleType.ROOT.getValue() );
-	}
 
 	/**
 	 * 得到当前用户角色列表

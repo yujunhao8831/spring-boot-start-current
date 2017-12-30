@@ -34,7 +34,8 @@ public class AdminUiApplication extends SpringBootServletInitializer {
      * @param application
      * @see <a href="http://www.infoq.com/cn/articles/microframeworks1-spring-boot">info</a>
      */
-    protected SpringApplicationBuilder configure ( SpringApplicationBuilder application ) {
+    @Override
+	protected SpringApplicationBuilder configure ( SpringApplicationBuilder application ) {
         return application.sources( AdminUiApplication.class );
     }
 }

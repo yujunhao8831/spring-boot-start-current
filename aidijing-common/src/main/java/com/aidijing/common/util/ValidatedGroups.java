@@ -69,7 +69,6 @@ public interface ValidatedGroups {
 	 * 查询
 	 */
 	interface Query {
-
 	}
 
 	/**

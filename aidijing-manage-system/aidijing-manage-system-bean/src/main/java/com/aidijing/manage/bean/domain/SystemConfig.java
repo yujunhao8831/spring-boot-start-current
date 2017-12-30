@@ -14,14 +14,14 @@ import java.util.Date;
 
 /**
  * <p>
- * 系统配置表
+ * 系统配置
  * </p>
  *
  * @author 披荆斩棘
- * @since 2017-07-12
+ * @since 2017-12-28
  */
-@EqualsAndHashCode( callSuper = true )
 @Data
+@EqualsAndHashCode( callSuper = true )
 @Accessors( chain = true )
 @TableName( "system_config" )
 public class SystemConfig extends Model< SystemConfig > {
