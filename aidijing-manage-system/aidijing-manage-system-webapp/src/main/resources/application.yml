@@ -48,7 +48,7 @@ mybatis-plus:
     # 自定义填充策略接口实现
     # meta-object-handler: com.baomidou.springboot.xxx
     # 自定义SQL注入器
-    # sql-injector: com.baomidou.springboot.xxx
+    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false

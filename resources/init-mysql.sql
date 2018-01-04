@@ -230,4 +230,3 @@ create table system_log
   ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台管理用户历史记录操作表';
 
 alter table system_log comment '系统日志表';
-manage_system.pdm
