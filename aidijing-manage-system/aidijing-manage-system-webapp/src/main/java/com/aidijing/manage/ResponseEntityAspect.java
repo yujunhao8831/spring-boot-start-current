@@ -25,7 +25,7 @@ public class ResponseEntityAspect {
 
 
 	@Around( "execution(org.springframework.http.ResponseEntity com.aidijing.*.controller.*Controller.*(..)) )" )
-	public Object dataPlatform ( ProceedingJoinPoint joinPoint ) throws Throwable {
+	public Object returnValueHandle ( ProceedingJoinPoint joinPoint ) throws Throwable {
 
 		Object returnValue = joinPoint.proceed();
 
