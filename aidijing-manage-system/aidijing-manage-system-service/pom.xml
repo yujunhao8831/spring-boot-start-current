@@ -40,6 +40,12 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>com.aidijing</groupId>
+			<artifactId>aidijing-basic-config</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
 
 		<dependency>
 			<groupId>${project.groupId}</groupId>
