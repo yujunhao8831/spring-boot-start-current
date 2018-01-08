@@ -84,7 +84,6 @@ docker运行命令 : docker run -p 8080:8080 -t com.aidijing/aidijing-restful-cl
 
 
 
-
 + 服务接口
 
 
@@ -131,7 +130,6 @@ aidijing-generator
 #### 创建枚举
 相应的枚举,注释必须完整
 注:
-+ 枚举请实现 BaseEnumInterface 接口,方便之后操作
 + 枚举放入domain.enum包下
 
 ``` java
