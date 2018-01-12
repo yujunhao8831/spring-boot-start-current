@@ -242,8 +242,10 @@ AssertUtils.isTrue( condition , "操作失败." );
 ## 配置文件加密
 
 + 引入依赖
+
 pom.xml
-``` pom
+
+``` xml
 <dependency>
     <groupId>com.github.ulisesbocchio</groupId>
     <artifactId>jasypt-spring-boot-starter</artifactId>
@@ -252,7 +254,9 @@ pom.xml
 ```
 
 + 设置用于加密/解密属性的主密码
+
 配置文件中设置
+
 ``` yml
 jasypt:
   encryptor:
@@ -284,7 +288,9 @@ public class JasyptStringEncryptorTest {
 ```
 
 + 使用
+
 格式 : ENC(需要解密的字符串)
+
 ``` yml
 spring:
   datasource:
