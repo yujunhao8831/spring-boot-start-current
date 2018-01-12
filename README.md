@@ -39,6 +39,7 @@ docker运行命令 : docker run -p 8080:8080 -t com.aidijing/aidijing-restful-cl
  + WebSocket
  + JWT(JSON Web Tokens)
  + WebSocket
+ + jasypt
 
 项目包含了
  + 分布式锁
@@ -232,4 +233,61 @@ SELECT * FROM manage_role_permission_resource;
 ## 流程控制
 接口对内使用Exception处理 AssertUtils
 
+``` java
+AssertUtils.isTrue( condition , "操作失败." );
+```
+
 接口对外使用if else流程控制
+
+## 配置文件加密
+
++ 引入依赖
+pom.xml
+``` pom
+<dependency>
+    <groupId>com.github.ulisesbocchio</groupId>
+    <artifactId>jasypt-spring-boot-starter</artifactId>
+    <version>版本 https://github.com/ulisesbocchio/jasypt-spring-boot 获取最新的</version>
+</dependency>
+```
+
++ 设置用于加密/解密属性的主密码
+配置文件中设置
+``` yml
+jasypt:
+  encryptor:
+    password: aidijing
+```
+
++ 加密
+
+JasyptStringEncryptorTest.java
+
+``` java 
+@RunWith( SpringRunner.class )
+@SpringBootTest
+public class JasyptStringEncryptorTest {
+
+	@Autowired
+	private StringEncryptor stringEncryptor;
+
+	@Test
+	public void name () throws Exception {
+		final String username = stringEncryptor.encrypt( "root" );
+		final String password = stringEncryptor.encrypt( "root" );
+
+		System.err.println( "username = " + username );
+		System.err.println( "password = " + password );
+
+	}
+}
+```
+
++ 使用
+格式 : ENC(需要解密的字符串)
+``` yml
+spring:
+  datasource:
+    username: ENC(jEmjzNoC9rTYorAj5mI84A==)
+    password: ENC(jEmjzNoC9rTYorAj5mI84A==)
+```

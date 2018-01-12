@@ -23,6 +23,8 @@ import java.sql.SQLException;
 /**
  * 统一异常处理
  *
+ * <a href="https://docs.spring.io/spring/docs/5.0.2.RELEASE/spring-framework-reference/web.html#mvc-ann-rest-spring-mvc-exceptions">default</a>
+ *
  * @author : 披荆斩棘
  * @date : 2017/5/18
  */

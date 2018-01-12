@@ -168,29 +168,9 @@
 			<artifactId>jolokia-core</artifactId>
 		</dependency>
 
-		<!-- 服务发现注册 -->
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-eureka-server</artifactId>
-		</dependency>
-
-		<!-- Feign是Netflix开发的声明式,模板化的HTTP客户端. -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-feign</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>io.github.openfeign.form</groupId>
-			<artifactId>feign-form</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.github.openfeign.form</groupId>
-			<artifactId>feign-form-spring</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.github.openfeign</groupId>
-			<artifactId>feign-okhttp</artifactId>
+			<groupId>com.github.ulisesbocchio</groupId>
+			<artifactId>jasypt-spring-boot-starter</artifactId>
 		</dependency>
 
 

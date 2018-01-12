@@ -1,0 +1,102 @@
+# 服务器
+server:
+  port: 8080
+
+# 设置用于加密/解密属性的主密码
+jasypt:
+  encryptor:
+    password: aidijing
+
+# 日志
+logging:
+  config: classpath:log4j2.xml
+  
+# 数据库
+spring:
+  datasource:
+    username: ENC(jEmjzNoC9rTYorAj5mI84A==)
+    password: ENC(jEmjzNoC9rTYorAj5mI84A==)
+    url: jdbc:mysql://127.0.0.1:3306/aidijing?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 文档 : https://github.com/alibaba/druid/tree/1.1.0/druid-spring-boot-starter
+    druid: 
+      # 连接池配置，说明请参考Druid Wiki，配置_DruidDataSource参考配置 -> https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_DruidDataSource%E5%8F%82%E8%80%83%E9%85%8D%E7%BD%AE
+      filters: stat # 配置监控统计拦截的filters,默认值为stat，配置多个请以英文逗号分隔，如stat,wall,log4j 
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      maxWait: 60000 # 配置获取连接等待超时的时间
+      timeBetweenEvictionRunsMillis: 60000 # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      minEvictableIdleTimeMillis: 300000 # 配置一个连接在池中最小生存的时间，单位是毫秒  
+      validationQuery: SELECT 1
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true # 是否打开PSCache
+      maxPoolPreparedStatementPerConnectionSize: 20 # 指定每个连接上PSCache的大小
+      # WebStatFilter配置，说明请参考Druid Wiki，配置_配置WebStatFilter -> https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_%E9%85%8D%E7%BD%AEWebStatFilter
+      web-stat-filter: 
+        enabled: false # 是否启用StatFilter默认值true
+        urlPattern: 
+        exclusions:
+        sessionStatMaxCount:
+        sessionStatEnable:
+        principalSessionName:
+        principalCookieName:
+        profileEnable:
+      # StatViewServlet配置，说明请参考Druid Wiki，配置_StatViewServlet配置 -> https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_StatViewServlet%E9%85%8D%E7%BD%AE
+      stat-view-servlet:
+        enabled: false # 是否启用StatViewServlet默认值true
+        urlPattern:
+        resetEnable:
+        loginUsername:
+        loginPassword:
+        allow:
+        deny:
+      # aop-patterns: # Spring监控AOP切入点，如x.y.z.service.*,配置多个英文逗号分隔,如果spring.datasource.druid.aop-patterns要代理的类没有定义interface请设置spring.aop.proxy-target-class=true
+
+# spring boot admin 监控 start
+  boot:
+    admin:
+      url: http://localhost:8888  
+      username: root
+      password: root
+      client:
+          enabled: true
+management:
+  security:
+    enabled: false
+  # spring boot admin 监控 end
+
+
+
+
+aidijing:
+  # 缓存相关
+  spring:
+    cache:
+      redis-manager:
+        default-expiration: 1800
+        use-prefix: true
+        expires:
+          users: 900
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 60
+  # mybatis plus 性能分析拦截器
+  mybatis-plus:
+    performance-interceptor:
+      enabled: true
+
+
+
+
+
+
+
+
+
+
+
+

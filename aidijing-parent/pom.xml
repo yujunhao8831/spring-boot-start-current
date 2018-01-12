@@ -73,6 +73,7 @@
 		<io.github.openfeign.feign-okhttp.version>9.5.0</io.github.openfeign.feign-okhttp.version>
 		<cron-utils.version>6.0.2</cron-utils.version>
 		<cron-utils-spring.version>1.0.1</cron-utils-spring.version>
+		<jasypt-spring-boot-starter.version>1.17</jasypt-spring-boot-starter.version>
 	</properties>
 
 	<dependencyManagement>
@@ -440,6 +441,12 @@
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-text</artifactId>
 				<version>1.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.github.ulisesbocchio</groupId>
+				<artifactId>jasypt-spring-boot-starter</artifactId>
+				<version>${jasypt-spring-boot-starter.version}</version>
 			</dependency>
 
 		</dependencies>
