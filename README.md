@@ -243,7 +243,7 @@ AssertUtils.isTrue( condition , "操作失败." );
 
 + 引入依赖
 
-pom.xml
+    - pom.xml
 
 ``` xml
 <dependency>
@@ -255,7 +255,7 @@ pom.xml
 
 + 设置用于加密/解密属性的主密码
 
-配置文件中设置
+    - 配置文件中设置
 
 ``` yml
 jasypt:
@@ -265,7 +265,7 @@ jasypt:
 
 + 加密
 
-JasyptStringEncryptorTest.java
+    - JasyptStringEncryptorTest.java
 
 ``` java 
 @RunWith( SpringRunner.class )
@@ -289,7 +289,7 @@ public class JasyptStringEncryptorTest {
 
 + 使用
 
-格式 : ENC(需要解密的字符串)
+    - 格式 : ENC(需要解密的字符串)
 
 ``` yml
 spring:
