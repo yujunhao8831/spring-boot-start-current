@@ -16,9 +16,7 @@
  ```
  
 maven打包命令 : mvn clean package docker:build
- 
-docker运行命令 : docker run -p 8080:8080 -t com.aidijing/aidijing-restful-client # (默认情况打包后的docker镜像名称是这样)
- 
+
 
 
 项目所用技术
