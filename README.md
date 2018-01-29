@@ -68,40 +68,12 @@ maven打包命令 : mvn clean package docker:build
  + redis 默认使用 127.0.0.1:6379
  + mysql root/root 127.0.0.1:3306 数据库名称 : blog,基础sql见init.sql
  + lombok 插件(eclipse IntelliJ IDEA),不然项目可能会报错,但是不影响运行
- 
-## aidijing-parent
-+ 版本管理
-
-## aidijing-common 
-+ 工具
-
-## aidijing-service
-**pom.xml**中所有的依赖都是
-``` xml
-<scope>provided</scope>
-```
-
-
-
-+ 服务接口
-
-
-## aidijing-dao
-**pom.xml**中所有的依赖都是
-``` xml
-<scope>provided</scope>
-```
-+ dao与数据库交互
-
-## aidijing-basic-config
-+ 基础配置(暂时未用到)
-
-## aidijing-restful-client
-+ 控制器,发布http restful接口
 
 
 ## 项目无状态
-不要使用session(项目也禁用了)
+
+不使用session
+
 ``` java
 com.aidijing.ContextUtils
 ```
