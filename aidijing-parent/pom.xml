@@ -58,7 +58,7 @@
 		<squiggly-filter-jackson.version>1.3.6</squiggly-filter-jackson.version>
 		<kaptcha.version>2.3.2</kaptcha.version>
 		<spring-boot-admin.version>1.5.3</spring-boot-admin.version>
-		<net.javacrumbs.shedlock.version>0.12.0</net.javacrumbs.shedlock.version>
+		<net.javacrumbs.shedlock.version>0.18.1</net.javacrumbs.shedlock.version>
 		<ojdbc6.version>11.2.0.3</ojdbc6.version>
 		<eu.bitwalker.UserAgentUtils.version>1.20</eu.bitwalker.UserAgentUtils.version>
 		<feign-okhttp.version>8.18.0</feign-okhttp.version>
