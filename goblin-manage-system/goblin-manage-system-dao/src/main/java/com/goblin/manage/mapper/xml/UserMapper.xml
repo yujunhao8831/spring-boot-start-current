@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goblin.manage.mapper.UserMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.goblin.manage.bean.domain.User">
+		<id column="id" property="id" />
+		<result column="username" property="username" />
+		<result column="password" property="password" />
+		<result column="password_salt" property="passwordSalt" />
+		<result column="nick_name" property="nickName" />
+		<result column="real_name" property="realName" />
+		<result column="email" property="email" />
+		<result column="phone" property="phone" />
+		<result column="user_image_url" property="userImageUrl" />
+		<result column="last_password_reset_date" property="lastPasswordResetDate" />
+		<result column="create_user_id" property="createUserId" />
+		<result column="update_user_id" property="updateUserId" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="is_enabled" property="enabled" />
+		<result column="remark" property="remark" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, username, password, password_salt AS passwordSalt, nick_name AS nickName, real_name AS realName, email, phone, user_image_url AS userImageUrl, last_password_reset_date AS lastPasswordResetDate, create_user_id AS createUserId, update_user_id AS updateUserId, create_time AS createTime, update_time AS updateTime, is_enabled AS enabled, remark
+    </sql>
+
+</mapper>

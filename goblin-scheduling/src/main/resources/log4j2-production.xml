@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="3600" shutdownHook="disable">
+
+    <properties>
+        <property name="LOG_HOME">${sys:user.home}</property>
+        <!-- 日志切割的最小单位 -->
+        <property name="LOG_FILE_SIZE">100 MB</property>
+        <!-- 日志备份目录 -->
+        <property name="SERVER_NAME">goblin-scheduling</property>
+        <property name="OUTPUT_LOG_LEVEL">DEBUG</property><!-- 日志输出级别 -->
+    </properties>
+
+    <Appenders>
+        <!--
+            Console 的target是SYSTEM_OUT是输出到统一的输出流，没有指定日志文件
+            配置文件log4j.xml 中的<Console name="Console" target="SYSTEM_OUT">表示 log4j2将日志配置到System.out输入到控制到输出流。
+        -->
+        <Console name="Console" target="SYSTEM_OUT" follow="true" >
+            <!-- 输出日志的格式 -->
+            <PatternLayout pattern="[%X{userId}] [%X{userName}] %d{yyyy-MM-dd HH:mm:ss SSS} [%p] [%t] %c.%M(%L) | %m%n"/>
+        </Console>
+
+        <!--
+            这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档
+        -->
+        <RollingRandomAccessFile name="RandomAccessFile"
+                                 fileName="${LOG_HOME}/applogs/${SERVER_NAME}.app.log"
+                                 filePattern="${LOG_HOME}/applogs/${SERVER_NAME}.$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log"
+                                 immediateFlush="false" append="false"
+        >
+            <PatternLayout>
+                <Pattern>%X %d{yyyy-MM-dd HH:mm:ss SSS} [%p] [%t] %c.%M(%L) | %m%n</Pattern>
+            </PatternLayout>
+
+            <Policies>
+                <!-- 定义log文件封存的周期 -->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="${LOG_FILE_SIZE}"/>
+            </Policies>
+            <!-- 最多备份x个 -->
+            <DefaultRolloverStrategy fileIndex="max" max="20"/>
+        </RollingRandomAccessFile>
+
+    </Appenders>
+
+
+    <Loggers>
+
+        <!-- 定义单个类日志记录级别 -->
+        <logger name="org.mybatis" level="warn" />
+        <logger name="org.springframework" level="warn" />
+        <logger name="com.alibaba.druid" level="warn"/>
+
+        <!--
+            同步和异步混合记录
+         -->
+        <AsyncLogger name="com.goblin"  level="info" includeLocation="true" additivity="false">
+            <AppenderRef ref="RandomAccessFile"/>
+            <AppenderRef ref="Console"/>
+        </AsyncLogger>
+
+        <!-- 定义除单个类外所有日志记录级别 -->
+        <Root level="info" includeLocation="true">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RandomAccessFile"/>
+        </Root>
+    </Loggers>
+
+</Configuration>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

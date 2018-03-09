@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goblin.manage.mapper.SmsSubscribeMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.goblin.manage.bean.domain.SmsSubscribe">
+		<id column="id" property="id" />
+		<result column="user_id" property="userId" />
+		<result column="sms_phone" property="smsPhone" />
+		<result column="mobile_operators" property="mobileOperators" />
+		<result column="sms_content" property="smsContent" />
+		<result column="sms_send_time" property="smsSendTime" />
+		<result column="sms_send_state" property="smsSendState" />
+		<result column="sms_send_retry_number" property="smsSendRetryNumber" />
+		<result column="sms_send_retry_count" property="smsSendRetryCount" />
+		<result column="remark" property="remark" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user_id AS userId, sms_phone AS smsPhone, mobile_operators AS mobileOperators, sms_content AS smsContent, sms_send_time AS smsSendTime, sms_send_state AS smsSendState, sms_send_retry_number AS smsSendRetryNumber, sms_send_retry_count AS smsSendRetryCount, remark, create_time AS createTime, update_time AS updateTime
+    </sql>
+
+</mapper>

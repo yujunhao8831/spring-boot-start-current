@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goblin.manage.mapper.RoleMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.goblin.manage.bean.domain.Role">
+		<id column="id" property="id" />
+		<result column="role_name" property="roleName" />
+		<result column="role_name_code" property="roleNameCode" />
+		<result column="role_type" property="roleType" />
+		<result column="is_enabled" property="enabled" />
+		<result column="description" property="description" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="remark" property="remark" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, role_name AS roleName, role_name_code AS roleNameCode, role_type AS roleType, is_enabled AS enabled, description, create_time AS createTime, update_time AS updateTime, remark
+    </sql>
+
+</mapper>

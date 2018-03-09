@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>goblin-parent</artifactId>
+	<packaging>pom</packaging>
+	<name>goblin-parent</name>
+	<description>goblin parent</description>
+
+	<parent>
+		<artifactId>goblin</artifactId>
+		<groupId>com.goblin</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+
+	<properties>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<spring-cloud.version>Dalston.SR1</spring-cloud.version>
+
+
+		<goblin-basic-config.version>${project.version}</goblin-basic-config.version>
+		<goblin-common.version>${project.version}</goblin-common.version>
+		<goblin-cache.version>${project.version}</goblin-cache.version>
+		<goblin-security.version>${project.version}</goblin-security.version>
+		<goblin-manage-system-bean.version>${project.version}</goblin-manage-system-bean.version>
+		<goblin-manage-system-dao.version>${project.version}</goblin-manage-system-dao.version>
+		<goblin-manage-system-service.version>${project.version}</goblin-manage-system-service.version>
+
+
+		<commons.io.version>2.6</commons.io.version>
+		<commons.fileupload.version>1.3.3</commons.fileupload.version>
+		<commons.codec.version>1.11</commons.codec.version>
+		<commons.beanutils.version>1.9.3</commons.beanutils.version>
+		<commons.collections4.version>4.1</commons.collections4.version>
+		<commons.math3.version>3.6.1</commons.math3.version>
+		<commons-lang3.version>3.5</commons-lang3.version>
+		<springfox-swagger2.version>2.8.0</springfox-swagger2.version>
+		<disruptor.version>3.4.1</disruptor.version>
+		<com.alibaba.spring.boot.starter.version>1.1.8</com.alibaba.spring.boot.starter.version>
+		<mybatisplus-spring-boot-starter.version>1.0.5</mybatisplus-spring-boot-starter.version>
+		<mybatis-plus.version>2.1.8</mybatis-plus.version>
+		<com.github.pagehelper.version>1.2.3</com.github.pagehelper.version>
+		<gson.version>2.8.2</gson.version>
+		<fastjson.version>1.2.46</fastjson.version>
+		<okhttp.version>3.10.0</okhttp.version>
+		<redisson.version>3.6.1</redisson.version>
+		<jjwt.version>0.9.0</jjwt.version>
+		<velocity.version>1.7</velocity.version>
+		<squiggly-filter-jackson.version>1.3.9</squiggly-filter-jackson.version>
+		<kaptcha.version>2.3.2</kaptcha.version>
+		<spring-boot-admin.version>1.5.7</spring-boot-admin.version>
+		<net.javacrumbs.shedlock.version>0.18.1</net.javacrumbs.shedlock.version>
+		<ojdbc6.version>11.2.0.3</ojdbc6.version>
+		<eu.bitwalker.UserAgentUtils.version>1.20</eu.bitwalker.UserAgentUtils.version>
+		<feign-okhttp.version>8.18.0</feign-okhttp.version>
+		<poi-ooxml.version>3.15</poi-ooxml.version>
+		<poi-scratchpad.version>3.15</poi-scratchpad.version>
+		<org.apache.poi.xwpf.converter.xhtml.version>1.0.6</org.apache.poi.xwpf.converter.xhtml.version>
+		<reflections.version>0.9.11</reflections.version>
+		<com.lowagie.itext.version>4.2.2</com.lowagie.itext.version>
+		<org.apache.pdfbox.version>2.0.4</org.apache.pdfbox.version>
+		<io.github.openfeign.form.feign-form.version>2.2.0</io.github.openfeign.form.feign-form.version>
+		<io.github.openfeign.form.feign-form-spring.version>2.2.0</io.github.openfeign.form.feign-form-spring.version>
+		<io.github.openfeign.feign-okhttp.version>9.5.0</io.github.openfeign.feign-okhttp.version>
+		<cron-utils.version>6.0.2</cron-utils.version>
+		<cron-utils-spring.version>1.0.1</cron-utils-spring.version>
+		<jasypt-spring-boot-starter.version>1.18</jasypt-spring-boot-starter.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>goblin-cache</artifactId>
+				<version>${goblin-cache.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>goblin-security</artifactId>
+				<version>${goblin-security.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>goblin-common</artifactId>
+				<version>${goblin-common.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>goblin-basic-config</artifactId>
+				<version>${goblin-basic-config.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>goblin-manage-system-bean</artifactId>
+				<version>${goblin-manage-system-bean.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>goblin-manage-system-dao</artifactId>
+				<version>${goblin-manage-system-dao.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>goblin-manage-system-service</artifactId>
+				<version>${goblin-manage-system-service.version}</version>
+			</dependency>
+
+
+
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-web</artifactId>
+				<version>${spring-security.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-config</artifactId>
+				<version>${spring-security.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.thymeleaf.extras</groupId>
+				<artifactId>thymeleaf-extras-springsecurity4</artifactId>
+				<version>${thymeleaf-extras-springsecurity4.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons.io.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-fileupload</groupId>
+				<artifactId>commons-fileupload</artifactId>
+				<version>${commons.fileupload.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-collections4</artifactId>
+				<version>${commons.collections4.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-math3</artifactId>
+				<version>${commons.math3.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${commons-lang3.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>com.lmax</groupId>
+				<artifactId>disruptor</artifactId>
+				<version>${disruptor.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.datatype</groupId>
+				<artifactId>jackson-datatype-guava</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql.version}</version>
+				<scope>runtime</scope>
+			</dependency>
+
+
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid-spring-boot-starter</artifactId>
+				<version>${com.alibaba.spring.boot.starter.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>org.mybatis.spring.boot</groupId>
+				<artifactId>mybatis-spring-boot-starter</artifactId>
+				<version>1.3.0</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatisplus-spring-boot-starter</artifactId>
+				<version>${mybatisplus-spring-boot-starter.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatis-plus</artifactId>
+				<version>${mybatis-plus.version}</version>
+			</dependency>
+
+			<!--pagehelper-->
+			<dependency>
+				<groupId>com.github.pagehelper</groupId>
+				<artifactId>pagehelper-spring-boot-starter</artifactId>
+				<version>${com.github.pagehelper.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger2</artifactId>
+				<version>${springfox-swagger2.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger-ui</artifactId>
+				<version>${springfox-swagger2.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				<version>${gson.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>${fastjson.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.squareup.okhttp3</groupId>
+				<artifactId>okhttp</artifactId>
+				<version>${okhttp.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.redisson</groupId>
+				<artifactId>redisson</artifactId>
+				<version>${redisson.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt</artifactId>
+				<version>${jjwt.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.velocity</groupId>
+				<artifactId>velocity</artifactId>
+				<version>${velocity.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>com.github.bohnman</groupId>
+				<artifactId>squiggly-filter-jackson</artifactId>
+				<version>${squiggly-filter-jackson.version}</version>
+			</dependency>
+
+			<!-- 验证码 -->
+			<dependency>
+				<groupId>com.github.penggle</groupId>
+				<artifactId>kaptcha</artifactId>
+				<version>${kaptcha.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>de.codecentric</groupId>
+				<artifactId>spring-boot-admin-server</artifactId>
+				<version>${spring-boot-admin.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>de.codecentric</groupId>
+				<artifactId>spring-boot-admin-server-ui</artifactId>
+				<version>${spring-boot-admin.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.codecentric</groupId>
+				<artifactId>spring-boot-admin-starter-client</artifactId>
+				<version>${spring-boot-admin.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.codecentric</groupId>
+				<artifactId>spring-boot-admin-server-ui-hystrix</artifactId>
+				<version>${spring-boot-admin.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.codecentric</groupId>
+				<artifactId>spring-boot-admin-server-ui-turbine</artifactId>
+				<version>${spring-boot-admin.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.codecentric</groupId>
+				<artifactId>spring-boot-admin-server-ui-activiti</artifactId>
+				<version>${spring-boot-admin.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.codecentric</groupId>
+				<artifactId>spring-boot-admin-server-ui-login</artifactId>
+				<version>${spring-boot-admin.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>net.javacrumbs.shedlock</groupId>
+				<artifactId>shedlock-spring</artifactId>
+				<version>${net.javacrumbs.shedlock.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>net.javacrumbs.shedlock</groupId>
+				<artifactId>shedlock-provider-jedis</artifactId>
+				<version>${net.javacrumbs.shedlock.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.oracle</groupId>
+				<artifactId>ojdbc6</artifactId>
+				<version>${ojdbc6.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>eu.bitwalker</groupId>
+				<artifactId>UserAgentUtils</artifactId>
+				<version>${eu.bitwalker.UserAgentUtils.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>com.netflix.feign</groupId>
+				<artifactId>feign-okhttp</artifactId>
+				<version>${feign-okhttp.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.github.openfeign</groupId>
+				<artifactId>feign-okhttp</artifactId>
+				<version>${io.github.openfeign.feign-okhttp.version}</version>
+			</dependency>
+
+
+
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi-ooxml</artifactId>
+				<version>${poi-ooxml.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi-scratchpad</artifactId>
+				<version>${poi-scratchpad.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>fr.opensagres.xdocreport</groupId>
+				<artifactId>org.apache.poi.xwpf.converter.xhtml</artifactId>
+				<version>${org.apache.poi.xwpf.converter.xhtml.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.reflections</groupId>
+				<artifactId>reflections</artifactId>
+				<version>${reflections.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>com.lowagie</groupId>
+				<artifactId>itext</artifactId>
+				<version>${com.lowagie.itext.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>org.apache.pdfbox</groupId>
+				<artifactId>pdfbox</artifactId>
+				<version>${org.apache.pdfbox.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.github.openfeign.form</groupId>
+				<artifactId>feign-form</artifactId>
+				<version>${io.github.openfeign.form.feign-form.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.github.openfeign.form</groupId>
+				<artifactId>feign-form-spring</artifactId>
+				<version>${io.github.openfeign.form.feign-form-spring.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.cronutils</groupId>
+				<artifactId>cron-utils</artifactId>
+				<version>${cron-utils.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.cronutils</groupId>
+				<artifactId>cron-utils-spring</artifactId>
+				<version>${cron-utils-spring.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-text</artifactId>
+				<version>1.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.github.ulisesbocchio</groupId>
+				<artifactId>jasypt-spring-boot-starter</artifactId>
+				<version>${jasypt-spring-boot-starter.version}</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+
+	<!--<distributionManagement>
+		<repository>
+			<id>nexus-releases</id>
+			<url>your </url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus-snapshots</id>
+			<url>your </url>
+		</snapshotRepository>
+	</distributionManagement>-->
+
+
+
+
+
+</project>

@@ -1,0 +1,74 @@
+# 服务器
+server:
+  port: 8080
+  
+# 日志
+logging:
+  config: classpath:log4j2.xml
+  
+# 数据库
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://127.0.0.1:3306/goblin?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 文档 : https://github.com/alibaba/druid/tree/1.1.0/druid-spring-boot-starter
+    druid: 
+      # 连接池配置，说明请参考Druid Wiki，配置_DruidDataSource参考配置 -> https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_DruidDataSource%E5%8F%82%E8%80%83%E9%85%8D%E7%BD%AE
+      filters: stat # 配置监控统计拦截的filters,默认值为stat，配置多个请以英文逗号分隔，如stat,wall,log4j 
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      maxWait: 60000 # 配置获取连接等待超时的时间
+      timeBetweenEvictionRunsMillis: 60000 # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      minEvictableIdleTimeMillis: 300000 # 配置一个连接在池中最小生存的时间，单位是毫秒  
+      validationQuery: SELECT 1
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true # 是否打开PSCache
+      maxPoolPreparedStatementPerConnectionSize: 20 # 指定每个连接上PSCache的大小
+# spring boot admin 监控 start
+  boot:
+    admin:
+      url: http://localhost:8888  
+      username: root
+      password: root
+      client:
+          enabled: true
+management:
+  security:
+    enabled: false
+  # spring boot admin 监控 end
+
+
+
+goblin:
+  # 缓存相关
+  spring:
+    cache:
+      redis-manager:
+        default-expiration: 1800
+        expires:
+          users: 900
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 60
+  # mybatis plus 性能分析拦截器
+  mybatis-plus:
+    performance-interceptor:
+      enabled: true
+
+
+
+
+
+
+
+
+
+
+
+

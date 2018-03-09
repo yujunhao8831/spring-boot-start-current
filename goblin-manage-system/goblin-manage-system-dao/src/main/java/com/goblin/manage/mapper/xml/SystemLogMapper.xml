@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goblin.manage.mapper.SystemLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.goblin.manage.bean.domain.SystemLog">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="user_real_name" property="userRealName" />
+        <result column="action_level" property="actionLevel" />
+        <result column="action_type" property="actionType" />
+        <result column="action_log" property="actionLog" />
+        <result column="action_ip_address" property="actionIpAddress" />
+        <result column="action_description" property="actionDescription" />
+        <result column="action_start_time" property="actionStartTime" />
+        <result column="action_end_time" property="actionEndTime" />
+        <result column="action_total_time" property="actionTotalTime" />
+        <result column="action_class" property="actionClass" />
+        <result column="action_method" property="actionMethod" />
+        <result column="action_args" property="actionArgs" />
+        <result column="is_warn" property="warn" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user_id AS userId, user_real_name AS userRealName, action_level AS actionLevel, action_type AS actionType, action_log AS actionLog, action_ip_address AS actionIpAddress, action_description AS actionDescription, action_start_time AS actionStartTime, action_end_time AS actionEndTime, action_total_time AS actionTotalTime, action_class AS actionClass, action_method AS actionMethod, action_args AS actionArgs, is_warn AS warn, create_time AS createTime, update_time AS updateTime
+    </sql>
+
+</mapper>

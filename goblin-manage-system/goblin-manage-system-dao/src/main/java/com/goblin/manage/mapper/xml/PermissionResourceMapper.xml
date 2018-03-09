@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goblin.manage.mapper.PermissionResourceMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.goblin.manage.bean.domain.PermissionResource">
+		<id column="id" property="id" />
+		<result column="parent_id" property="parentId" />
+		<result column="resource_depth" property="resourceDepth" />
+		<result column="permission_sort" property="permissionSort" />
+		<result column="permission_name" property="permissionName" />
+		<result column="resource_class" property="resourceClass" />
+		<result column="resource_style" property="resourceStyle" />
+		<result column="resource_router_url" property="resourceRouterUrl" />
+		<result column="resource_type" property="resourceType" />
+		<result column="resource_api_uri" property="resourceApiUri" />
+		<result column="resource_api_uri_methods" property="resourceApiUriMethods" />
+		<result column="resource_api_uri_options_fields" property="resourceApiUriOptionsFields" />
+		<result column="resource_api_protected_type" property="resourceApiProtectedType" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="remark" property="remark" />
+		<result column="category_code" property="categoryCode" />
+		<result column="is_enabled" property="enabled" />
+		<result column="create_user_id" property="createUserId" />
+		<result column="update_user_id" property="updateUserId" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, parent_id AS parentId, resource_depth AS resourceDepth, permission_sort AS permissionSort, permission_name AS permissionName, resource_class AS resourceClass, resource_style AS resourceStyle, resource_router_url AS resourceRouterUrl, resource_type AS resourceType, resource_api_uri AS resourceApiUri, resource_api_uri_methods AS resourceApiUriMethods, resource_api_uri_options_fields AS resourceApiUriOptionsFields, resource_api_protected_type AS resourceApiProtectedType, create_time AS createTime, update_time AS updateTime, remark, category_code AS categoryCode, is_enabled AS enabled, create_user_id AS createUserId, update_user_id AS updateUserId
+    </sql>
+
+</mapper>

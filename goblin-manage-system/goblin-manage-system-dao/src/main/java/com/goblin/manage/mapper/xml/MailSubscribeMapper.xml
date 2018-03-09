@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goblin.manage.mapper.MailSubscribeMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.goblin.manage.bean.domain.MailSubscribe">
+		<id column="id" property="id" />
+		<result column="user_id" property="userId" />
+		<result column="to_email" property="toEmail" />
+		<result column="to_email_type" property="toEmailType" />
+		<result column="email_subject" property="emailSubject" />
+		<result column="email_text" property="emailText" />
+		<result column="email_attachment_url" property="emailAttachmentUrl" />
+		<result column="email_send_time" property="emailSendTime" />
+		<result column="email_send_state" property="emailSendState" />
+		<result column="email_send_retry_number" property="emailSendRetryNumber" />
+		<result column="email_send_retry_count" property="emailSendRetryCount" />
+		<result column="remark" property="remark" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user_id AS userId, to_email AS toEmail, to_email_type AS toEmailType, email_subject AS emailSubject, email_text AS emailText, email_attachment_url AS emailAttachmentUrl, email_send_time AS emailSendTime, email_send_state AS emailSendState, email_send_retry_number AS emailSendRetryNumber, email_send_retry_count AS emailSendRetryCount, remark, create_time AS createTime, update_time AS updateTime
+    </sql>
+
+</mapper>

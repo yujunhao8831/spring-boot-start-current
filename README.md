@@ -1,9 +1,12 @@
 # Spring Boot 基础骨架
+
++ 升级到 spring boot 2.0
+
 项目可以打成jar部署,也可以打成war部署,默认使用jar
 
 ``` xml
-<groupId>com.aidijing</groupId>
-    <artifactId>aidijing-restful-client</artifactId>
+<groupId>com.goblin</groupId>
+    <artifactId>goblin-restful-client</artifactId>
     <!--<packaging>war</packaging>-->
 <packaging>jar</packaging>
 ```
@@ -37,7 +40,7 @@ maven打包命令 : mvn clean package docker:build
  + WebSocket
  + JWT(JSON Web Tokens)
  + WebSocket
- + jasypt
+ + jasypt 配置文件加密(spring boot 2.0暂未支持)
 
 项目包含了
  + 分布式锁
@@ -58,7 +61,7 @@ maven打包命令 : mvn clean package docker:build
  + Spring Security基础权限管理
  + 细粒度权限控制(粒度控制到字段)
  + 验证码
- + Spring Boot Admin 管理和监视
+ + Spring Boot Admin 管理和监视(spring boot 2.0暂未支持)
  + 极简分布式任务调度
  + WebSocket 简单示例
  
@@ -75,7 +78,7 @@ maven打包命令 : mvn clean package docker:build
 不使用session
 
 ``` java
-com.aidijing.ContextUtils
+com.goblin.ContextUtils
 ```
 用户相关数据从 ContextUtils 中获取
 ## 数据交互
@@ -85,11 +88,11 @@ org.springframework.http.ResponseEntity
 使用ResponseEntity对数据进行封装
 ## 代码生成器
 ```
-aidijing-generator
+goblin-generator
 |---src
 |   |---test
          |---com
-              |---aidijing
+              |---goblin
                    |---generator
                        |---...
 ```
@@ -107,7 +110,7 @@ aidijing-generator
 /**
  * 资源类型(API:接口,MENU:菜单,BUTTON:按钮)
  * <p>
- * 对应字段 {@link com.aidijing.domain.PermissionResource#resourceType}
+ * 对应字段 {@link com.goblin.domain.PermissionResource#resourceType}
  */
 @Getter
 public enum ResourceType implements IEnum {
@@ -149,7 +152,7 @@ public class PermissionResource {
 #### 配置枚举包位置
 ``` yml
 mybatis-plus:
-  type-enums-package: com.aidijing.manage.bean.domain.enums
+  type-enums-package: com.goblin.manage.bean.domain.enums
 ```
 
 ## 使用 mybatis plus
@@ -230,7 +233,7 @@ AssertUtils.isTrue( condition , "操作失败." );
 ``` yml
 jasypt:
   encryptor:
-    password: aidijing
+    password: goblin
 ```
 
 + 加密

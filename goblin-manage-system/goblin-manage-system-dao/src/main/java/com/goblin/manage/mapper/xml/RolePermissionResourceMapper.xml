@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goblin.manage.mapper.RolePermissionResourceMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.goblin.manage.bean.domain.RolePermissionResource">
+		<id column="id" property="id" />
+		<result column="role_id" property="roleId" />
+		<result column="permission_resource_id" property="permissionResourceId" />
+		<result column="resource_api_uri_show_fields" property="resourceApiUriShowFields" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, role_id AS roleId, permission_resource_id AS permissionResourceId, resource_api_uri_show_fields AS resourceApiUriShowFields
+    </sql>
+
+</mapper>

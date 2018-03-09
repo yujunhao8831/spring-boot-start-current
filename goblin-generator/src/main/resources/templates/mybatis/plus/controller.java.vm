@@ -1,0 +1,89 @@
+package ${package.Controller};
+
+import org.springframework.http.ResponseEntity;
+import ${package.Entity}.${entity};
+import ${package.Service}.${table.serviceName};
+        
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import com.github.pagehelper.PageInfo;
+import com.goblin.common.PagingRequest;
+
+#if(${restControllerStyle})
+#else
+import org.springframework.stereotype.Controller;
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+
+/**
+ * <p>
+ * $!{table.comment} 前端控制器
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}s#end#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}s#else${table.entityPath}s#end")
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+#else
+public class ${table.controllerName} {
+#end
+    @Autowired
+    private ${table.serviceName} ${serviceVariableName};
+
+    /*
+      #foreach($field in ${table.fields})
+      
+        #if("$!field.comment" != "") ${field.comment} #end ${field.propertyName} #if(${field.propertyType.equals("Boolean")}) boolean #else ${field.propertyType} #end
+        
+       #end
+      
+     */
+    
+    
+    @GetMapping("{id}")
+    public ResponseEntity< ${entity} > get ( @PathVariable ${primaryKeyTypeString} id ){
+        return ResponseEntity.ok().setResponseContent(${serviceVariableName}.selectById( id ));
+    }
+
+    @GetMapping
+    public ResponseEntity< PageInfo<${entity}> > list ( PagingRequest pagingRequest ){
+        return ResponseEntity.ok().setResponseContent(${serviceVariableName}.listPage( pagingRequest ));
+    }
+
+    @PostMapping
+    public ResponseEntity insert ( @RequestBody ${entity} ${entityVariableName} ){
+        if ( ! ${serviceVariableName}.insert( ${entityVariableName}) ){
+            return ResponseEntity.badRequest("保存失败");    
+        }
+        return ResponseEntity.ok("保存成功");
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity update ( @PathVariable ${primaryKeyTypeString} id,
+                                              @RequestBody ${entity} ${entityVariableName} ){
+        if ( ! ${serviceVariableName}.updateById( ${entityVariableName}.setId(id)) ){
+            return ResponseEntity.badRequest("更新失败");    
+        }
+        return ResponseEntity.ok("更新成功");
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity delete ( @PathVariable ${primaryKeyTypeString} id ){
+        if ( ! ${serviceVariableName}.deleteById(id) ){
+            return ResponseEntity.badRequest("删除失败");    
+        }
+        return ResponseEntity.ok("删除成功");
+    }
+
+    
+    
+}

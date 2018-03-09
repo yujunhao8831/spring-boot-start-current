@@ -1,0 +1,33 @@
+package ${package.ServiceImpl};
+
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+import ${superServiceImplClassPackage};
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.goblin.common.PagingRequest;
+
+
+/**
+ * <p>
+ * $!{table.comment} 服务实现类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Service
+public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+
+
+    @Override
+    public PageInfo<${entity}> listPage( PagingRequest pagingRequest ) {
+        PageHelper.startPage( pagingRequest.getPageNumber(), pagingRequest.getPageSize() );
+        return new PageInfo<>( super.selectList( null ) );
+    }
+    
+    
+}
