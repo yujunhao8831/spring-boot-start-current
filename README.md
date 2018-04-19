@@ -40,7 +40,7 @@ maven打包命令 : mvn clean package docker:build
  + WebSocket
  + JWT(JSON Web Tokens)
  + WebSocket
- + jasypt 配置文件加密(spring boot 2.0暂未支持)
+ + jasypt 配置文件加密
 
 项目包含了
  + 分布式锁

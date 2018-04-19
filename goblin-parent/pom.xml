@@ -70,7 +70,7 @@
 		<io.github.openfeign.feign-okhttp.version>9.5.0</io.github.openfeign.feign-okhttp.version>
 		<cron-utils.version>6.0.2</cron-utils.version>
 		<cron-utils-spring.version>1.0.1</cron-utils-spring.version>
-		<jasypt-spring-boot-starter.version>1.18</jasypt-spring-boot-starter.version>
+		<jasypt-spring-boot-starter.version>2.0.0</jasypt-spring-boot-starter.version>
 	</properties>
 
 	<dependencyManagement>
