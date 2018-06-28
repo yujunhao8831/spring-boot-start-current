@@ -5,6 +5,7 @@ import com.goblin.common.PagingRequest;
 import com.goblin.common.ResponseEntityPro;
 import com.goblin.common.annotation.Log;
 import com.goblin.manage.bean.domain.User;
+import com.goblin.manage.permission.Pass;
 import com.goblin.manage.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ import java.util.List;
  * @author : 披荆斩棘
  * @date : 2017/8/26
  */
-//@Pass
+@Pass
 @RestController
 @RequestMapping( "log" )
 public class LogDemoController {

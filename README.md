@@ -72,10 +72,17 @@ maven打包命令 : mvn clean package docker:build
  
  
 要求 : 
- + JDK 1.8 
+ + JDK 1.8
  + redis 默认使用 127.0.0.1:6379
- + mysql root/root 127.0.0.1:3306 数据库名称 : blog,基础sql见init.sql
+ + mysql root/12345678 127.0.0.1:3306 数据库名称 : goblin,基础sql见init.sql
  + lombok 插件(eclipse IntelliJ IDEA),不然项目可能会报错,但是不影响运行
+
+
+## 权限
+Spring Security在这里仅仅只是用来认证(登录认证).
+
+细粒度的权限是自行实现,resources/manage_system.pdm可以自行查看 manage_permission_resource, manage_role, manage_role_permission_resource, manage_user, manage_user_role
+代码中 AdminPermissionInterceptor 进行拦截控制,具体看代码实现,都有注释.
 
 
 ## 项目无状态
@@ -275,3 +282,79 @@ spring:
     username: ENC(jEmjzNoC9rTYorAj5mI84A==)
     password: ENC(jEmjzNoC9rTYorAj5mI84A==)
 ```
+
+# 项目介绍
+## 版本
++ goblin-parent
+控制版本
+## 公共模块
+其实这些模块,在这里体现不出什么,这里就一个goblin-manage-system服务,其实可以全部写到goblin-manage-system里面就行了,这样看起来就简单很多.
+因为自己用过Spring Cloud进行开发,这里只是为了以后多服务方便.
++ goblin-basic-config
+公共配置模块
++ goblin-cache
+缓存模块
++ goblin-common
+工具模块
++ goblin-security
+安全模块
+## 代码生成
++ goblin-generator
+## 监控
++ goblin-admin-ui
+## 服务
++ goblin-manage-system
+主服务
++ goblin-scheduling
+分布式调度服务,非常简单
+
+# 启动
+
+## 初始化数据库
+执行 resources/init-mysql.sql(库名goblin,创建数据库时,记得设置编码为:UTF-8)
+
+## 启动redis
+
+默认使用 127.0.0.1:6379
+
+## 项目
+
+以下都可单独运行
+
+### goblin-admin-ui
+用于监控服务,http://localhost:8888
+### goblin-manage-system
+http://localhost:8080
+
++ DemoController
+注入攻击,api返回指定/排除字段示例
+
++ DistributedDemoController
+分布式锁以及异步处理的demo
++ EnumDemoController
+mybatis 枚举处理
++ LogDemoController
+aop
++ UserValidatorDemoController
+HibernateValidator 例子
++ WebSocketDemoController
+WebSocket例子
+
+
+### goblin-scheduling
+简单调度
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
