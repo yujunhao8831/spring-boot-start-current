@@ -32,8 +32,8 @@ public class DemoController {
 		return ResponseEntityPro.badRequest(
 			new User().setPassword( "123456" )
 					  .setNickName( "披荆斩棘" )
-					  .setPhone( "18692222950" )
-					  .setRealName( "余峻豪" )
+					  .setPhone( "18696666666" )
+					  .setRealName( "渣渣辉" )
 					  .setLastPasswordResetDate( new Date() )
 					  .setRemark( "地精风险投资公司" )
 					  .setEmail( "yujunhao_8831@yahoo.com" ) ,

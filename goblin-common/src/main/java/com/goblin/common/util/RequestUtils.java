@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.Enumeration;
 
 /**
- * @author : 余峻豪
+ * @author : 披荆斩棘
  * @date : 16/6/16
  */
 public abstract class RequestUtils {

@@ -17,7 +17,7 @@ public class ResponseEntityProTest {
 		User user = new User().setUsername( "披荆斩棘" )
 							  .setEmail( "yujunhao_8831@yahoo.com" )
 							  .setNickName( "披荆斩棘" )
-							  .setPhone( "18692222950" )
+							  .setPhone( "18696666666" )
 							  .setPassword( "123456" )
 							  .setPasswordSalt( "-1" )
 							  .setEnabled( true );
@@ -46,7 +46,7 @@ public class ResponseEntityProTest {
 		User user = new User().setUsername( "披荆斩棘" )
 							  .setEmail( "yujunhao_8831@yahoo.com" )
 							  .setNickName( "披荆斩棘" )
-							  .setPhone( "18692222950" )
+							  .setPhone( "18696666666" )
 							  .setPassword( "123456" )
 							  .setPasswordSalt( "-1" )
 							  .setEnabled( true );
