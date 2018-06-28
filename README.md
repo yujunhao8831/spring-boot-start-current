@@ -84,6 +84,7 @@ Spring Security在这里仅仅只是用来认证(登录认证).
 细粒度的权限是自行实现,resources/manage_system.pdm可以自行查看 manage_permission_resource, manage_role, manage_role_permission_resource, manage_user, manage_user_role
 代码中 AdminPermissionInterceptor 进行拦截控制,具体看代码实现,都有注释.
 
+这里没有后台页面,权限的管理需要自行设计页面处理,或者自己插入脚本.
 
 ## 项目无状态
 
