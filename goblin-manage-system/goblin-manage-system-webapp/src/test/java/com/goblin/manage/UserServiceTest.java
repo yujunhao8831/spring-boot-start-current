@@ -31,7 +31,7 @@ public class UserServiceTest {
 			.setNickName( "披荆斩棘" )
 			.setUsername( "admin" )
 			.setEnabled( true )
-			.setPassword( passwordEncoder.encode( "123456" ) );
+			.setPassword( passwordEncoder.encode( "admin" ) );
 		userService.save( user );
 
 	}

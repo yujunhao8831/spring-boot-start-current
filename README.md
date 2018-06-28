@@ -2,6 +2,11 @@
 
 + 升级到 spring boot 2.0
 
+![](resources/1.png)
+![](resources/2.png)
+![](resources/3.png)
+
+
 项目可以打成jar部署,也可以打成war部署,默认使用jar
 
 ``` xml
@@ -61,7 +66,7 @@ maven打包命令 : mvn clean package docker:build
  + Spring Security基础权限管理
  + 细粒度权限控制(粒度控制到字段)
  + 验证码
- + Spring Boot Admin 管理和监视(spring boot 2.0暂未支持)
+ + Spring Boot Admin 管理和监视
  + 极简分布式任务调度
  + WebSocket 简单示例
  

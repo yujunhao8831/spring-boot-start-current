@@ -6,7 +6,7 @@
         <groupId>com.goblin</groupId>
         <artifactId>goblin-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/>
+		<relativePath>../goblin-parent</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <description>简单分布式调度</description>
@@ -64,10 +64,10 @@
             <scope>test</scope>
         </dependency>
 
-		<!--<dependency>-->
-			<!--<groupId>de.codecentric</groupId>-->
-			<!--<artifactId>spring-boot-admin-starter-client</artifactId>-->
-		<!--</dependency>-->
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-starter-client</artifactId>
+		</dependency>
 
 
 		<dependency>

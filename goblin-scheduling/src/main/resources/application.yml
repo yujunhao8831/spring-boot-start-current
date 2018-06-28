@@ -7,9 +7,10 @@ spring:
   aop:
     proxy-target-class: true
     auto: true
+  application:
+    name: goblin-scheduling
   
 
-    
     
     
     

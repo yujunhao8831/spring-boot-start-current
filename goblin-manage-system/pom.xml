@@ -6,7 +6,7 @@
 		<artifactId>goblin-parent</artifactId>
 		<groupId>com.goblin</groupId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath/>
+		<relativePath>../goblin-parent</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 

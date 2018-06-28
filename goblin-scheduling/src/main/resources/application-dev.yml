@@ -1,6 +1,6 @@
 # 服务器
 server:
-  port: 8080
+  port: 8081
 
 # 日志
 logging:
@@ -15,13 +15,13 @@ spring:
 # spring boot admin 监控 start
   boot:
     admin:
-      url: http://localhost:8888  
-      username: root
-      password: root
       client:
-          enabled: true
+        enabled: true
+        url: http://localhost:8888
 management:
-  security:
-    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
   # spring boot admin 监控 end
 

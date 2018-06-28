@@ -6,7 +6,7 @@
 		<artifactId>goblin-parent</artifactId>
 		<groupId>com.goblin</groupId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath/>
+		<relativePath>../goblin-parent</relativePath>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
@@ -39,14 +39,6 @@
 			<artifactId>spring-boot-starter-websocket</artifactId>
 			<scope>provided</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.mobile</groupId>
-			<artifactId>spring-mobile-device</artifactId>
-			<version>2.0.0.M2</version>
-			<scope>provided</scope>
-		</dependency>
-
 
 
 		<dependency>

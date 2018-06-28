@@ -1,11 +1,5 @@
 # 发件箱,配自己的发件箱,该发件箱已无效
 send.mail: pjzj8831@163.com
-security:
-  user:
-    name: root
-    password: root
-  basic:
-    enabled: true
 
 # 服务器
 server:
@@ -26,23 +20,11 @@ spring:
       mail.smtp.starttls: false 
       mail.smtp.quitwait: false
   boot:
-    admin:
-      username: "${security.user.name}"       
-      password: "${security.user.password}"    
-      client:
-        metadata:
-          user.name: "${security.user.name}"
-          user.password: "${security.user.password}"
-      notify:
-        mail:
-          to: yujunhao_8831@yahoo.com # 通知到哪个邮箱
-          subject: goblin
-          from: ${send.mail}
-      routes:
-        endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream
-      turbine:
-        clusters: default
-        location: turbine
+      admin:
+        notify:
+          mail:
+            to: yujunhao_8831@yahoo.com # 通知到哪个邮箱
 
-management.security.enabled: false
+
+
 

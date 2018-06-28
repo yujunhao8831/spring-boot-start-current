@@ -83,7 +83,13 @@ $(function () {
                 $("#token").val(message.token);
                 $("#tokenDiv").removeAttr("hidden");
             }, fail : function (message) {
-                $("#error").html(message.statusMessage);
+                console.log(message);
+                $("#error").html(message.responseText);
+                $("#errorDiv").removeAttr("hidden");
+                $("#tokenDiv").attr("hidden", true);
+            }, error : function (message) {
+                console.log(message);
+                $("#error").html(message.responseText);
                 $("#errorDiv").removeAttr("hidden");
                 $("#tokenDiv").attr("hidden", true);
             }

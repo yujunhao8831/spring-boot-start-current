@@ -42,7 +42,7 @@
 		<commons-lang3.version>3.5</commons-lang3.version>
 		<springfox-swagger2.version>2.8.0</springfox-swagger2.version>
 		<disruptor.version>3.4.1</disruptor.version>
-		<com.alibaba.spring.boot.starter.version>1.1.8</com.alibaba.spring.boot.starter.version>
+		<com.alibaba.spring.boot.starter.version>1.1.10</com.alibaba.spring.boot.starter.version>
 		<mybatisplus-spring-boot-starter.version>1.0.5</mybatisplus-spring-boot-starter.version>
 		<mybatis-plus.version>2.1.8</mybatis-plus.version>
 		<com.github.pagehelper.version>1.2.3</com.github.pagehelper.version>
@@ -54,7 +54,7 @@
 		<velocity.version>1.7</velocity.version>
 		<squiggly-filter-jackson.version>1.3.9</squiggly-filter-jackson.version>
 		<kaptcha.version>2.3.2</kaptcha.version>
-		<spring-boot-admin.version>1.5.7</spring-boot-admin.version>
+		<spring-boot-admin.version>2.0.1</spring-boot-admin.version>
 		<net.javacrumbs.shedlock.version>0.18.1</net.javacrumbs.shedlock.version>
 		<ojdbc6.version>11.2.0.3</ojdbc6.version>
 		<eu.bitwalker.UserAgentUtils.version>1.20</eu.bitwalker.UserAgentUtils.version>
@@ -71,6 +71,7 @@
 		<cron-utils.version>6.0.2</cron-utils.version>
 		<cron-utils-spring.version>1.0.1</cron-utils-spring.version>
 		<jasypt-spring-boot-starter.version>2.0.0</jasypt-spring-boot-starter.version>
+		<easyexcel.version>1.0.1</easyexcel.version>
 	</properties>
 
 	<dependencyManagement>
@@ -294,45 +295,15 @@
 				<version>${kaptcha.version}</version>
 			</dependency>
 
-
 			<dependency>
 				<groupId>de.codecentric</groupId>
-				<artifactId>spring-boot-admin-server</artifactId>
-				<version>${spring-boot-admin.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>de.codecentric</groupId>
-				<artifactId>spring-boot-admin-server-ui</artifactId>
+				<artifactId>spring-boot-admin-starter-server</artifactId>
 				<version>${spring-boot-admin.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>de.codecentric</groupId>
 				<artifactId>spring-boot-admin-starter-client</artifactId>
-				<version>${spring-boot-admin.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>de.codecentric</groupId>
-				<artifactId>spring-boot-admin-server-ui-hystrix</artifactId>
-				<version>${spring-boot-admin.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>de.codecentric</groupId>
-				<artifactId>spring-boot-admin-server-ui-turbine</artifactId>
-				<version>${spring-boot-admin.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>de.codecentric</groupId>
-				<artifactId>spring-boot-admin-server-ui-activiti</artifactId>
-				<version>${spring-boot-admin.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>de.codecentric</groupId>
-				<artifactId>spring-boot-admin-server-ui-login</artifactId>
 				<version>${spring-boot-admin.version}</version>
 			</dependency>
 
@@ -444,6 +415,13 @@
 				<groupId>com.github.ulisesbocchio</groupId>
 				<artifactId>jasypt-spring-boot-starter</artifactId>
 				<version>${jasypt-spring-boot-starter.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>easyexcel</artifactId>
+				<version>${easyexcel.version}</version>
 			</dependency>
 
 		</dependencies>
