@@ -1,13 +1,7 @@
-/*
- * 文 件 名:  GenerationCode.java
- * 版    权:  HNA TELECOM Co.,LTD.
- * 描    述:  生成编码规则
- * 创 建 人:  wubangjie
- * 创建时间:  2016年6月27日
- */
 package com.goblin.common.util;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.management.ManagementFactory;
 import java.net.NetworkInterface;
@@ -26,7 +20,7 @@ import java.util.concurrent.atomic.LongAdder;
  *
  * @author pijingzhanji
  */
-public final class GenerationCode {
+public final class DistributedCode {
 
 
 	/** 机器码 加 进程号 会导致生成的序列号很长, 基于这两个值做一些截取 */
@@ -37,8 +31,8 @@ public final class GenerationCode {
 	private static final DateTimeFormatter DATE_TIME_FORMATTER   = DateTimeFormatter.ofPattern( "yyyyMMddHHmmssSSS" );
 	/** 原子类 */
 	private static final LongAdder         LONG_ADDER            = new LongAdder();
-	private static final Long              INITIAL_VALUE         = 1000000L;
-	private static final Long              NEXT_NUMBER_MAX_LIMIT = 9999999L;
+	private static final Long              INITIAL_VALUE         = 100_00L;
+	private static final Long              NEXT_NUMBER_MAX_LIMIT = 999_99L;
 
 
 	static {
@@ -48,7 +42,7 @@ public final class GenerationCode {
 			int machineIdentifier = createMachineIdentifier();
 			// 进程号 --> 当前运行的 jvm 进程号的 hashcode 值
 			int    processIdentifier = createProcessIdentifier();
-			String mp                = Integer.toString( Math.abs( ( machineIdentifier + "" + processIdentifier ).hashCode() ) );
+			String mp                = Integer.toString( Math.abs( ( machineIdentifier + "" + processIdentifier ).hashCode() + 1 ) );
 			MP = ( mp.length() > MP_LEN ) ? mp.substring( mp.length() - MP_LEN , mp.length() ) : mp;
 		} catch ( Exception e ) {
 			throw new RuntimeException( e );
@@ -56,45 +50,72 @@ public final class GenerationCode {
 	}
 
 	/**
-	 * (机器码 + 进程号) + 随机数 + 时间 + 计数器
+	 * 得到当前机器码
 	 *
+	 * @return 6位长度<code>String</code>
+	 */
+	public static String getMachineCode () {
+		return MP;
+	}
+
+
+	/**
+	 * 指定生成的ID长度
+	 *
+	 * @param length <b style="color:red">最大长度不能小于28</b>
 	 * @return 全局唯一ID
+	 */
+	public static String globalUniqueId ( final int length ) {
+		if ( length < 28 ) {
+			throw new IllegalArgumentException( "length 不能小于28,否则无法保证唯一性" );
+		}
+		// 补位长度
+		final int fill = length - 28;
+		return globalUniqueId( StringUtils.EMPTY , RandomStringUtils.randomNumeric( fill ) );
+	}
+
+	/**
+	 * @return 全局唯一ID(大于32位)
 	 */
 	public static String globalUniqueId () {
-		return globalUniqueId( 10 );
+		return globalUniqueId( Thread.currentThread().getId() + StringUtils.EMPTY ,
+							   RandomStringUtils.randomNumeric( 10 ) );
 	}
 
 	/**
-	 * (机器码 + 进程号) + 随机数 + 时间 + 计数器 + 用户ID
-	 *
-	 * @param userId : 用户ID
-	 * @return 全局唯一ID
+	 * @return 固定长度28位
 	 */
-	public static String globalUniqueId ( final String userId ) {
-		return globalUniqueId() + userId;
+	public static String globalUniqueId28Length () {
+		return globalUniqueId( StringUtils.EMPTY , StringUtils.EMPTY );
 	}
 
+	/**
+	 * @return 固定长度32位
+	 */
+	public static String globalUniqueId32Length () {
+		return globalUniqueId( 32 );
+	}
 
 	/**
-	 * (机器码 + 进程号) + 随机数 + 时间 + 计数器
+	 * 前缀[自定长度] + 机器码[6位] + 时间[17位] + 循环增减数[5位] + 随机数[自定长度]
 	 *
-	 * @param count 随机数长度
-	 * @return 全局唯一ID
+	 * @param prefix       前缀
+	 * @param randomNumber 随机数
+	 * @return 可确定长度28位
 	 */
-	private static String globalUniqueId ( final int count ) {
-		// 随机数,该工具类是线程安全的
-		final String randomNumber = RandomStringUtils.randomNumeric( count );
+	private static String globalUniqueId ( final String prefix , final String randomNumber ) {
 		// 时间
 		final String now = DATE_TIME_FORMATTER.format( LocalDateTime.now() );
 		// 下一个数
-		final long nextNumber = getNextNumber();
-		return MP + Thread.currentThread().getId() + randomNumber + now + nextNumber;
+		final long nextNumber = nextNumber();
+		return prefix + MP + now + nextNumber + randomNumber;
 	}
 
+
 	/**
-	 * 自增数
+	 * @return 5位
 	 */
-	private static long getNextNumber () {
+	private static long nextNumber () {
 		final long next = LONG_ADDER.longValue();
 		if ( next >= NEXT_NUMBER_MAX_LIMIT ) {
 			LONG_ADDER.reset();
