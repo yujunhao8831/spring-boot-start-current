@@ -71,7 +71,7 @@
 		<cron-utils.version>6.0.2</cron-utils.version>
 		<cron-utils-spring.version>1.0.1</cron-utils-spring.version>
 		<jasypt-spring-boot-starter.version>2.0.0</jasypt-spring-boot-starter.version>
-		<easyexcel.version>1.0.1</easyexcel.version>
+		<easyexcel.version>1.0.3</easyexcel.version>
 	</properties>
 
 	<dependencyManagement>

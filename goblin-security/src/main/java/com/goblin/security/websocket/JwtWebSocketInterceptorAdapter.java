@@ -10,7 +10,7 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
-import org.springframework.messaging.support.ChannelInterceptorAdapter;
+import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,7 +24,7 @@ import java.util.Objects;
  * @author : 披荆斩棘
  * @date : 2017/8/26
  */
-public class JwtWebSocketInterceptorAdapter extends ChannelInterceptorAdapter {
+public class JwtWebSocketInterceptorAdapter implements ChannelInterceptor {
 
     @Autowired
     private UserDetailsService userDetailsService;
