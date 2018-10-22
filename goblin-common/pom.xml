@@ -215,6 +215,12 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>easyexcel</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.antlr</groupId>
+			<artifactId>antlr4-runtime</artifactId>
+			<version>4.3</version>
+			<scope>test</scope>
+		</dependency>
 
 
 	</dependencies>

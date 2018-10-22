@@ -1,5 +1,6 @@
 package com.goblin.common.converter;
 
+import com.goblin.common.SimpleDateFormatPro;
 import com.goblin.common.util.DateFormatStyle;
 import com.goblin.common.util.DateUtils;
 import org.springframework.core.convert.converter.Converter;
@@ -19,13 +20,6 @@ public class StringToDateConverter implements Converter< String, Date > {
 
     @Override
     public Date convert ( String source ) {
-		Date date = null;
-        for ( DateFormatStyle formatStyle : DateFormatStyle.values() ) {
-			date = DateUtils.formatStringByStyle(source.trim(), formatStyle.getDateStyle());
-			if ( Objects.nonNull(date) ) {
-				break;
-			}
-        }
-        return date;
+        return new SimpleDateFormatPro( DateFormatStyle.getDateFormatStyles() ).parse( source );
     }
 }

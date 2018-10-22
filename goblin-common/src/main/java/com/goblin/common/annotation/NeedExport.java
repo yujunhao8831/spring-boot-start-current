@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  * <p style="color:red">
  * 要求 :
  * <ul>
- * <li>1. {@link com.goblin.common.ResponseEntity} 返回类型,并在泛型中指定类型</li>
+ * <li>1. {@link com.goblin.common.ResponseEntityPro} 返回类型,并在泛型中指定类型</li>
  * <li>2. 指定的类型字段释义用 {@link ExportFiledComment} 指定,如果未指定,那么字段默认释义就是这个字段的名称 </li>
  * </ul>
  * </p>

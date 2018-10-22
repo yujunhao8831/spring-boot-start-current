@@ -3,6 +3,7 @@ package com.goblin.common.util;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.bohnman.squiggly.Squiggly;
 import com.google.gson.Gson;
@@ -20,7 +21,7 @@ import java.util.List;
  * @author : 披荆斩棘
  * @date : 2016/10/2
  */
-public abstract class JsonUtils {
+public final class JsonUtils {
 
 
     /**
@@ -43,6 +44,7 @@ public abstract class JsonUtils {
 
     static {
         BASIC.setDateFormat( new SimpleDateFormat( DateFormatStyle.CN_DATE_BASIC_STYLE.getDateStyle() ) );
+		BASIC.configure( DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false );
     }
 
     /**
@@ -256,6 +258,8 @@ public abstract class JsonUtils {
 			setDateFormat( dateFormat );
 			// <code>null<code> 不序列化
 			setSerializationInclusion( JsonInclude.Include.NON_NULL );
+			// 遇到未知属性,略过
+			configure( DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false );
 		}
 
         private CustomizationObjectMapper () {

@@ -14,8 +14,7 @@ import org.apache.logging.log4j.message.*;
  * @author : 披荆斩棘
  * @date : 2017/5/12
  */
-public abstract class LogUtils {
-
+public final class LogUtils {
 
 	/**
 	 * 返回一个调用这的名称的Logger
