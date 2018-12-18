@@ -6,7 +6,13 @@ spring:
     active: dev
   application:
     name: goblin-manage-system-webapp
-# 缓存
+  # HTTP字符编码
+  http:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+  # 缓存
   cache:
     type: redis
 # AOP

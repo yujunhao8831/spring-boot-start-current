@@ -70,16 +70,8 @@ public class SpringConfig implements WebMvcConfigurer, ErrorPageRegistrar {
 	 */
 	@Bean
 	public FilterRegistrationBean filterRegistrationBean () {
-		// 过滤器注册
-		FilterRegistrationBean  registrationBean = new FilterRegistrationBean();
-		CharacterEncodingFilter encodingFilter   = new CharacterEncodingFilter();
-		encodingFilter.setEncoding( StandardCharsets.UTF_8.displayName() );
-		encodingFilter.setForceEncoding( true );
-		// 字符过滤器
-		registrationBean.setFilter( encodingFilter );
 		// 日志处理过滤器
-		registrationBean.setFilter( new RequestLoggingFilter() );
-		return registrationBean;
+		return new FilterRegistrationBean<>( new RequestLoggingFilter() );
 	}
 
 	/**

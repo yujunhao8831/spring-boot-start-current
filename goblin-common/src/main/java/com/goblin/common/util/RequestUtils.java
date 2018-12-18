@@ -249,9 +249,9 @@ public abstract class RequestUtils {
 	private static String getRequestMessage ( HttpServletRequest request , StringBuilder parameters ) throws
 																									  IOException {
 		parameters.append( "\n请求URL : " )
-				  .append( request.getRequestURI() )
+				  .append( request.getRequestURL())
 				  .append( "\n请求URI : " )
-				  .append( request.getRequestURL() )
+				  .append( request.getRequestURI())
 				  .append( "\n请求方式 : " )
 				  .append( request.getMethod() )
 				  .append( RequestUtils.isAjaxRequest( request ) ? "\tajax请求" : "\t同步请求" )
