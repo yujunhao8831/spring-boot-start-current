@@ -33,6 +33,9 @@ public @interface Log {
 
 	@Getter
 	enum NoticeType {
+		/**
+		 *
+		 */
 		SMS( "SMS" , "短信通知" ),
 		MAIL( "MAIL" , "邮箱通知" );
 
