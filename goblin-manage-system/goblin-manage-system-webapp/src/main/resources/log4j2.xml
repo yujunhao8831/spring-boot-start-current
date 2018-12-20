@@ -32,7 +32,7 @@ ${project.name}
         -->
         <Console name="Console" target="SYSTEM_OUT" follow="true" >
             <!-- 输出日志的格式 -->
-            <PatternLayout pattern="[%X{userId}] [%X{userName}] %d{yyyy-MM-dd HH:mm:ss SSS} [%p] [%t] %c.%M(%L) | %m%n"/>
+            <PatternLayout pattern="[%X{userId}] [%X{userName}] %d{yyyy-MM-dd HH:mm:ss SSS} [%p] [%t] %class.%M(%L) | %m%n"/>
         </Console>
 
         <!--
