@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MultipartException;
 
+import javax.validation.ConstraintDeclarationException;
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -33,35 +34,41 @@ import java.util.Objects;
 public class GlobalErrorController {
 
 
+	@ExceptionHandler( ConstraintDeclarationException.class )
+	public ResponseEntity constraintDeclarationException ( ConstraintDeclarationException e ) {
+		LogUtils.getLogger().error( "error" , e );
+		return ResponseEntityPro.badRequest( e.getMessage() );
+	}
+
 	@ExceptionHandler( ServletRequestBindingException.class )
 	public ResponseEntity servletRequestBindingExceptionHandler ( ServletRequestBindingException e ) {
 		LogUtils.getLogger().error( "error" , e );
-		return ResponseEntityPro.unauthorized( e.getMessage() + ",请检查参数名称是否符合格式." );
+		return ResponseEntityPro.badRequest( e.getMessage() + ",请检查参数名称是否符合格式." );
 	}
 
 	@ExceptionHandler( ValidatedIllegalArgumentException.class )
 	public ResponseEntity validatedIllegalArgumentExceptionHandler ( ValidatedIllegalArgumentException e ) {
 		LogUtils.getLogger().error( "error" , e );
-		return ResponseEntityPro.unauthorized( Objects.requireNonNull( e.getBindingResult().getFieldError() ).getDefaultMessage() );
+		return ResponseEntityPro.badRequest( Objects.requireNonNull( e.getBindingResult().getFieldError() ).getDefaultMessage() );
 	}
 
 	@ExceptionHandler( MethodArgumentNotValidException.class )
 	public ResponseEntity methodArgumentNotValidExceptionHandler ( MethodArgumentNotValidException e ) {
 		LogUtils.getLogger().error( "error" , e );
-		return ResponseEntityPro.unauthorized( Objects.requireNonNull( e.getBindingResult().getFieldError() ).getDefaultMessage() );
+		return ResponseEntityPro.badRequest( Objects.requireNonNull( e.getBindingResult().getFieldError() ).getDefaultMessage() );
 	}
 
 	@ExceptionHandler( HttpMessageNotReadableException.class )
 	public ResponseEntity httpMessageNotReadableExceptionHandler ( HttpMessageNotReadableException e ) {
 		LogUtils.getLogger().error( "error" , e );
-		return ResponseEntityPro.unauthorized(
+		return ResponseEntityPro.badRequest(
 			"Required request body is missing,请求体无法解析,请检查请求体格式的有效性(或请求体内参数格式有误导致无法解析). " );
 	}
 
 	@ExceptionHandler( MultipartException.class )
 	public ResponseEntity multipartExceptionHandler ( MultipartException e ) {
 		LogUtils.getLogger().error( "error" , e );
-		return ResponseEntityPro.unauthorized( e.getMessage() );
+		return ResponseEntityPro.badRequest( e.getMessage() );
 	}
 
 	@ExceptionHandler( AuthenticationCredentialsNotFoundException.class )
@@ -135,6 +142,9 @@ public class GlobalErrorController {
 
 	@Getter
 	private enum ExceptionCode {
+		/**
+		 *
+		 */
 		SQL_EXCEPTION( "9001" , "SQL异常" );
 
 

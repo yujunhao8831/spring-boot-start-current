@@ -30,17 +30,6 @@ public final class JsonUtils {
      */
     private static final ObjectMapper BASIC         = new ObjectMapper();
     private static final ObjectMapper CUSTOMIZATION = new CustomizationObjectMapper();
-    /**
-     * <p>gson</p>
-     * <a href="https://github.com/google/gson/blob/master/UserGuide.md">document</a>
-     */
-    private static final Gson         GSON          = new GsonBuilder()
-            .setDateFormat( DateFormatStyle.CN_DATE_BASIC_STYLE.getDateStyle() ).create();
-    /**
-     * <p>fastjson</p>
-     * <a href="https://github.com/alibaba/fastjson/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98">document</a>
-     */
-    private static com.alibaba.fastjson.JSON JSON;
 
     static {
         BASIC.setDateFormat( new SimpleDateFormat( DateFormatStyle.CN_DATE_BASIC_STYLE.getDateStyle() ) );
@@ -177,7 +166,7 @@ public final class JsonUtils {
      * json转换为指定类型(支持泛型)
      * <pre class="code">
      * 示例 :
-     * ResponseEntity< User > responseEntity = JsonUtils.jsonToType( jscksonJsonValue,new TypeReference< ResponseEntity< User > >() {} );
+     * ResponseEntity< User > responseEntity = JsonUtils.jsonToType( jsonValue ,new TypeReference< ResponseEntity< User > >() {} );
      * </pre>
      *
      * @param inputJson  : json
@@ -201,13 +190,6 @@ public final class JsonUtils {
         return BASIC;
     }
 
-    public static Gson getGson () {
-        return GSON;
-    }
-
-    public static com.alibaba.fastjson.JSON getFastjson () {
-        return JSON;
-    }
 
     private static < T > T jsonToType ( ObjectMapper objectMapper , String inputJson , TypeReference targetType ) {
         try {
