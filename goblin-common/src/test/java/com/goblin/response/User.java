@@ -1,6 +1,6 @@
 package com.goblin.response;
 
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.util.Date;
@@ -13,7 +13,9 @@ import java.util.Date;
  * @author 披荆斩棘
  * @since 2017-07-12
  */
-@Data
+@Getter
+@Setter
+@ToString
 @Accessors( chain = true )
 public class User {
 

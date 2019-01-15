@@ -1,6 +1,9 @@
 package com.goblin.common.cron;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.springframework.scheduling.support.CronSequenceGenerator;
 
@@ -13,7 +16,9 @@ import static org.apache.commons.lang3.StringUtils.split;
  * @author : 披荆斩棘
  * @date : 2017/8/9
  */
-@Data
+@Getter
+@Setter
+@ToString
 @Accessors( chain = true )
 public class CustomizeCron implements Serializable {
 

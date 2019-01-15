@@ -14,7 +14,7 @@ import static com.goblin.common.util.JsonUtils.jsonToType;
 import static com.goblin.common.util.JsonUtils.toFilterJson;
 
 /**
- * api {@link ResponseEntity} 返回类型处理,针对 {@link RolePermissionResource#resourceApiUriShowFields} 字段
+ * api {@link ResponseEntity} 返回类型处理,针对 {@link RolePermissionResource#getResourceApiUriShowFields()} 字段
  *
  * @author : 披荆斩棘
  * @date : 2017/11/14

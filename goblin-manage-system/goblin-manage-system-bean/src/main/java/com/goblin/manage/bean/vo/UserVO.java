@@ -2,8 +2,7 @@ package com.goblin.manage.bean.vo;
 
 import com.goblin.manage.bean.domain.Role;
 import com.goblin.manage.bean.domain.User;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 /**
@@ -14,8 +13,9 @@ import lombok.experimental.Accessors;
  * @author 披荆斩棘
  * @since 2017-06-19
  */
-@EqualsAndHashCode( callSuper = true )
-@Data
+@Getter
+@Setter
+@ToString
 @Accessors( chain = true )
 public class UserVO extends User {
 

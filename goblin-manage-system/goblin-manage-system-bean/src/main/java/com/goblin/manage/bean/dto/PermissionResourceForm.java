@@ -1,7 +1,9 @@
 package com.goblin.manage.bean.dto;
 
 import com.goblin.manage.bean.domain.enums.ResourceType;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotEmpty;
@@ -17,7 +19,9 @@ import java.util.Set;
  * @author 披荆斩棘
  * @since 2017-06-19
  */
-@Data
+@Getter
+@Setter
+@ToString
 @Accessors( chain = true )
 public class PermissionResourceForm implements Serializable {
 

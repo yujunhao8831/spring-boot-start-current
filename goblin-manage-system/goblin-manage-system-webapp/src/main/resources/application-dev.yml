@@ -10,7 +10,7 @@ logging:
 spring:
   datasource:
     username: root
-    password: 12345678
+    password: 123456789
     url: jdbc:mysql://127.0.0.1:3306/goblin?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true
     type: com.alibaba.druid.pool.DruidDataSource
     # 文档 : https://github.com/alibaba/druid/tree/1.1.0/druid-spring-boot-starter

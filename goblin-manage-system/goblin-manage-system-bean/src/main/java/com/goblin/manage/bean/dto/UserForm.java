@@ -1,7 +1,9 @@
 package com.goblin.manage.bean.dto;
 
 import com.goblin.common.util.ValidatedGroups;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 
@@ -14,7 +16,9 @@ import java.io.Serializable;
  * @author : 披荆斩棘
  * @date : 2017/7/5
  */
-@Data
+@Getter
+@Setter
+@ToString
 @Accessors( chain = true )
 public class UserForm implements Serializable {
 

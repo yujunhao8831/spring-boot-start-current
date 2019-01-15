@@ -1,6 +1,8 @@
 package com.goblin.common;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -11,7 +13,9 @@ import java.io.Serializable;
  * @author : 披荆斩棘
  * @date : 2017/7/13
  */
-@Data
+@Getter
+@Setter
+@ToString
 @Accessors( chain = true )
 public class PagingRequest implements Serializable {
 

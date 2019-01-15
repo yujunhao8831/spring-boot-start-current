@@ -22,7 +22,9 @@ ${project.name}
         <property name="LOG_FILE_SIZE">100 MB</property>
         <!-- 日志备份目录 -->
         <property name="SERVER_NAME">goblin-manage-system-webapp</property>
-        <property name="OUTPUT_LOG_LEVEL">DEBUG</property><!-- 日志输出级别 -->
+        <!-- 日志输出级别 -->
+        <property name="OUTPUT_LOG_LEVEL">DEBUG</property>
+        <Property name="LOG_PATTERN">[%clr{%X{userId}}{magenta} %clr{%X{userName}}{magenta}] [%clr{${sys:PID}}{magenta}] %d{yyyy-MM-dd HH:mm:ss.SSS} [%p] [%t] %class.%M(%L) | %m%n</Property>
     </properties>
 
     <Appenders>
@@ -32,7 +34,9 @@ ${project.name}
         -->
         <Console name="Console" target="SYSTEM_OUT" follow="true" >
             <!-- 输出日志的格式 -->
-            <PatternLayout pattern="[%X{userId}] [%X{userName}] %d{yyyy-MM-dd HH:mm:ss SSS} [%p] [%t] %class.%M(%L) | %m%n"/>
+            <PatternLayout>
+                <Pattern>${sys:LOG_PATTERN}</Pattern>
+            </PatternLayout>
         </Console>
 
         <!--
@@ -44,7 +48,7 @@ ${project.name}
                      immediateFlush="false" append="false"
         >
             <PatternLayout>
-                <Pattern>%X %d{yyyy-MM-dd HH:mm:ss SSS} [%p] [%t] %c.%M(%L) | %m%n</Pattern>
+                <Pattern>${sys:LOG_PATTERN}</Pattern>
             </PatternLayout>
 
             <Policies>
@@ -58,7 +62,7 @@ ${project.name}
 
 
         <!--
-                         打印错误日志，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档
+            打印错误日志，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档
         -->
         <RollingRandomAccessFile name="RandomAccessFileForError"
                      fileName="${LOG_HOME}/applogs/${SERVER_NAME}.error.log"
@@ -66,7 +70,7 @@ ${project.name}
                      append="false"
         >
             <PatternLayout>
-                <Pattern>%X %d{yyyy-MM-dd HH:mm:ss SSS} [%p] [%t] %c.%M(%L) | %m%n</Pattern>
+                <Pattern>${sys:LOG_PATTERN}</Pattern>
             </PatternLayout>
 
             <Policies>

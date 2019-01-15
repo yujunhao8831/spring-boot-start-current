@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -19,8 +18,9 @@ import java.io.Serializable;
  * @author 披荆斩棘
  * @since 2017-12-28
  */
-@Data
-@EqualsAndHashCode( callSuper = true )
+@Getter
+@Setter
+@ToString
 @Accessors( chain = true )
 @TableName( "manage_role_permission_resource" )
 public class RolePermissionResource extends Model< RolePermissionResource > {
