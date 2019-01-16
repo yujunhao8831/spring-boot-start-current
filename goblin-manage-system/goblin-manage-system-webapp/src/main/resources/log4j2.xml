@@ -100,14 +100,14 @@ ${project.name}
         <!--
             同步和异步混合记录
          -->
-        <AsyncLogger name="com.goblin"  level="debug" includeLocation="true" additivity="false">
+        <AsyncLogger name="com.goblin"  level="info" includeLocation="true" additivity="false">
             <AppenderRef ref="RandomAccessFile"/>
             <AppenderRef ref="RandomAccessFileForError"/>
             <AppenderRef ref="Console"/>
         </AsyncLogger>
 
         <!-- 定义除单个类外所有日志记录级别 -->
-        <Root level="debug" includeLocation="true">
+        <Root level="info" includeLocation="true">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="RandomAccessFile"/>
             <AppenderRef ref="RandomAccessFileForError"/>

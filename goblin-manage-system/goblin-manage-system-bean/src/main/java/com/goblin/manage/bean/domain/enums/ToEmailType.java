@@ -1,6 +1,6 @@
 package com.goblin.manage.bean.domain.enums;
 
-import com.baomidou.mybatisplus.enums.IEnum;
+import com.baomidou.mybatisplus.core.enums.IEnum;
 import lombok.Getter;
 
 /**
@@ -12,6 +12,9 @@ import lombok.Getter;
 @Getter
 public enum ToEmailType implements IEnum {
 
+	/**
+	 *
+	 */
 	SYSTEM( "SYSTEM" , "系统邮箱" ),
 	OTHER( "OTHER" , "其他邮箱[非系统邮箱])" );
 

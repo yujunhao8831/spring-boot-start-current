@@ -24,19 +24,19 @@ import java.util.List;
 @RequestMapping( "log" )
 public class LogDemoController {
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
-	@Log
-	@GetMapping( "users" )
-	public ResponseEntity< List< User > > users () {
-		return ResponseEntityPro.ok( userService.selectList( null ) );
-	}
+    @Log
+    @GetMapping( "users" )
+    public ResponseEntity< List< User > > users () {
+        return ResponseEntityPro.ok( userService.list() );
+    }
 
-	@GetMapping( "users-page" )
-	public ResponseEntity< PageInfo< User > > listPage ( PagingRequest pagingRequest ) {
-		return ResponseEntityPro.ok( userService.listPage( pagingRequest ) );
-	}
+    @GetMapping( "users-page" )
+    public ResponseEntity< PageInfo< User > > listPage ( PagingRequest pagingRequest ) {
+        return ResponseEntityPro.ok( userService.listPage( pagingRequest ) );
+    }
 
 
 }

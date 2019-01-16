@@ -2,7 +2,7 @@ package com.goblin.manage.service;
 
 import com.goblin.manage.bean.domain.Role;
 import com.goblin.manage.bean.domain.UserRole;
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
 

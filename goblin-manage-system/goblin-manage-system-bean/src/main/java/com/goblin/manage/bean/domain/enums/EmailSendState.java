@@ -1,6 +1,6 @@
 package com.goblin.manage.bean.domain.enums;
 
-import com.baomidou.mybatisplus.enums.IEnum;
+import com.baomidou.mybatisplus.core.enums.IEnum;
 import lombok.Getter;
 
 /**
@@ -18,6 +18,9 @@ import lombok.Getter;
 @Getter
 public enum EmailSendState implements IEnum {
 
+	/**
+	 *
+	 */
 	NOT_SEND( "NOT_SEND" , "未发送" ),
 	SEND( "SEND" , "已发送" ),
 	FAIL_SEND( "FAIL_SEND" , "发送失败" ),

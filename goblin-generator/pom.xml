@@ -31,7 +31,7 @@
 
 		<dependency>
 			<groupId>com.baomidou</groupId>
-			<artifactId>mybatisplus-spring-boot-starter</artifactId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
 		</dependency>
 
 		<dependency>
@@ -47,11 +47,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.baomidou</groupId>
-			<artifactId>mybatis-plus</artifactId>
 			<scope>test</scope>
 		</dependency>
 

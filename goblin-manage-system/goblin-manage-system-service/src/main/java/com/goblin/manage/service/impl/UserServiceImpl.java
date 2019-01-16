@@ -1,5 +1,9 @@
 package com.goblin.manage.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.goblin.common.PagingRequest;
 import com.goblin.common.annotation.Log;
 import com.goblin.common.util.AssertUtils;
@@ -7,10 +11,6 @@ import com.goblin.common.util.LogUtils;
 import com.goblin.manage.bean.domain.User;
 import com.goblin.manage.mapper.UserMapper;
 import com.goblin.manage.service.UserService;
-import com.baomidou.mybatisplus.mapper.Condition;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
@@ -48,13 +48,13 @@ public class UserServiceImpl extends ServiceImpl< UserMapper, User > implements 
 	public PageInfo< User > listPage ( PagingRequest pagingRequest ) {
 		AssertUtils.isTrue( true,"测试log异常记录" );
 		PageHelper.startPage( pagingRequest.getPageNumber() , pagingRequest.getPageSize() );
-		return new PageInfo<>( super.selectList( null ) );
+		return new PageInfo<>( super.list() );
 	}
 
 	@Cacheable( key = "T(java.lang.String).valueOf(#id)" )
 	@Override
 	public User get ( Long id ) {
-		return super.selectById( id );
+		return super.getById( id );
 	}
 
 	@Caching(
@@ -70,7 +70,7 @@ public class UserServiceImpl extends ServiceImpl< UserMapper, User > implements 
 		if ( ! super.updateById( user ) ) {
 			return null;
 		}
-		return super.selectById( user.getId() );
+		return super.getById( user.getId() );
 	}
 
 	@Caching(
@@ -83,7 +83,7 @@ public class UserServiceImpl extends ServiceImpl< UserMapper, User > implements 
 	)
 	@Override
 	public boolean save ( User user ) {
-		return super.insert( user );
+		return super.save( user );
 	}
 
 	@Caching( evict = {
@@ -92,17 +92,17 @@ public class UserServiceImpl extends ServiceImpl< UserMapper, User > implements 
 	} )
 	@Override
 	public boolean delete ( Long id ) {
-		return super.deleteById( id );
+		return super.removeById( id );
 	}
 
 	@Override
 	public User findByUsername ( String username ) {
-		return this.selectOne( Condition.create().eq( "username" , username ) );
+		return super.getOne( new QueryWrapper<>( new User().setUsername( username ) ) );
 	}
 
 	@Override
 	public boolean isExist ( Long userId ) {
-		return super.selectCount( Condition.create().eq( "id" , userId ) ) > 0;
+		return super.count( new QueryWrapper<>( new User().setId( userId ) ) ) > 0;
 	}
 
 	@Override

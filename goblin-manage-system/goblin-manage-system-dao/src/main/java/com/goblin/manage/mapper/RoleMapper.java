@@ -1,7 +1,7 @@
 package com.goblin.manage.mapper;
 
 import com.goblin.manage.bean.domain.Role;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>

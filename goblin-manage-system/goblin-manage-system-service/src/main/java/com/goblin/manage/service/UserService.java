@@ -2,7 +2,7 @@ package com.goblin.manage.service;
 
 import com.goblin.common.PagingRequest;
 import com.goblin.manage.bean.domain.User;
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
 
 import java.util.concurrent.Future;

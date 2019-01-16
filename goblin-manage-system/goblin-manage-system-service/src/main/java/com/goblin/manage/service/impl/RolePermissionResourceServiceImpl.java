@@ -1,13 +1,13 @@
 package com.goblin.manage.service.impl;
 
-import com.baomidou.mybatisplus.mapper.Condition;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.goblin.common.PagingRequest;
 import com.goblin.manage.bean.domain.Role;
 import com.goblin.manage.bean.domain.RolePermissionResource;
 import com.goblin.manage.bean.domain.User;
-import com.goblin.common.PagingRequest;
 import com.goblin.manage.mapper.RolePermissionResourceMapper;
 import com.goblin.manage.service.RolePermissionResourceService;
 import com.goblin.manage.service.RoleService;
@@ -38,20 +38,19 @@ public class RolePermissionResourceServiceImpl extends ServiceImpl< RolePermissi
     private UserService userService;
 
     @Override
-    public PageInfo<RolePermissionResource> listPage ( PagingRequest pagingRequest ) {
-        PageHelper.startPage( pagingRequest.getPageNumber(), pagingRequest.getPageSize() );
-        return new PageInfo<>( super.selectList( null ) );
+    public PageInfo< RolePermissionResource > listPage ( PagingRequest pagingRequest ) {
+        PageHelper.startPage( pagingRequest.getPageNumber() , pagingRequest.getPageSize() );
+        return new PageInfo<>( super.list() );
     }
 
     @Override
     public List< RolePermissionResource > listByUserId ( Long userId ) {
         // 1. 得到用户
-        final User user = userService.selectById( userId );
-
+        final User user = userService.getById( userId );
+        
         if ( Objects.isNull( user ) ) {
             return Collections.emptyList();
         }
-
         // 2. 得到角色
         final List< Role > roles = roleService.listByUserId( user.getId() );
 
@@ -59,13 +58,12 @@ public class RolePermissionResourceServiceImpl extends ServiceImpl< RolePermissi
             return Collections.emptyList();
         }
         // 3. 得到角色资源中间表信息
-        final List< RolePermissionResource > rolePermissionResources = super.selectList(
-                new Condition().in(
-                        "role_id",
+        return super.list(
+                new QueryWrapper< RolePermissionResource >().lambda().in(
+                        RolePermissionResource::getRoleId ,
                         roles.parallelStream().map( Role::getId ).collect( Collectors.toList() )
                 )
         );
-        return rolePermissionResources;
     }
 
 }

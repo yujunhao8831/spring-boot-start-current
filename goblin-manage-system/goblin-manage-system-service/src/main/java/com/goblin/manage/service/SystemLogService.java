@@ -1,7 +1,7 @@
 package com.goblin.manage.service;
 
 import com.goblin.manage.bean.domain.SystemLog;
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
 import com.goblin.common.PagingRequest;
 

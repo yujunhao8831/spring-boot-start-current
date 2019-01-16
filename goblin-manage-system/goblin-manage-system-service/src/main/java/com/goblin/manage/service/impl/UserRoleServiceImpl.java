@@ -1,11 +1,11 @@
 package com.goblin.manage.service.impl;
 
-import com.baomidou.mybatisplus.mapper.Condition;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.goblin.manage.bean.domain.UserRole;
 import com.goblin.common.PagingRequest;
+import com.goblin.manage.bean.domain.UserRole;
 import com.goblin.manage.mapper.UserRoleMapper;
 import com.goblin.manage.service.UserRoleService;
 import org.springframework.stereotype.Service;
@@ -27,17 +27,17 @@ public class UserRoleServiceImpl extends ServiceImpl< UserRoleMapper, UserRole >
 
 
     @Override
-    public PageInfo listPage ( PagingRequest pagingRequest ) {
-        PageHelper.startPage( pagingRequest.getPageNumber(), pagingRequest.getPageSize() );
-        return new PageInfo( super.selectList( null ) );
+    public PageInfo< UserRole > listPage ( PagingRequest pagingRequest ) {
+        PageHelper.startPage( pagingRequest.getPageNumber() , pagingRequest.getPageSize() );
+        return new PageInfo<>( super.list() );
     }
 
     @Override
     public List< UserRole > listByUserId ( Long userId ) {
         if ( Objects.isNull( userId ) ) {
-            return Collections.EMPTY_LIST;
+            return Collections.emptyList();
         }
-        return super.selectList( new Condition().eq( "user_id", userId ) );
+        return super.list( new QueryWrapper< UserRole >().eq( "user_id" , userId ) );
     }
 
 

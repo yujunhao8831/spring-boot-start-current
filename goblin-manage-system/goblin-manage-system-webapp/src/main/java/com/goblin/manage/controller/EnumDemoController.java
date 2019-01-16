@@ -22,15 +22,14 @@ import java.util.List;
 @RequestMapping( "enums" )
 public class EnumDemoController {
 
-	@Autowired
-	private PermissionResourceService permissionResourceService;
+    @Autowired
+    private PermissionResourceService permissionResourceService;
 
 
-	@GetMapping
-	public ResponseEntity<List<PermissionResource> > list () {
-		return ResponseEntity.ok().body( permissionResourceService.selectList( null) );
-	}
-
+    @GetMapping
+    public ResponseEntity< List< PermissionResource > > list () {
+        return ResponseEntity.ok().body( permissionResourceService.list() );
+    }
 
 
 }

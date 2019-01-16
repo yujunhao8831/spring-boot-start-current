@@ -1,10 +1,10 @@
 package com.goblin.manage.service.impl;
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.goblin.manage.bean.domain.SystemConfig;
 import com.goblin.common.PagingRequest;
+import com.goblin.manage.bean.domain.SystemConfig;
 import com.goblin.manage.mapper.SystemConfigMapper;
 import com.goblin.manage.service.SystemConfigService;
 import org.springframework.stereotype.Service;
@@ -18,13 +18,13 @@ import org.springframework.stereotype.Service;
  * @since 2017-06-19
  */
 @Service
-public class SystemConfigServiceImpl extends ServiceImpl<SystemConfigMapper, SystemConfig> implements SystemConfigService {
+public class SystemConfigServiceImpl extends ServiceImpl< SystemConfigMapper, SystemConfig > implements SystemConfigService {
 
 
     @Override
-    public PageInfo listPage( PagingRequest pagingRequest ) {
-        PageHelper.startPage( pagingRequest.getPageNumber(), pagingRequest.getPageSize() );
-        return new PageInfo( super.selectList( null ) );
+    public PageInfo listPage ( PagingRequest pagingRequest ) {
+        PageHelper.startPage( pagingRequest.getPageNumber() , pagingRequest.getPageSize() );
+        return new PageInfo( super.list() );
     }
 
 

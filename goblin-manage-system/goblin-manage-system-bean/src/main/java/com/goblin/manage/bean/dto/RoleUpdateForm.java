@@ -1,6 +1,5 @@
 package com.goblin.manage.bean.dto;
 
-import com.goblin.manage.bean.domain.enums.RoleType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,27 +26,23 @@ public class RoleUpdateForm implements Serializable {
     /**
      * 角色名称
      */
-    private String   roleName;
+    private String  roleName;
     /**
      * 角色名称core(组code+角色code)
      */
-    private String   roleNameCode;
-    /**
-     * 角色类型(ROOT:根,SUPER_ADMIN:超级管理员,ADMIN:管理员,USER:普通用户)
-     */
-    private RoleType roleType;
+    private String  roleNameCode;
     /**
      * 角色状态(1:激活,0:锁定)
      */
-    private Boolean  enabled;
+    private Boolean enabled;
     /**
      * 描述
      */
-    private String   description;
+    private String  description;
     /**
      * 备注
      */
-    private String   remark;
+    private String  remark;
 
 
 }

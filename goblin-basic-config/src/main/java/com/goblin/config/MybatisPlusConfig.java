@@ -1,6 +1,7 @@
 package com.goblin.config;
 
-import com.baomidou.mybatisplus.plugins.PerformanceInterceptor;
+import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
+import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +25,14 @@ public class MybatisPlusConfig {
 	public PerformanceInterceptor performanceInterceptor () {
 		return new PerformanceInterceptor();
 	}
+
+
+	@Bean
+	public LogicSqlInjector logicSqlInjector () {
+		return new LogicSqlInjector();
+	}
+
+
 
 	@MapperScan( { "com.goblin.manage.mapper" } )
 	@Configuration

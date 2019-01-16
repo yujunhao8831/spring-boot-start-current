@@ -1,6 +1,7 @@
 package com.goblin.manage.bean.domain.enums;
 
-import com.baomidou.mybatisplus.enums.IEnum;
+import com.baomidou.mybatisplus.core.enums.IEnum;
+import com.goblin.manage.bean.domain.SystemLog;
 import lombok.Getter;
 
 /**
@@ -8,10 +9,13 @@ import lombok.Getter;
  *
  * @author : 披荆斩棘
  * @date : 2017/12/29
- * 对应字段 {@link com.goblin.manage.bean.domain.SystemLog#noticeType}
+ * 对应字段 {@link SystemLog#getNoticeType()}
  */
 @Getter
 public enum NoticeType implements IEnum {
+	/**
+	 *
+	 */
 	SMS( "SMS" , "短信通知" ),
 	MAIL( "MAIL" , "邮箱通知" );
 
